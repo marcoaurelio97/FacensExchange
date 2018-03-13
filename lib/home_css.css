@@ -1,0 +1,7 @@
+#success_message{ display: none;}
+
+body{
+  position: relative;
+  background-color: white;
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#1a315f', endColorstr='#1a315f', GradientType=0);
+}

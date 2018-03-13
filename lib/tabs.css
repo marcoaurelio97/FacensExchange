@@ -1,0 +1,217 @@
+/***********************************************
+
+	Template Name: Tabs Login & Registration Form
+	Author: BootstrapLayouts
+	URI: http://www.bootstraplayouts.com
+
+	***********************************************/
+	html,body{
+		background: rgba(11,96,186,1);
+		background: -moz-radial-gradient(center, ellipse cover, rgba(11,96,186,1) 0%, rgba(12,8,26,1) 100%);
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(11,96,186,1)), color-stop(100%, rgba(12,8,26,1)));
+		background: -webkit-radial-gradient(center, ellipse cover, rgba(11,96,186,1) 0%, rgba(12,8,26,1) 100%);
+		background: -o-radial-gradient(center, ellipse cover, rgba(11,96,186,1) 0%, rgba(12,8,26,1) 100%);
+		background: -ms-radial-gradient(center, ellipse cover, rgba(11,96,186,1) 0%, rgba(12,8,26,1) 100%);
+		background: radial-gradient(ellipse at center, rgba(11,96,186,1) 0%, rgba(12,8,26,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b60ba', endColorstr='#0c081a', GradientType=1 );
+		height:100%;
+	}
+	/**Panel**/
+
+	.panel{
+		margin-top:50px;
+		border:0px;
+	}
+
+	.panel-heading{
+		border:0px;
+	}
+
+	.panel-body{
+		background-color:#1c2b4a;
+		
+	}
+
+	.title{
+		margin-bottom:40px;
+		color:white;
+		font-weight:bold;
+	}
+
+	.btn-group-justified a{
+		color:white;
+		font-weight:bold;
+	}
+
+	.btn-group-justified a:hover{
+		color:#00cc66;
+	}
+
+	/**Login Form**/
+
+	#login_form{
+		display:block;
+	}
+
+	.nopadding{
+		padding-top:0 !important;
+		padding-bottom:0 !important;
+	}
+
+	.btn-group a{
+		border-radius:0;
+	}
+
+	.checkbox .remember_me{
+		color:white;
+	}
+
+	
+	.new_here p{
+		border-top:1px solid white;
+		color:white;
+		padding-top:10px;
+	}
+
+	#login_link.active{
+		background-color:#17233b;
+		color:white;
+		border: none;
+	}
+
+	#login_link{
+		background-color: white;
+		color: #17233b;
+	}
+
+	.butn .btn-default{
+		margin-top:20px;
+		border: none;
+		background-color: #009966;
+		color:white;
+		font-weight:bold;
+	}
+
+	.butn .btn-default:hover{
+		background-color:#00cc66;
+		color:white;
+	}
+
+	.login_form_icons{
+		color:#009966;
+	}
+
+	#login_form .input-group-addon{
+		background-color:#12192c;
+		border:none;
+		
+	}
+
+	/**Registration Form**/
+
+	#registration_form{
+		display:none;
+	}
+
+	.input{
+		border-radius:0px;
+		background-color:#12192c;
+
+		border:none;
+	}
+
+	.checkbox .check{
+		color:white;
+	}
+
+	.butn{
+
+		margin-top:20px;
+	}
+
+	.already_member {
+		padding-top:15px;
+		color:white;
+	}
+	
+	.forgot{
+
+		margin:20px 0px 10px 0px;
+		color:white;
+	}
+
+	.newhere {
+		border-top:1px solid white;
+		padding-top:10px;
+	}
+
+	#registration_link.active{
+		background-color:#17233b;
+		color:white;	
+		border:none;
+	}
+
+	#registration_link{
+		background-color: white;
+		color: #17233b;
+	}
+
+	#registration_form .input-group-addon{
+		background-color:#12192c;
+		border:none;	}
+
+		.registration_form_icons{
+			color:#009966;
+
+		}
+
+		/**Social Buttons**/
+
+		.social-button h4{
+			color: white;
+		}
+		.social-buttons .btn-default{
+			border-radius:0px;
+			margin-bottom:10px;
+			margin-top:5px;
+		}
+
+		.social-buttons i{
+			margin-right:5px;
+		}
+
+		.social-buttons .btn_facebook{
+			background-color:#003380;
+			color:white;
+			border:0px;
+		}
+
+		.social-buttons .btn_twitter{
+			background-color:#499bea;
+			color:white;
+			border:0px;
+		}
+		.social-buttons .btn_gmail{
+			background-color:#b30000;
+			color:white;
+			border:0px;
+		}
+
+		/**Media Query**/
+
+		@media (max-width:800px){
+			.social-buttons .btn-default{
+				margin-bottom:10px;
+			}
+
+		}
+
+		#footer{
+			color:White;
+			margin-top:10px;
+		}
+
+		#footer a{
+			color:White;
+			text-decoration:underline;
+		}
