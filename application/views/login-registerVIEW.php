@@ -46,16 +46,52 @@
             <ul class="nav">
                 <li class="active">
                     <a href="dashboard.html">
-                        <i class="ti-home"></i>
-                        <p>Home</p>
+                        <i class="ti-panel"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="user.html">
+                        <i class="ti-user"></i>
+                        <p>User Profile</p>
                     </a>
                 </li>
                 <li>
                     <a href="table.html">
                         <i class="ti-view-list-alt"></i>
-                        <p>Categories</p>
+                        <p>Table List</p>
                     </a>
-                </li>                
+                </li>
+                <li>
+                    <a href="typography.html">
+                        <i class="ti-text"></i>
+                        <p>Typography</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="icons.html">
+                        <i class="ti-pencil-alt2"></i>
+                        <p>Icons</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="maps.html">
+                        <i class="ti-map"></i>
+                        <p>Maps</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="notifications.html">
+                        <i class="ti-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+				<li class="active-pro">
+                    <a href="upgrade.html">
+                        <i class="ti-export"></i>
+                        <p>Upgrade to PRO</p>
+                    </a>
+                </li>
             </ul>
     	</div>
     </div>
@@ -71,131 +107,97 @@
                         <span class="icon-bar bar3"></span>
                     </button>
                     <a class="navbar-brand">Pesquisar</a>
-                    <input type="text" class="collapse navbar-collapse" placeholder="Procure um produto..." style="margin-top:22px;"><a href="#"><i class="ti ti-search"></i></a>
+                    <input type="text" class="collapse navbar-collapse" placeholder="Procure um produto..." style="margin-top:22px;"><a href="#"><i class="fa fa-search"></i></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                        <button class="btn btn-info">Entrar</button>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="ti-panel"></i>
+								<p>Stats</p>
+                            </a>
                         </li>
-                        <li>
-                        <button class="btn btn-info">Contatc</button>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-bell"></i>
+                                    <p class="notification">5</p>
+									<p>Notifications</p>
+									<b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                              </ul>
                         </li>
-                        <li>
-                        <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
-                              Vinicius
-                       <b class="caret"></b>
-                       </a>
-
-              <ul class="dropdown-menu">
-                <li><a href="#paper">Action</a></li>
-                <li><a href="#paper">Another action</a></li>
-                <li><a href="#paper">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#paper">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#paper">One more separated link</a></li>
+						<li>
+                            <a href="#">
+								<i class="ti-settings"></i>
+								<p>Settings</p>
+                            </a>
+                        </li>
+                    </ul>
 
                 </div>
-                        
             </div>
         </nav>
 
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
                     <div class="col-md-4">
-                    <div class="card">
-                    <div class="header">
+                        <div class="card">
+                            <div class="header">
                                 <h4 class="title">Galaxy S8</h4>
-                                <p class="category">Bom barato e gostoso</p>                               
+                                <p class="category">Celular bom e barato, vem trocar!</p>
                             </div>
-                            <p/>
-                            <hr />
                             <div class="content">
-                                
-                                <div class="row">
-                                    
-                                    <div class="col-xs-5">
-                                        <div class="icon-big icon-warning text-center">
-                                        <img src="assets/img/s8.png" alt="" width="145px"/>
-                                        </div>
-                                    </div>
-                                </div>
+                                <img src="assets/img/s8.png" alt=""/>
+
                                 <div class="footer">
-                                <br/>
-                                <hr />
-                                <p/>
-                                    <div class="stats ">                                        
-                                    <button class="btn btn-info">Check now</button>
+                                    <div class="chart-legend">
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Visualizar</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                       
                     </div>
-
                     <div class="col-md-4">
-                    <div class="card">
-                    <div class="header">
+                        <div class="card">
+                            <div class="header">
                                 <h4 class="title">Macbook Pro</h4>
-                                <p class="category">Só pra quem ganha mais de 5k</p>                               
+                                <p class="category">Troco por rim!</p>
                             </div>
-                            <p/>
-                            <hr />
                             <div class="content">
-                                
-                                <div class="row">
-                                    
-                                    <div class="col-xs-5">
-                                        <div class="icon-big icon-warning text-center">
-                                        <img src="assets/img/macbook.jpg" alt="" width="260px" heigth="250px"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer">
-                                <br/>
-                                <hr />
-                                <p/>
-                                    <div class="stats ">                                        
-                                    <button class="btn btn-info">Check now</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                       
-                    </div>
+                                <img src="assets/img/macbook.jpg" alt="" width="260px" heigth="200px"/>
 
-                    <div class="col-md-4">
-                    <div class="card">
-                    <div class="header">
-                                <h4 class="title">Coleção Livros Harry Potter</h4>
-                                <p class="category">Coleção incrível de todos os livros.</p>                               
-                            </div>
-                            <p/>
-                            <hr />
-                            <div class="content">
-                                
-                                <div class="row">
-                                    
-                                    <div class="col-xs-5">
-                                        <div class="icon-big icon-warning text-center">
-                                        <img src="assets/img/harrypotter.png" alt="" width="135px" heigth="170px"/>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="footer">
-                                <br/>
-                                <hr />
-                                <p/>
-                                    <div class="stats ">                                        
-                                    <button class="btn btn-info">Check now</button>
+                                    <div class="chart-legend">
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Visualizar</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>                       
+                        </div>
                     </div>
-                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Coleção Livros Harry Potter</h4>
+                                <p class="category">Coleção incrível de todos os livros da saga!</p>
+                            </div>
+                            <div class="content">
+                                <img src="assets/img/harrypotter.png" alt="" width="220px" heigth="170px"/>
+
+                                <div class="footer">
+                                    <div class="chart-legend">
+                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Visualizar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
