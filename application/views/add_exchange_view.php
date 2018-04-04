@@ -27,6 +27,14 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -227,232 +235,89 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Facens
-        <small>Exchange</small>
+        Add Exchange
+        <small>Facens Exchange</small>
       </h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <?php echo $this->session->userdata('item'); ?>
-      <div>
-          <div class="row">
-             
-          <div class="col-md-4">
-              <div class="box box-solid box-primary">
-                <div class="box-header">
-                  <h3 class="box-title">Jogo de Cadeiras</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  
-                  <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-
-                
-                </div><!-- /.box-body -->
-                <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
+     
+      <div class="row container">
+      
+        <!-- /.col -->
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h2 class="box-title"><strong>Exchange Infos</strong></h2>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
                   <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
+                    <div class="form-group">
+                        <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
+                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter a title of exchange">
                     </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
+                    <div class="form-group">
+                        <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
+                        <textarea class="form-control" rows="5" placeholder="Enter a description of exchange"></textarea>
                       </div>
 
-                <!-- <button type="button" class="btn btn-block btn-primary btn-flat" >More info</button> -->
-                <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Trade/tradeDetails') ?>">More info</a>
-              </div><!-- /.box -->
-              
+                      <strong><i class="fa fa-star margin-r-5"></i>Interests</strong>
+                      <div class="form-group">
+                            <label>
+                              <span class="label label-danger pull-left"><i class="fa fa-gamepad"></i></span>                             
+                            </label>
+                            <label>                               
+                              <span class="label label-success pull-left"><i class="fa fa-book "></i></span>                          
+                            </label>
+                            <label>                                
+                              <span class="label label-info pull-left"><i class="fa fa-mobile-phone"></i></span>                          
+                            </label>
+                            <label>                               
+                              <span class="label label-warning pull-left"><i class="fa fa-tv "></i></span>                           
+                            </label>
+                            <label>                               
+                              <span class="label label-danger pull-left"><i class="fa fa-futbol-o "></i></span>                           
+                            </label>
+                            <label>                               
+                              <span class="label label-success pull-left"><i class="fa fa-automobile  "></i></span>                           
+                            </label>
+                            <label>                               
+                              <span class="label label-info pull-left"><i class="fa fa-motorcycle "></i></span>                           
+                            </label>
+                     
             </div>
 
-            <div class="col-md-4">
-                <div class="box box-solid box-primary">
-                  <div class="box-header">
-                    <h3 class="box-title">Jogo de Cadeiras</h3>
-                  </div><!-- /.box-header -->
-                  <div class="box-body">
-                    
-                    <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-  
-                  </div><!-- /.box-body -->
-                  <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                  <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                </div><!-- /.box -->
-                
+            <div class="form-group">
+                <p><strong><i class="fa fa-file-image-o margin-r-5"></i> Images</strong></p>
+               
+                <input type="file" id="exampleInputFile">
+
+                <p class="help-block">Add images for your exchange.</p>
               </div>
 
-              <div class="col-md-4">
-                  <div class="box box-solid box-primary">
-                    <div class="box-header">
-                      <h3 class="box-title">Jogo de Cadeiras</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                      
-                      <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-                         
-                    </div><!-- /.box-body -->
-                    <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                    <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                  </div><!-- /.box -->
-                  
-                </div>
-
-                <div class="col-md-4">
-                    <div class="box box-solid box-primary">
-                      <div class="box-header">
-                        <h3 class="box-title">Jogo de Cadeiras</h3>
-                      </div><!-- /.box-header -->
-                      <div class="box-body">
-                        
-                        <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-                      </div><!-- /.box-body -->
-                      <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                      <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                    </div><!-- /.box -->
                     
                   </div>
+                  <!-- /.box-body -->
+    
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                  </div>
+                </form>
+              </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
 
-                  <div class="col-md-4">
-                      <div class="box box-solid box-primary">
-                        <div class="box-header">
-                          <h3 class="box-title">Jogo de Cadeiras</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">                          
-                          <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">        
-                        </div><!-- /.box-body -->
-                        <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                        <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                      </div><!-- /.box -->
-                      
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="box box-solid box-primary">
-                          <div class="box-header">
-                            <h3 class="box-title">Jogo de Cadeiras</h3>
-                          </div><!-- /.box-header -->
-                          <div class="box-body">
-                            
-                            <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-                          </div><!-- /.box-body -->
-                          <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                          <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                        </div><!-- /.box -->
-                        
-                      </div>
+    </section>
+    <!-- /.content -->
+  </div>
            
-        
-      
-</div>
-<!-- ./wrapper -->
-
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

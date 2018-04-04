@@ -5,59 +5,64 @@ class Login extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('model_usuarios');
+		$this->load->model('model_users');
+		$this->load->model('model_credentials');
 	}
 
 	public function index()
 	{
-		$this->load->view('login');
+		$this->load->view('login_view');
 	}
 
 	public function cadastrar(){
-		
-		$this->form_validation->set_rules('usuario', 'Usuario', 'required');
-		$this->form_validation->set_rules('email', 'E-mail', 'required');
-		$this->form_validation->set_rules('senha', 'Senha', 'required');
-		$this->form_validation->set_rules('senha_confirmar', 'Confirmação de Senha', 'required|matches[senha]');
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
+		if($this->input->post('password') != $this->input->post('password_confirm')){
+			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Passwords doesn't match!</div>");
+			redirect('Login');
+		}
 
-		if($this->form_validation->run()){
-			$usuario = $this->input->post('usuario');
-			$email   = $this->input->post('email');
-			$senha   = $this->input->post('senha');
+		if($this->input->post()){
+			$name  = $this->input->post('name');
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
 
 			$db = array(
-				'usuario' => $usuario,
-				'email'   => $email,
-				'senha'   => md5($senha)
+				'user_name' => $name
 			);
 
-			$this->model_usuarios->cadastrarUsuario($db);
+			$this->model_users->addUser($db);
+			$idUser = $this->db->insert_id();
 
-			redirect('login');
-		} else {
-			$this->load->view('login');
+			$db = array(
+				'credentials_iduser' => $idUser,
+				'credentials_email'  => $email,
+				'credentials_password' => md5($password)
+			);
+
+			$this->model_credentials->addCredential($db);
+
+			$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User registered with success!</div>");
+			redirect('Home');
 		}
+
+		$this->load->view('login_view');
 	}
 
 	public function login(){
-		$this->form_validation->set_rules('usuario', 'Usuario', 'required');
-		$this->form_validation->set_rules('senha', 'Senha', 'required');
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
+		if($this->input->post()){
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
 
-		if($this->form_validation->run()){
-			$usuario = $this->input->post('usuario');
-			$senha   = $this->input->post('senha');
+			$credentials = $this->model_credentials->checkEmailPassword($email, md5($password));
 
-			$credenciais = $this->model_usuarios->verificaUsuarioSenha($usuario, $senha);
-
-			if($credenciais){
-				redirect('login');
+			if($credentials){
+				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
+				redirect('Home');
 			}
 
+			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Failed to login!</div>");
 			redirect('login');
-		} else {
-			$this->load->view('login');
 		}
+
+		$this->load->view('login_view');
 	}
 }

@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteCond $1 !^(index\.php|css|public|documentos|images|js|materiais|manutencao.php|load-balancer.html|assets|dist|plugins|bower_components)
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+RedirectMatch 404 /\.git

@@ -227,8 +227,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Facens
-        <small>Exchange</small>
+        Sign in or register
+        <small>Facens Exchange</small>
       </h1>
     </section>
 
@@ -236,221 +236,110 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <?php echo $this->session->userdata('item'); ?>
-      <div>
           <div class="row">
-             
-          <div class="col-md-4">
-              <div class="box box-solid box-primary">
-                <div class="box-header">
-                  <h3 class="box-title">Jogo de Cadeiras</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  
-                  <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-
+              <div class="col-md-6">  
                 
-                </div><!-- /.box-body -->
-                <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-
-                <!-- <button type="button" class="btn btn-block btn-primary btn-flat" >More info</button> -->
-                <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Trade/tradeDetails') ?>">More info</a>
-              </div><!-- /.box -->
+    <div class="box box-primary">
+        <div class="box-header with-border">           
+              <div class="login-box-body">
+                  <p class="login-box-msg"><strong>Sign in to start your session</strong></p>
               
-            </div>
-
-            <div class="col-md-4">
-                <div class="box box-solid box-primary">
-                  <div class="box-header">
-                    <h3 class="box-title">Jogo de Cadeiras</h3>
-                  </div><!-- /.box-header -->
-                  <div class="box-body">
-                    
-                    <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-  
-                  </div><!-- /.box-body -->
-                  <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
+                  <form action="<?= site_url('Login/login') ?>" method="post">
+                    <div class="form-group has-feedback">
+                      <input type="email" class="form-control" name="email" placeholder="Email" required>
+                      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                  <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                </div><!-- /.box -->
-                
-              </div>
-
-              <div class="col-md-4">
-                  <div class="box box-solid box-primary">
-                    <div class="box-header">
-                      <h3 class="box-title">Jogo de Cadeiras</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                      
-                      <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-                         
-                    </div><!-- /.box-body -->
-                    <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
+                    <div class="form-group has-feedback">
+                      <input type="password" class="form-control" name="password" placeholder="Password" required>
+                      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
+                    <div class="row">
+                      <div class="col-xs-8">
+                        <div class="checkbox icheck"  style="margin-left:20px;">
+                          <label>
+                            <input type="checkbox" > Remember Me
+                          </label>
+                        </div>
                       </div>
-                    <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                  </div><!-- /.box -->
-                  
-                </div>
-
-                <div class="col-md-4">
-                    <div class="box box-solid box-primary">
-                      <div class="box-header">
-                        <h3 class="box-title">Jogo de Cadeiras</h3>
-                      </div><!-- /.box-header -->
-                      <div class="box-body">
-                        
-                        <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-                      </div><!-- /.box-body -->
-                      <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
+                      <!-- /.col -->
+                      <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                      </div>
+                      <!-- /.col -->
                     </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                      <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                    </div><!-- /.box -->
-                    
+                  </form>
+              
+                  <div class="social-auth-links text-center">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+                      Facebook</a>
+                    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+                      Google+</a>
                   </div>
-
-                  <div class="col-md-4">
-                      <div class="box box-solid box-primary">
-                        <div class="box-header">
-                          <h3 class="box-title">Jogo de Cadeiras</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">                          
-                          <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">        
-                        </div><!-- /.box-body -->
-                        <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                        <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                      </div><!-- /.box -->
-                      
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="box box-solid box-primary">
-                          <div class="box-header">
-                            <h3 class="box-title">Jogo de Cadeiras</h3>
-                          </div><!-- /.box-header -->
-                          <div class="box-body">
-                            
-                            <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-                          </div><!-- /.box-body -->
-                          <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
-                  <div class="box-body">
-                      <ul>
-                        <li>Pouco tempo de uso;</li>
-                        <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                    
-                      </ul>
-                    </div>
-                    <div class="box-body"  style="margin-left:10px;">
-                        <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
-                        <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
-                        </p>
-                      </div>
-                          <button type="button" class="btn btn-block btn-primary btn-flat">More info</button>
-                        </div><!-- /.box -->
-                        
-                      </div>
-           
-        
-      
+                  <!-- /.social-auth-links -->
+              
+                  <a href="#">I forgot my password</a><br>
+                  <a href="register.html" class="text-center">Register a new membership</a>
+                </div>  </div>  
+                </div>        
 </div>
+
+<div class="col-md-6">   
+    <div class="box box-primary">
+        <div class="box-header with-border">
+    <div class="register-box-body">
+        <p class="login-box-msg"><strong>Register a new membership</strong></p>
+    
+        <form action="<?= site_url('Login/cadastrar') ?>" method="post">
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" name="name" placeholder="Full name" required>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" name="password_confirm" placeholder="Retype password" required>
+            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="checkbox icheck" style="margin-left:20px;">
+                <label>
+                  <input type="checkbox"> I agree to the <a href="#">terms</a>
+                </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+    
+        <div class="social-auth-links text-center">
+          <p>- OR -</p>
+          <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+            Facebook</a>
+          <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
+            Google+</a>
+        </div>
+    
+        <a href="login.html" class="text-center">I already have a membership</a>
+      </div>
+  </div>
+  </div>
+  </div>
+
+
+</div>
+</section>
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->

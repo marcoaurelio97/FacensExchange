@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Model_usuarios extends CI_Model {
+class Model_users extends CI_Model {
     
     public function __construct(){
         parent::__construct();
     }
 
-    public function cadastrarUsuario($db){
-        $this->db->insert('usuarios', $db);
+    public function addUser($db){
+        $this->db->insert('user', $db);
     }
 
     public function verificaUsuarioSenha($usuario, $senha){
