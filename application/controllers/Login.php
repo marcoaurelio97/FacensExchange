@@ -6,7 +6,6 @@ class Login extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('model_users');
-		$this->load->model('model_credentials');
 	}
 
 	public function index()
@@ -19,26 +18,16 @@ class Login extends CI_Controller {
 			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Passwords doesn't match!</div>");
 			redirect('Login');
 		}
-
+		
 		if($this->input->post()){
-			$name  = $this->input->post('name');
-			$email = $this->input->post('email');
-			$password = $this->input->post('password');
+			require_once dirname(__FILE__) . "../../libraries/class/user.php";
+			$user = new User();
+			$user->user_name = $this->input->post('name');
+			$user->user_email = $this->input->post('email');
+			$user->user_password = md5($this->input->post('password'));
 
-			$db = array(
-				'user_name' => $name
-			);
-
-			$this->model_users->addUser($db);
+			$this->model_users->addUser($user);
 			$idUser = $this->db->insert_id();
-
-			$db = array(
-				'credentials_iduser' => $idUser,
-				'credentials_email'  => $email,
-				'credentials_password' => md5($password)
-			);
-
-			$this->model_credentials->addCredential($db);
 
 			$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User registered with success!</div>");
 			redirect('Home');
@@ -49,12 +38,15 @@ class Login extends CI_Controller {
 
 	public function login(){
 		if($this->input->post()){
-			$email = $this->input->post('email');
-			$password = $this->input->post('password');
+			require_once dirname(__FILE__) . "../../libraries/class/user.php";
+			$user = new User();
+			$user->user_email = $this->input->post('email');
+			$user->user_password = md5($this->input->post('password'));
 
-			$credentials = $this->model_credentials->checkEmailPassword($email, md5($password));
+			$authorized = $this->model_users->checkEmailPassword($user);
 
-			if($credentials){
+			if($authorized){
+				$this->session->set_userdata('logged', true);
 				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
 				redirect('Home');
 			}
@@ -64,5 +56,11 @@ class Login extends CI_Controller {
 		}
 
 		$this->load->view('login_view');
+	}
+
+	public function signOut(){
+		$this->session->unset_userdata('logged');
+		$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User sign out with success!</div>");
+		redirect('Home');
 	}
 }

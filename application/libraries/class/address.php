@@ -1,12 +1,13 @@
 <?php
 
 class Address {
-    private $address_id;
-    private $street;
-    private $number;
-    private $zip_code;
-    private $city;
-    private $neighborhood;
-    private $uf_state;
-    private $complement;
+    public $address_id;
+    public $address_id_user;
+    public $address_street;
+    public $address_number;
+    public $address_zip_code;
+    public $address_city;
+    public $address_neighborhood;
+    public $address_uf_state;
+    public $address_complement;
 }

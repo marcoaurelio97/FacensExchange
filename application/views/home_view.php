@@ -156,9 +156,15 @@
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
+                <?php if($logged) { ?>
+                  <div class="pull-right">
+                    <a href="<?= site_url('Login/signOut') ?>" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                <?php } else { ?>
+                  <div class="pull-right">
+                    <a href="<?= site_url('Login') ?>" class="btn btn-default btn-flat">Sign in</a>
+                  </div>
+                <?php } ?>
               </li>
             </ul>
           </li>

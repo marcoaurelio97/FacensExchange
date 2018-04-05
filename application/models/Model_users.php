@@ -7,17 +7,17 @@ class Model_users extends CI_Model {
         parent::__construct();
     }
 
-    public function addUser($db){
-        $this->db->insert('user', $db);
+    public function addUser($user){
+        $this->db->insert('users', $user);
     }
 
-    public function verificaUsuarioSenha($usuario, $senha){
-        $this->db->where('usuario', $usuario);
-        $this->db->where('senha', $senha);
-        $conta = $this->db->get('usuarios');
+    public function checkEmailPassword($user){
+        $this->db->where('user_email', $user->user_email);
+        $this->db->where('user_password', $user->user_password);
+        $auth = $this->db->get('users');
 
-        if($conta && $conta->num_rows() > 0){
-            return $conta->row();
+        if($auth && $auth->num_rows() > 0){
+            return TRUE;
         }
 
         return FALSE;

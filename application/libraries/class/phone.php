@@ -1,8 +1,8 @@
 <?php
 
 class Phone {
-    private $phone_id;
-    private $phone;
-    private $cellphone1;
-    private $cellphone2;
+    public $phone_id;
+    public $phone_id_user;
+    public $phone;
+    public $cellphone;
 }

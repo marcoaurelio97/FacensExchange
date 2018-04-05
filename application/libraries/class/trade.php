@@ -2,12 +2,10 @@
 
 class Trade {
     private $trade_id;
-    private $status;
-    private $title;
-    private $description;
-    private $wishes = array();
-    private $category;//class category
-    private $pictures = array();
-    private $user_from;//class user
-    private $user_to;//class user
+    private $trade_id_user_from;
+    private $trade_id_user_to;
+    private $trade_status;
+    private $trade_title;
+    private $trade_description;
+    private $trade_id_category;
 }
