@@ -123,18 +123,48 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?= site_url('dist/img/user2-160x160.jpg')?>" class="user-image" alt="User Image">
-              <span class="hidden-xs">Marco Aurélio</span>
+            <?php if($this->session->userdata('logged')) 
+              { ?>                
+                   <img src="<?= site_url('dist/img/user2-160x160.jpg')?>" class="user-image" alt="User Image">      
+               <?php } 
+                    else { ?>                  
+                      <img src="<?= site_url('dist/img/user-default.jpg')?>" class="user-image" alt="User Image">      
+              <?php } ?>
+            
+              <span class="hidden-xs">
+              <?php if($this->session->userdata('logged')) 
+              { ?>                
+                    <?php echo $this->session->userdata('userName'); ?>            
+               <?php } 
+                    else { ?>                  
+                    Guest       
+              <?php } ?>
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="<?= site_url('dist/img/user2-160x160.jpg')?>" class="img-circle" alt="User Image">
-
-                <p>
-                    Marco Aurélio - PHP Developer
-                  <small>Member since Jan. 2018</small>
-                </p>
+              <?php if($this->session->userdata('logged')) 
+              { ?>                
+                   <img src="<?= site_url('dist/img/user2-160x160.jpg')?>" class="img-circle" alt="User Image">      
+               <?php } 
+                    else { ?>                  
+                      <img src="<?= site_url('dist/img/user-default.jpg')?>" class="img-circle" alt="User Image">      
+              <?php } ?>
+                <?php if($this->session->userdata('logged')) 
+                { ?>                
+                    <p>
+                    <?php echo $this->session->userdata('userName'); ?>        
+                    <small>Member since Abr. 2018</small>
+                    </p>              
+                <?php } 
+                    else { ?>                  
+                    <p>
+                    Guest
+                  <small>Login to exchange items.</small>
+                </p>       
+              <?php } ?>
+                
               </li>
               <!-- Menu Body -->
               <li class="user-body">
@@ -152,20 +182,17 @@
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <?php if($this->session->userdata('logged')) { ?>
-                  <div class="pull-right">
-                    <a href="<?= site_url('Login/signOut') ?>" class="btn btn-default btn-flat">Sign out</a>
+              <li class="user-footer">              
+                  <div class="text-center">                  
+                    <a href="#" class="btn btn-primary btn-flat">Profile</a>   
+                      <?php if($this->session->userdata('logged')) { ?>  
+                        <a href="<?=site_url('Exchange/addTrade')?>" class="btn btn-warning btn-flat">Add Trade</a>               
+                    <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>                
+                      <?php } else { ?>                  
+                    <a href="<?= site_url('Login') ?>" class="btn btn-success btn-flat">Sign in</a>                
+                      <?php } ?>
                   </div>
-                <?php } else { ?>
-                  <div class="pull-right">
-                    <a href="<?= site_url('Login') ?>" class="btn btn-default btn-flat">Sign in</a>
-                  </div>
-                <?php } ?>
-              </li>
+             </li>
             </ul>
           </li>
         </ul>
@@ -177,15 +204,18 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <div class="user-panel">
+
+      <?php if($this->session->userdata('logged')) { ?>  
+        <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?= site_url('dist/img/user2-160x160.jpg')?>" class="img-circle" alt="User Image">
+           <img src="<?= site_url('dist/img/user2-160x160.jpg')?>" class="img-circle" alt="User Image"> 
         </div>
         <div class="pull-left info">
-          <p>Marco Aurélio</p>
+          <p>   <?php echo $this->session->userdata('userName'); ?>        </p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
-      </div>
+      </div>            
+                      <?php } ?>      
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">

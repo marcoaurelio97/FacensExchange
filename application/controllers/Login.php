@@ -49,6 +49,7 @@ class Login extends CI_Controller {
 			if($authorized){
 				$this->session->set_userdata('logged', true);
 				$this->session->set_userdata('idUser', $this->model_users->getUser($user));
+				$this->session->set_userdata('userName', $this->model_users->getName($user));
 				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
 				redirect('Home');
 			}
