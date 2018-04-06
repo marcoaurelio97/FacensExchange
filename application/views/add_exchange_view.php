@@ -24,43 +24,31 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
+                <form action="<?= site_url('Exchange/addTrade') ?>" method="post">                
                   <div class="box-body">
                     <div class="form-group">
-                        <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter a title of exchange">
+                      <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
+                      <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="Enter a title of exchange" required>
                     </div>
                     <div class="form-group">
                         <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
-                        <textarea class="form-control" rows="5" placeholder="Enter a description of exchange"></textarea>
+                        <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of exchange" required></textarea>
                       </div>
-
+                      <div class="form-group">
+                        <strong><i class="fa fa-th-list margin-r-5"></i>Category</strong>
+                        <?php echo form_dropdown('category', $categories, set_value('category'), 'id="category" class="form-control" required') ?>
+                      </div>
                       <strong><i class="fa fa-star margin-r-5"></i>Interests</strong>
                       <div class="form-group">
-                            <label>
-                              <span class="label label-danger pull-left"><i class="fa fa-gamepad"></i></span>                             
-                            </label>
-                            <label>                               
-                              <span class="label label-success pull-left"><i class="fa fa-book "></i></span>                          
-                            </label>
-                            <label>                                
-                              <span class="label label-info pull-left"><i class="fa fa-mobile-phone"></i></span>                          
-                            </label>
-                            <label>                               
-                              <span class="label label-warning pull-left"><i class="fa fa-tv "></i></span>                           
-                            </label>
-                            <label>                               
-                              <span class="label label-danger pull-left"><i class="fa fa-futbol-o "></i></span>                           
-                            </label>
-                            <label>                               
-                              <span class="label label-success pull-left"><i class="fa fa-automobile  "></i></span>                           
-                            </label>
-                            <label>                               
-                              <span class="label label-info pull-left"><i class="fa fa-motorcycle "></i></span>                           
-                            </label>
-                     
-            </div>
-
+                        <a href="#"><span class="label label-danger pull-left"><i class="fa fa-gamepad"></i></span></a>
+                        <a href="#"><span class="label label-success pull-left"><i class="fa fa-book"></i></span></a>
+                        <a href="#"><span class="label label-info pull-left"><i class="fa fa-mobile-phone"></i></span></a>
+                        <a href="#"><span class="label label-warning pull-left"><i class="fa fa-tv"></i></span></a>
+                        <a href="#"><span class="label label-danger pull-left"><i class="fa fa-futbol-o"></i></span></a>
+                        <a href="#"><span class="label label-success pull-left"><i class="fa fa-automobile"></i></span></a>
+                        <a href="#"><span class="label label-info pull-left"><i class="fa fa-motorcycle"></i></span></a>
+                      </div>
+                  <br>
             <div class="form-group">
                 <p><strong><i class="fa fa-file-image-o margin-r-5"></i> Images</strong></p>
                

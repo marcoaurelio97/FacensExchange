@@ -59,7 +59,7 @@
                   <a href="#">I forgot my password</a><br>
                   <a href="register.html" class="text-center">Register a new membership</a>
                 </div>  </div>  
-                </div>        
+                </div>
 </div>
 
 <div class="col-md-6">   
@@ -68,7 +68,7 @@
     <div class="register-box-body">
         <p class="login-box-msg"><strong>Register a new membership</strong></p>
     
-        <form action="<?= site_url('Login/cadastrar') ?>" method="post">
+        <form action="<?= site_url('Login/register') ?>" method="post">
           <div class="form-group has-feedback">
             <input type="text" class="form-control" name="name" placeholder="Full name" required>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>

@@ -22,4 +22,16 @@ class Model_users extends CI_Model {
 
         return FALSE;
     }
+
+    public function getUser($user){
+        $this->db->where('user_email', $user->user_email);
+        $this->db->where('user_password', $user->user_password);
+        $user = $this->db->get('users');
+
+        if($user && $user->num_rows() > 0){
+            return $user->row()->user_id;
+        }
+
+        return FALSE;
+    }
 }

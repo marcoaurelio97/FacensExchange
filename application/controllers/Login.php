@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 		$this->load->view('login_view');
 	}
 
-	public function cadastrar(){
+	public function register(){
 		if($this->input->post('password') != $this->input->post('password_confirm')){
 			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Passwords doesn't match!</div>");
 			redirect('Login');
@@ -22,6 +22,7 @@ class Login extends CI_Controller {
 		if($this->input->post()){
 			require_once dirname(__FILE__) . "../../libraries/class/user.php";
 			$user = new User();
+			$user->user_date_add = date('Y-m-d H:i:s');
 			$user->user_name = $this->input->post('name');
 			$user->user_email = $this->input->post('email');
 			$user->user_password = md5($this->input->post('password'));
@@ -30,7 +31,7 @@ class Login extends CI_Controller {
 			$idUser = $this->db->insert_id();
 
 			$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User registered with success!</div>");
-			redirect('Home');
+			redirect('login');
 		}
 
 		$this->load->view('login_view');
@@ -47,6 +48,7 @@ class Login extends CI_Controller {
 
 			if($authorized){
 				$this->session->set_userdata('logged', true);
+				$this->session->set_userdata('idUser', $this->model_users->getUser($user));
 				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
 				redirect('Home');
 			}
