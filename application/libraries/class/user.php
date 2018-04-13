@@ -10,4 +10,5 @@ class User {
     public $user_rg;
     public $user_cpf;
     public $user_profile_pic;
+    public $user_role = "Normal";
 }
