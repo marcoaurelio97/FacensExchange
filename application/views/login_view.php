@@ -6,7 +6,6 @@
     <section class="content-header">
       <h1>
         Sign in or register
-        <small>Facens Exchange</small>
       </h1>
     </section>
 
@@ -33,11 +32,6 @@
                     </div>
                     <div class="row">
                       <div class="col-xs-8">
-                        <div class="checkbox icheck"  style="margin-left:20px;">
-                          <label>
-                            <input type="checkbox" > Remember Me
-                          </label>
-                        </div>
                       </div>
                       <!-- /.col -->
                       <div class="col-xs-4">
@@ -89,7 +83,7 @@
             <div class="col-xs-8">
               <div class="checkbox icheck" style="margin-left:20px;">
                 <label>
-                  <input type="checkbox"> I agree to the <a href="#">terms</a>
+                  <input type="checkbox" id="terms" name="terms"> I agree to the <a href="#">terms</a>
                 </label>
               </div>
             </div>

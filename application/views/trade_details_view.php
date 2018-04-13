@@ -6,7 +6,6 @@
     <section class="content-header">
       <h1>
         Exchange Details
-        <small>Facens Exchange</small>
       </h1>
     </section>
 
@@ -21,22 +20,13 @@
            
             <!-- /.box-header -->
             <div class="box-body">
-                <img class="img-responsive pad" src="<?= site_url('dist/img/photo2.png')?>" alt="Photo">
+                <img class="img-responsive pad" src="<?= site_url('dist/img/'.$trade->trade_pic_picture)?>" alt="Photo">
             </div>  
             
             <div class="box-body">
                 <div>
                     <div style="float:left;margin-right:10px;margin-left:25px;" >
-                        <img src="<?= site_url('dist/img/photo2.png')?>" height="100" width="100"  />
-                    </div>
-                    <div style="float:left;margin-right:10px;">
-                        <img src="<?= site_url('dist/img/photo2.png')?>" height="100" width="100" />
-                    </div>
-                    <div style="float:left;margin-right:10px;">
-                        <img src="<?= site_url('dist/img/photo2.png')?>" height="100" width="100" />
-                    </div>
-                    <div style="float:left;margin-right:10px;" >
-                        <img src="<?= site_url('dist/img/photo2.png')?>" height="100" width="100"  />
+                        <img src="<?= site_url('dist/img/'.$trade->trade_pic_picture)?>" height="100" width="100"  />
                     </div>
                 </div>
               </div>
@@ -49,8 +39,8 @@
           <div class="box box-primary">
               <div class="box-header with-border">
                   <div >               
-                      <h1><strong>Jogo de Cadeiras</strong></h1>
-                      <h6 class="description-header">Published - 7:30 PM</h6>
+                      <h1><strong><?= $trade->trade_title; ?></strong></h1>
+                      <h6 class="description-header">Published - <i class="fa fa-fw fa-clock-o"></i><?= date('d/m/Y', strtotime($trade->trade_date_add)); ?></h6>
                 </div>              
               </div>
             <!-- /.box-header -->
@@ -59,12 +49,7 @@
               <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
               <div class="box-body">
                   <ul>
-                    <li>Pouco tempo de uso;</li>
-                    <li>Sem nenhuma marca de uso;</li>
-                    <li>5 Cadeiras e 1 Mesa;</li>
-                    <li>Madeira clara;</li>
-                    <li>Top;</li>
-                    <li>Aconchegantes.</li>                    
+                    <li><?= $trade->trade_description; ?></li>
                   </ul>
                 </div>
 

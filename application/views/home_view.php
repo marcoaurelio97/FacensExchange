@@ -5,8 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Facens
-        <small>Exchange</small>
+        Home
       </h1>
     </section>
 
@@ -18,26 +17,21 @@
           <div class="row">
           <?php if($trades){ ?>
           <?php foreach($trades AS $row){ ?>
-          <div class="col-md-4">
+          <div class="col-md-4" style="min-height: 500px;">
               <div class="box box-solid box-primary">
                 <div class="box-header">
                   <h3 class="box-title"><?= $row->trade_title ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   
-                  <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo">
-
+                  <!-- <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo"> -->
+                  <img class="img-responsive pad" src="<?= site_url('dist/img/'.$row->trade_pic_picture); ?>" alt="Photo">
                 
                 </div><!-- /.box-body -->
                 <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
                   <div class="box-body">
                       <ul>
                         <li><?= $row->trade_description ?></li>
-                        <!-- <li>Sem nenhuma marca de uso;</li>
-                        <li>5 Cadeiras e 1 Mesa;</li>
-                        <li>Madeira clara;</li>
-                        <li>Top;</li>
-                        <li>Aconchegantes.</li>                     -->
                       </ul>
                     </div>
                     <div class="box-body"  style="margin-left:10px;">
@@ -51,7 +45,7 @@
                       </div>
 
                 <!-- <button type="button" class="btn btn-block btn-primary btn-flat" >More info</button> -->
-                <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails') ?>">More info</a>
+                <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id) ?>">More info</a>
               </div><!-- /.box -->
             </div>
             <?php } ?>

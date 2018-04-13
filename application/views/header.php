@@ -173,7 +173,7 @@
                     <a href="#">Followers</a>
                   </div>
                   <div class="col-xs-4 text-center">
-                    <a href="#">Exchanges</a>
+                    <a href="<?= site_url('User/listTrades') ?>">Exchanges</a>
                   </div>
                   <div class="col-xs-4 text-center">
                     <a href="#">Friends</a>
@@ -231,7 +231,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
         <li class="active ">
-            <a href="#">
+            <a href="<?= site_url('Home') ?>">
               <i class="fa fa-home"></i> <span>Home</span>
             </a>            
           </li>

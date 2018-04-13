@@ -3,13 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Exchange extends CI_Controller {
 
-    public function tradeDetails(){
-        $this->load->view('trade_details_view');
+    public function __construct(){
+        parent::__construct();
+
+        $this->load->model('model_trades');
+    }
+
+    public function tradeDetails($idTrade){
+        
+        $data['trade'] = $this->model_trades->getTrades($idTrade);
+
+        $this->load->view('trade_details_view', $data);
     }
     
     public function addTrade(){
         if($this->input->post()){
-            $this->load->model('model_trades');
             require_once dirname(__FILE__) . "../../libraries/class/trade.php";
             $trade = new Trade();
             $trade->trade_id_user_from = $this->session->userdata('idUser');
@@ -20,6 +28,11 @@ class Exchange extends CI_Controller {
             $trade->trade_id_category = $this->input->post('category');
 
             $this->model_trades->addTrade($trade);
+            $idTrade = $this->db->insert_id();
+
+            if($_FILES){
+                $this->uploadImages($idTrade);
+            }
 
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Trade added with success!</div>");
 			redirect('Home');
@@ -28,5 +41,31 @@ class Exchange extends CI_Controller {
         $this->load->model('model_categories');
         $data['categories'] = $this->model_categories->getCategoriesArray();
         $this->load->view('add_exchange_view', $data);
+    }
+
+    public function uploadImages($idTrade){
+        $nameImage = $_FILES['image']['name'];
+
+        $config = array(
+            'upload_path'   => './dist/img/',
+            'allowed_types' => '*',
+            'file_name'     => $nameImage,
+            'max_size'      => '1000000'
+        );
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('image')){
+            $db = array(
+                'trade_pic_idtrade' => $idTrade,
+                'trade_pic_picture' => $nameImage
+            );
+
+            $this->model_trades->insertPicTrade($db);
+
+            return true;
+        } else {
+            echo $this->upload->display_errors();
+        }
     }
 }

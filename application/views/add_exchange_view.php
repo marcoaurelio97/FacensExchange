@@ -6,7 +6,6 @@
     <section class="content-header">
       <h1>
         Add Exchange
-        <small>Facens Exchange</small>
       </h1>
     </section>
 
@@ -24,7 +23,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form action="<?= site_url('Exchange/addTrade') ?>" method="post">                
+                <form action="<?= site_url('Exchange/addTrade') ?>" method="post" enctype="multipart/form-data">                
                   <div class="box-body">
                     <div class="form-group">
                       <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
@@ -52,12 +51,10 @@
             <div class="form-group">
                 <p><strong><i class="fa fa-file-image-o margin-r-5"></i> Images</strong></p>
                
-                <input type="file" id="exampleInputFile">
+                <input type="file" id="exampleInputFile" name="image">
 
                 <p class="help-block">Add images for your exchange.</p>
               </div>
-
-                    
                   </div>
                   <!-- /.box-body -->
     
