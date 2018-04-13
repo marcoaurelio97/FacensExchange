@@ -46,4 +46,31 @@ class Model_users extends CI_Model {
 
         return FALSE;
     }
+
+    public function verifyAdmin($id_user){
+        
+        $this->db->where('user_role', 'Admin');
+        $this->db->where('user_id', $id_user);
+        $users = $this->db->get('users');  
+
+        if ( $users && $users->num_rows() > 0)
+        {
+        return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    public function getUsers($id_user){
+        
+        $sql = "SELECT user_name,user_email,user_date_add,user_role FROM users WHERE user_id <> ?";       
+
+        $users = $this->db->query($sql, array($id_user));
+
+        if($users && $users->num_rows() > 0){
+            return $users->result();
+        }
+
+        return FALSE;
+    }
 }

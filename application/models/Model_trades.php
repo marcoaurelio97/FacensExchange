@@ -12,6 +12,7 @@ class Model_trades extends CI_Model {
     }
 
     public function getTrades(){
+        
         $trades = $this->db->get('trades');
 
         if($trades && $trades->num_rows() > 0){

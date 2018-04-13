@@ -22,4 +22,8 @@ class Model_categories extends CI_Model {
 
         return array();
     }
+
+    public function addCategory($category){
+        $this->db->insert('categories', $category);
+    }
 }

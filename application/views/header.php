@@ -251,6 +251,22 @@
             <li class="active"><a href="index2.html"><i class="fa fa-futbol-o"></i> Sports</a></li>
           </ul>
         </li>
+        <?php if($this->session->userdata('admin')) 
+              { ?>                
+                   <li class=" treeview">
+          <a href="#">
+            <i class="fa fa-user-secret"></i> <span>Administrator</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="<?= site_url('Add_category') ?>"><i class="fa fa-flag"></i> Add Category</a></li>
+            <li class="active"><a href="<?= site_url('Edit_users') ?>"><i class="fa fa-users"></i>Edit users</a></li>            
+          </ul>
+        </li>    
+               <?php } 
+        ?>
         
        
       </ul>
