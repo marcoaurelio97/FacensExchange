@@ -243,16 +243,19 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-desktop"></i> Tecnologies</a></li>
-            <li class="active"><a href="index.html"><i class="fa fa-car"></i> Car</a></li>
+            <?php if($this->session->userdata('categories')): ?>
+              <?php foreach($this->session->userdata('categories') AS $row): ?>
+                <li class="active"><a href="<?= site_url('home/listTrades/'.$row->category_id) ?>"><?= $row->category_name ?></a></li>
+            <!-- <li class="active"><a href="index.html"><i class="fa fa-car"></i> Car</a></li>
             <li class="active"><a href="index.html"><i class="fa fa-legal"></i> Tools</a></li>
             <li class="active"><a href="index.html"><i class="fa fa-gamepad"></i> Toys</a></li>
             <li class="active"><a href="index.html"><i class="fa fa-book"></i> Books</a></li>
-            <li class="active"><a href="index2.html"><i class="fa fa-futbol-o"></i> Sports</a></li>
+            <li class="active"><a href="index2.html"><i class="fa fa-futbol-o"></i> Sports</a></li> -->
+              <?php endforeach; ?>
+            <?php endif; ?>
           </ul>
         </li>
-        <?php if($this->session->userdata('admin')) 
-              { ?>                
+        <?php if($this->session->userdata('admin')): ?>
                    <li class=" treeview">
           <a href="#">
             <i class="fa fa-user-secret"></i> <span>Administrator</span>
@@ -261,12 +264,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<?= site_url('Add_category') ?>"><i class="fa fa-flag"></i> Add Category</a></li>
-            <li class="active"><a href="<?= site_url('Edit_users') ?>"><i class="fa fa-users"></i>Edit users</a></li>            
+            <li class="active"><a href="<?= site_url('Category/listCategories') ?>"><i class="fa fa-flag"></i>Categories</a></li>
+            <li class="active"><a href="<?= site_url('User/listUsers') ?>"><i class="fa fa-users"></i>List Users</a></li>
           </ul>
         </li>    
-               <?php } 
-        ?>
+      <?php endif; ?>
         
        
       </ul>

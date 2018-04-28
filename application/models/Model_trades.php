@@ -11,11 +11,16 @@ class Model_trades extends CI_Model {
         $this->db->insert('trades', $trade);
     }
 
-    public function getTrades($idTrade = false){
+    public function getTrades($idTrade = false, $idCategory = false){
         $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
+        $this->db->join('categories', 'category_id = trade_id_category', 'left');
 
         if($idTrade){
             $this->db->where('trade_id', $idTrade);
+        }
+
+        if($idCategory){
+            $this->db->where('trade_id_category', $idCategory);
         }
 
         $this->db->order_by('trade_date_add', 'desc');

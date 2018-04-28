@@ -80,23 +80,12 @@ class Login extends CI_Controller {
 
 	public function verifyAdmin($id_user){
 
-		if($this->input->post()){
-			require_once dirname(__FILE__) . "../../libraries/class/user.php";
-			$user = new User();
-			$user->user_email = $this->input->post('email');
-			$user->user_password = md5($this->input->post('password'));			
+		$is_admin = $this->model_users->verifyAdmin($id_user);			
 
-			$is_admin = $this->model_users->verifyAdmin($id_user);			
-
-			if($is_admin){
-				$this->session->set_userdata('admin', true);
-			}else{
-				$this->session->set_userdata('admin', false);
-			}
+		if($is_admin){
+			$this->session->set_userdata('admin', true);
+		} else {
+			$this->session->set_userdata('admin', false);
 		}
-
-		$this->load->view('login_view');
 	}
-
-
 }

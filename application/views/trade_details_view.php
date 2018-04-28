@@ -46,6 +46,12 @@
             <!-- /.box-header -->
             <div class="box-body">
               <!-- post text -->
+              <strong><i class="fa fa-th margin-r-5"></i>Category</strong>
+              <div class="box-body">
+                  <ul>
+                    <li><?= $trade->category_name; ?></li>
+                  </ul>
+                </div>
               <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
               <div class="box-body">
                   <ul>

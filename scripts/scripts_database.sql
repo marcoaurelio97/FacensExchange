@@ -1,14 +1,16 @@
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_date_add` datetime NOT NULL,
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(45) NOT NULL,
   `user_password` varchar(45) NOT NULL,
-  `user_date_of_birth` datetime DEFAULT NULL,
+  `user_date_of_birth` date DEFAULT NULL,
   `user_rg` varchar(45) DEFAULT NULL,
   `user_cpf` varchar(45) DEFAULT NULL,
   `user_profile_pic` varchar(255) DEFAULT NULL,
+  `user_role` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `address` (
   `address_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -27,7 +29,8 @@ CREATE TABLE `address` (
 
 CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` int(11) NOT NULL,
+  `category_name` varchar(45) NOT NULL,
+  `category_description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

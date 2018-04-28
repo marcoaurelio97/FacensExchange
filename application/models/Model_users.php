@@ -48,14 +48,12 @@ class Model_users extends CI_Model {
     }
 
     public function verifyAdmin($id_user){
-        
         $this->db->where('user_role', 'Admin');
         $this->db->where('user_id', $id_user);
         $users = $this->db->get('users');  
 
-        if ( $users && $users->num_rows() > 0)
-        {
-        return TRUE;
+        if ( $users && $users->num_rows() > 0){
+            return TRUE;
         }
 
         return FALSE;

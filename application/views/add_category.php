@@ -24,7 +24,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form action="<?= site_url('Add_category/addCategories') ?>" method="post">                
+                <form action="<?= site_url('Category/addCategory') ?>" method="post">                
                   <div class="box-body">
                     <div class="form-group">
                       <strong><i class="fa fa-edit margin-r-5"></i>Name</strong>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
-                        <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of category" required></textarea>
+                        <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of category"></textarea>
                       </div>                     
                   <br>
             

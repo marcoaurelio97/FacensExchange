@@ -3,20 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Exchange extends CI_Controller {
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
 
         $this->load->model('model_trades');
     }
 
-    public function tradeDetails($idTrade){
-        
+    public function tradeDetails($idTrade)
+    {
         $data['trade'] = $this->model_trades->getTrades($idTrade);
-
         $this->load->view('trade_details_view', $data);
     }
     
-    public function addTrade(){
+    public function addTrade()
+    {
         if($this->input->post()){
             require_once dirname(__FILE__) . "../../libraries/class/trade.php";
             $trade = new Trade();
@@ -43,7 +44,8 @@ class Exchange extends CI_Controller {
         $this->load->view('add_exchange_view', $data);
     }
 
-    public function uploadImages($idTrade){
+    public function uploadImages($idTrade)
+    {
         $nameImage = $_FILES['image']['name'];
 
         $config = array(
