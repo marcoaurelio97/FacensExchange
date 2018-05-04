@@ -29,6 +29,13 @@
   <link rel="stylesheet" href="<?= site_url('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')?>">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- fontIconPicker -->
+  <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/css/jquery.fonticonpicker.min.css')?>" />
+  <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/themes/grey-theme/jquery.fonticonpicker.grey.min.css')?>"/>
+  <!-- Font -->
+  <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/demo/fontello-7275ca86/css/fontello.css')?>"/>
+  <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/demo/icomoon/icomoon.css')?>"/>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -253,6 +260,7 @@
             <li class="active"><a href="index2.html"><i class="fa fa-futbol-o"></i> Sports</a></li> -->
               <?php endforeach; ?>
             <?php endif; ?>
+            <li class="active"><a href="index.html"><span class="icon-display"></span> Teste</a></li>
           </ul>
         </li>
         <?php if($this->session->userdata('admin')): ?>

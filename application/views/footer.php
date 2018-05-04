@@ -36,5 +36,9 @@
 <script src="<?= site_url('dist/js/pages/dashboard.js')?>"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= site_url('dist/js/demo.js')?>"></script>
+<!-- fontIconPicker JS -->
+<script src="<?= site_url('bower_components/iconpicker/jquery.fonticonpicker.min.js')?>"></script>
+<script src="<?= site_url('dist/js/iconpicker.js')?>"></script>
+
 </body>
 </html>
