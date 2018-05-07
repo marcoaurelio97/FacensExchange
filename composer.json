@@ -11,16 +11,17 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": ">=5.2.4",
-		"codeigniter/framework": "3.0.*"
+    "php": ">=5.3.7",
+    "silex/silex": "~1.1",
+    "monolog/monolog": "~1.7",
+	"ext-mysql": "*"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
 	},
 	"require-dev": {
-		"mikey179/vfsStream": "1.1.*",
-		"phpunit/phpunit": "4.* || 5.*",
-		"kenjis/ci-phpunit-test": "^0.10.0",
-        "heroku/heroku-buildpack-php": "*"
+	"mikey179/vfsStream": "1.1.*",
+    "phpunit/phpunit": "4.* || 5.*",
+    "heroku/heroku-buildpack-php": "*"
 	}
 }
