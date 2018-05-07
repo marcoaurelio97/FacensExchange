@@ -260,7 +260,6 @@
             <li class="active"><a href="index2.html"><i class="fa fa-futbol-o"></i> Sports</a></li> -->
               <?php endforeach; ?>
             <?php endif; ?>
-            <li class="active"><a href="index.html"><span class="icon-display"></span> Teste</a></li>
           </ul>
         </li>
         <?php if($this->session->userdata('admin')): ?>
