@@ -105,26 +105,22 @@
           <li class="dropdown tasks-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-exchange"></i>
-              <span class="label label-danger">1</span>
+              <span class="label label-danger"><?= count($this->session->userdata('offersNotifications')) != 0 ? count($this->session->userdata('offersNotifications')) : '' ?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 1 Exchange(s)</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                        <i class="fa fa-shopping-cart text-green"></i> Jogo de Cadeiras
-                      </a>  
-                  </li>
-                  <!-- end task item -->
-                  
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all Exchanges</a>
-              </li>
+              <?php if ($this->session->userdata('offersNotifications')) : ?>
+                <li class="header">You have <?= count($this->session->userdata('offersNotifications')) ?> Exchange(s)</li>
+                <li>
+                  <ul class="menu">
+                    <li>
+                      <a href="#"><i class="fa fa-shopping-cart text-green"></i> Jogo de Cadeiras</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="footer">
+                  <a href="#">View all Exchanges</a>
+                </li>
+              <?php endif; ?>
             </ul>
           </li>
           <!-- User Account: style can be found in dropdown.less -->
@@ -192,14 +188,14 @@
               <li class="user-footer">              
                   <div class="text-center">                  
                     <a href="#" class="btn btn-primary btn-flat">Profile</a>   
-                      <?php if ($this->session->userdata('logged')) { ?>  
-                        <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>               
-                    <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>                
-                      <?php 
-                    } else { ?>                  
-                    <a href="<?= site_url('Login') ?>" class="btn btn-success btn-flat">Sign in</a>                
-                      <?php 
-                    } ?>
+                      <?php if ($this->session->userdata('logged')) : ?>
+                        <?php if ($this->session->userdata('idUser') <> 1) : ?>
+                          <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
+                        <?php endif; ?>
+                        <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>
+                      <?php else : ?>
+                        <a href="<?= site_url('Login') ?>" class="btn btn-success btn-flat">Sign in</a>
+                      <?php endif; ?>
                   </div>
              </li>
             </ul>
@@ -220,7 +216,7 @@
            <img src="<?= site_url('dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image"> 
         </div>
         <div class="pull-left info">
-          <p>   <?php echo $this->session->userdata('userName'); ?>        </p>
+          <p><?php echo $this->session->userdata('userName'); ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>            
@@ -228,7 +224,7 @@
       <!-- search form -->
       <form action="<?= site_url('Exchange/searchOffers') ?>" method="post" class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="search" class="form-control" placeholder="Search...">
+          <input type="text" name="search" class="form-control" placeholder="Search..." value="<?= isset($search) ? $search : '' ?>">
           <span class="input-group-btn">
             <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
           </span>

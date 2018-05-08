@@ -20,13 +20,13 @@
            
             <!-- /.box-header -->
             <div class="box-body">
-                <img class="img-responsive pad" src="<?= site_url('dist/img/'.$trade->trade_pic_picture)?>" alt="Photo">
+                <img class="img-responsive pad" src="<?= site_url('dist/img/' . $trade->trade_pic_picture) ?>" alt="Photo">
             </div>  
             
             <div class="box-body">
                 <div>
                     <div style="float:left;margin-right:10px;margin-left:25px;" >
-                        <img src="<?= site_url('dist/img/'.$trade->trade_pic_picture)?>" height="100" width="100"  />
+                        <img src="<?= site_url('dist/img/' . $trade->trade_pic_picture) ?>" height="100" width="100"  />
                     </div>
                 </div>
               </div>
@@ -67,17 +67,15 @@
                 <span class="label label-warning"><i class="fa fa-tv "></i></span>
               </p>
 
-              <hr>
-
-              <div class="row no-print">
+              <?php if ($trade->trade_id_user_from != $idUserLogged) : ?>
+                <hr>
+                <div class="row no-print">
                   <div class="col-xs-12">                   
-                    <button type="button" class="btn btn-success btn-lg btn-flat"><i class="fa fa-exchange"></i> Exchange
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg btn-flat" style="margin-right: 5px;">
-                      <i class="fa fa-commenting-o"></i> Contact
-                    </button>
+                    <a class="btn btn-success btn-lg btn-flat" href="<?= site_url('Exchange/chooseOffer/'.$trade->trade_id) ?>"><i class="fa fa-exchange"></i> Exchange</a>
+                    <a class="btn btn-primary btn-lg btn-flat" href="#"><i class="fa fa-commenting-o"></i> Contact</a>
                   </div>
                 </div>
+              <?php endif; ?>
 
             </div>
             <!-- /.box-body -->

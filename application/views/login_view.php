@@ -12,7 +12,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <?php echo $this->session->userdata('item'); ?>
+      <?= $this->session->userdata('item'); ?>
           <div class="row">
               <div class="col-md-6">  
                 

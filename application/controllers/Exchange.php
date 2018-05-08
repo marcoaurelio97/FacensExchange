@@ -12,6 +12,7 @@ class Exchange extends CI_Controller {
 
     public function tradeDetails($idTrade)
     {
+        $data['idUserLogged'] = $this->session->userdata('idUser');
         $data['trade'] = $this->model_trades->getTrades($idTrade);
         $this->load->view('trade_details_view', $data);
     }
@@ -23,7 +24,7 @@ class Exchange extends CI_Controller {
             $trade = new Trade();
             $trade->trade_id_user_from = $this->session->userdata('idUser');
             $trade->trade_date_add = date('Y-m-d H:i:s');
-            $trade->trade_status = 1;
+            $trade->trade_status = 0;
             $trade->trade_title = $this->input->post('title');
             $trade->trade_description = $this->input->post('description');
             $trade->trade_id_category = $this->input->post('category');
@@ -71,8 +72,33 @@ class Exchange extends CI_Controller {
         }
     }
 
-    public function searchOffers(){
+    public function searchOffers()
+    {
         $data['trades'] = $this->model_trades->findOfferBySearch($this->input->post('search'));
+        $data['search'] = $this->input->post('search');
 		$this->load->view('home_view', $data);
-	}
+    }
+    
+    public function chooseOffer($idTrade)
+    {
+        $idUser = $this->session->userdata('idUser');
+
+        $data['trade']    = $this->model_trades->getTrades($idTrade);
+        $data['myTrades'] = $this->model_trades->getTradesUser($idUser);
+
+        $this->load->view('choose_offers_trades_view', $data);
+    }
+
+    public function sendOffer($idTradeWant, $idTradeHave)
+    {
+        $db = array(
+            'trade_offer_idtrade'      => $idTradeWant,
+            'trade_offer_idtrade_sent' => $idTradeHave
+        );
+
+        $this->model_trades->addTradeOffer($db);
+
+        $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Offer sent with success!</div>");
+        redirect('Home');
+    }
 }

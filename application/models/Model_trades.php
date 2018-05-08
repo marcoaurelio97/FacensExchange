@@ -71,4 +71,28 @@ class Model_trades extends CI_Model {
 
         return FALSE;
     }
+
+    public function addTradeOffer($db){
+        $this->db->insert('trade_offers', $db);
+    }
+
+    public function getOffersNotifications($idUser){
+        $offers = $this->db->query("
+            SELECT 
+                *
+            FROM
+                trade_offers
+                    LEFT JOIN
+                trades
+                ON trade_id = trade_offer_idtrade
+            WHERE
+                trade_id_user_from = {$idUser}
+        ");
+
+        if($offers && $offers->num_rows() > 0){
+            return $offers->result();
+        }
+
+        return FALSE;
+    }
 }
