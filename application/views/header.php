@@ -109,16 +109,26 @@
             </a>
             <ul class="dropdown-menu">
               <?php if ($this->session->userdata('offersNotifications')) : ?>
-                <li class="header">You have <?= count($this->session->userdata('offersNotifications')) ?> Exchange(s)</li>
+                <li class="header">You have <?= count($this->session->userdata('offersNotifications')) ?> Offer(s)</li>
                 <li>
                   <ul class="menu">
-                    <li>
-                      <a href="#"><i class="fa fa-shopping-cart text-green"></i> Jogo de Cadeiras</a>
-                    </li>
+                    <?php foreach($this->session->userdata('offersNotifications') AS $row) : ?>
+                      <li>
+                        <a href="<?= site_url('Exchange/viewOffer/'.$row->trade_offer_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?= $row->trade_title; ?></a>
+                      </li>
+                    <?php endforeach; ?>
                   </ul>
                 </li>
                 <li class="footer">
-                  <a href="#">View all Exchanges</a>
+                  <a href="#">View all offers</a>
+                </li>
+              <?php else : ?>
+              <li class="header">You don't have any offer</li>
+                <li>
+                  <ul class="menu">
+                    <li>
+                    </li>
+                  </ul>
                 </li>
               <?php endif; ?>
             </ul>

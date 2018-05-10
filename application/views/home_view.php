@@ -4,15 +4,13 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Home
-      </h1>
+      <h1>Home</h1>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <?php echo $this->session->userdata('item'); ?>
+      <?= $this->session->flashdata('item'); ?>
       <div>
           <div class="row">
           <?php if ($trades) { ?>

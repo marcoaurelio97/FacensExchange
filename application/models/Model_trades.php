@@ -77,6 +77,10 @@ class Model_trades extends CI_Model {
     }
 
     public function getOffersNotifications($idUser){
+        if(!$idUser){
+            return array();
+        }
+
         $offers = $this->db->query("
             SELECT 
                 *
@@ -84,13 +88,24 @@ class Model_trades extends CI_Model {
                 trade_offers
                     LEFT JOIN
                 trades
-                ON trade_id = trade_offer_idtrade
+                ON trade_id = trade_offer_idtrade_from
             WHERE
-                trade_id_user_from = {$idUser}
+                trade_offer_iduser_to = {$idUser}
         ");
 
         if($offers && $offers->num_rows() > 0){
             return $offers->result();
+        }
+
+        return array();
+    }
+
+    public function getTradeOffer($idTradeOffer){
+        $this->db->where('trade_offer_id', $idTradeOffer);
+        $offer = $this->db->get('trade_offers');
+
+        if($offer && $offer->num_rows() > 0){
+            return $offer->row();
         }
 
         return FALSE;

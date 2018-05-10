@@ -16,7 +16,7 @@ class Home extends CI_Controller {
 
 		$data['trades'] = $this->model_trades->getTrades(FALSE, $idCategory);
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
-		// $this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
+		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
 	
 		$this->load->view('home_view', $data);
 	}
