@@ -22,6 +22,9 @@
                             </div>
                         </div>
                         <div class="box-body">
+                            <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/editTrade/'.$row->trade_id) ?>">Edit</a>
+                        </div>
+                        <div class="box-body">
                             <?= $row->trade_description ?>
                             <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id) ?>">More info</a>
                         </div>
