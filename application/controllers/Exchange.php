@@ -180,4 +180,13 @@ class Exchange extends CI_Controller
 
         }
     }
+
+    public function listTrades() {
+        $this->load->model('model_trades');
+		$this->load->model('model_categories');
+
+        $data['trades'] = $this->model_trades->getTrades(FALSE,FALSE,TRUE);
+	
+		$this->load->view('list_trades', $data);
+    }
 }

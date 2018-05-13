@@ -16,10 +16,13 @@ class Model_trades extends CI_Model {
         $this->db->update('trades',$array);
     }
 
-    public function getTrades($idTrade = false, $idCategory = false){
+    public function getTrades($idTrade = false, $idCategory = false, $getUser= FALSE){
         $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
         $this->db->join('categories', 'category_id = trade_id_category', 'left');
 
+        if($getUser) {
+            $this->db->join('users', 'trade_id_user_from = user_id', 'left');          
+        }
         if($idTrade){
             $this->db->where('trade_id', $idTrade);
         }
