@@ -25,12 +25,12 @@
                         <ul><li><?= $tradeHave->trade_description ?></li></ul>
                     </div>
                     <!-- <button type="button" class="btn btn-block btn-primary btn-flat" >More info</button> -->
-                    <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/' . $tradeHave->trade_id) ?>">More info</a>
+                    <a class="btn btn-block btn-primary btn-flat" target="_blank" href="<?= site_url('Exchange/tradeDetails/' . $tradeHave->trade_id) ?>">More info</a>
                 </div><!-- /.box -->
             </div>
             <div class="col-md-4">
-                <a class="btn btn-block btn-success btn-flat" href="<?= site_url('Exchange/responseOffer/1') ?>" style="margin-top: 375px;">Accept the offer</a>
-                <a class="btn btn-block btn-danger btn-flat"  href="<?= site_url('Exchange/responseOffer/2') ?>">Decline the offer</a>
+                <a class="btn btn-block btn-success btn-flat" href="<?= site_url('Exchange/responseOffer/1/'.$idTradeOffer) ?>" style="margin-top: 375px;">Accept the offer</a>
+                <a class="btn btn-block btn-danger btn-flat"  href="<?= site_url('Exchange/responseOffer/2/'.$idTradeOffer) ?>">Decline the offer</a>
             </div>
             <div class="col-md-4 pull-right" style="min-height: 500px;">
                 <h3>What the user wants...</h3>
@@ -47,7 +47,7 @@
                         <ul><li><?= $tradeWant->trade_description ?></li></ul>
                     </div>
                     <!-- <button type="button" class="btn btn-block btn-primary btn-flat" >More info</button> -->
-                    <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/' . $tradeWant->trade_id) ?>">More info</a>
+                    <a class="btn btn-block btn-primary btn-flat" target="_blank" href="<?= site_url('Exchange/tradeDetails/' . $tradeWant->trade_id . '/1') ?>">More info</a>
                 </div><!-- /.box -->
             </div>
         </div>

@@ -31,6 +31,7 @@ class Model_trades extends CI_Model {
             $this->db->where('trade_id_category', $idCategory);
         }
 
+        $this->db->where('trade_status', '0');
         $this->db->order_by('trade_date_add', 'desc');
         $trades = $this->db->get('trades');
 
@@ -94,6 +95,7 @@ class Model_trades extends CI_Model {
                 ON trade_id = trade_offer_idtrade_from
             WHERE
                 trade_offer_iduser_to = {$idUser}
+                AND trade_offer_status = '0'
         ");
 
         if($offers && $offers->num_rows() > 0){
@@ -127,5 +129,10 @@ class Model_trades extends CI_Model {
         }
 
         return FALSE;
+    }
+
+    public function updateTradeOffer($idTradeOffer, $db){
+        $this->db->where('trade_offer_id', $idTradeOffer);
+        $this->db->update('trade_offers', $db);
     }
 }
