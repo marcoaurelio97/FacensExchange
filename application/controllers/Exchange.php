@@ -129,18 +129,53 @@ class Exchange extends CI_Controller
     public function viewOffer($idTradeOffer)
     {
         $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $data['tradeHave'] = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_from);
-        $data['tradeWant'] = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_to);
+        $data['tradeHave'] = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_to);
+        $data['tradeWant'] = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_from);
+        $data['idTradeOffer'] = $idTradeOffer;
         $this->load->view('view_offer_trade', $data);
     }
 
-    public function responseOffer($type)
+    public function responseOffer($type, $idTradeOffer)
     {
-        var_dump($type);die;
-        if($type == 1){ //accepted
+        $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
+        $tradeHave  = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_to);
+        $tradeWant  = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_from);
 
-        } else { //refused
+        $this->db->trans_begin();
+        
+        if($type == '1'){
+            $db = array(
+                'trade_status'     => $type,
+                'trade_id_user_to' => $tradeWant->trade_id_user_from
+            );
 
+            $this->model_trades->updateTrade($tradeHave->trade_id, $db);
+
+            $db['trade_id_user_to'] = $tradeHave->trade_id_user_from;
+
+            $this->model_trades->updateTrade($tradeWant->trade_id, $db);
+
+            $db = array(
+                'trade_offer_status' => $type
+            );
+    
+            $this->model_trades->updateTradeOffer($idTradeOffer, $db);
+        } else {
+            $db = array(
+                'trade_offer_status' => $type
+            );
+    
+            $this->model_trades->updateTradeOffer($idTradeOffer, $db);
+        }
+
+        if ($this->db->trans_status() === false) {
+            $this->db->trans_rollback();
+            $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while trading!</div>");
+            redirect('Exchange/viewOffer/'.$idTradeOffer);
+        } else {
+            $this->db->trans_commit();
+            $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The exchange was successful!</div>");
+            redirect('Home');
         }
     }
 }
