@@ -71,9 +71,7 @@ class Login extends CI_Controller
 				$this->session->set_userdata('userName', $this->model_users->getName($user));
 
 				$this->verifyAdmin($id_user);
-				
-				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
-				redirect('Home');
+				redirect('Profile/register');
 			}
 
 			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Failed to login!</div>");

@@ -1,5 +1,11 @@
 <?php $this->load->view('header') ?>
 
+<style>
+  #fotinho img {
+      width:250px;
+      height:200px;
+  }
+</style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -23,7 +29,9 @@
                 <div class="box-body">
                   
                   <!-- <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo"> -->
-                  <img class="img-responsive pad" src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                  <div class="container" id="fotinho">
+                    <img width="200" height="200" class="img-responsive pad" src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                  </div>
                 
                 </div><!-- /.box-body -->
                 <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
