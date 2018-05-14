@@ -41,7 +41,7 @@ class Model_users extends CI_Model {
         $user = $this->db->get('users');
 
         if($user && $user->num_rows() > 0){
-            return $user->row()->user_name;
+            return $user->row()->user_username;
         }
 
         return FALSE;

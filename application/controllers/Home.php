@@ -12,7 +12,7 @@ class Home extends CI_Controller {
 		$this->load->model('model_trades');
 		$this->load->model('model_categories');
 
-        $idUser = $this->session->userdata('idUser') ? $this->session->userdata('idUser') : FALSE;
+		$idUser = $this->session->userdata('idUser') ? $this->session->userdata('idUser') : FALSE;
 
 		$data['trades'] = $this->model_trades->getTrades(FALSE, $idCategory);
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());

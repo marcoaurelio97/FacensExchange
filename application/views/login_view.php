@@ -64,7 +64,7 @@
     
         <form action="<?= site_url('Login/register') ?>" method="post">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control" name="name" placeholder="Full name" required>
+            <input type="text" class="form-control" name="username" placeholder="User name" required>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">

@@ -10,7 +10,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <?= $this->session->flashdata('item'); ?>
+      <?= $this->session->userdata('item'); ?>
       <div>
           <div class="row">
           <?php if ($trades) { ?>
