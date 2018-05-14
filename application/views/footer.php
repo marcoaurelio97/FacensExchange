@@ -39,6 +39,8 @@
 <!-- fontIconPicker JS -->
 <script src="<?= site_url('bower_components/iconpicker/jquery.fonticonpicker.min.js')?>"></script>
 <script src="<?= site_url('dist/js/iconpicker.js')?>"></script>
+<script src="<?= site_url('dist/js/jquery.mask.min.js')?>"></script>
+
 
 </body>
 </html>
