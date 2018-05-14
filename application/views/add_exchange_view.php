@@ -27,15 +27,15 @@
                   <div class="box-body">
                     <div class="form-group">
                       <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
-                      <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="Enter a title of exchange" required>
+                      <input type="text" class="form-control" name="title" id="title" value="<?php echo (isset($trade)) ? $trade->trade_title : "";?>" placeholder="Enter a title of exchange" required>
                     </div>
                     <div class="form-group">
                         <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
-                        <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of exchange" required></textarea>
+                        <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of exchange" required><?php echo (isset($trade)) ? $trade->trade_description : "";?></textarea>
                       </div>
                       <div class="form-group">
                         <strong><i class="fa fa-th-list margin-r-5"></i>Category</strong>
-                        <?php echo form_dropdown('category', $categories, set_value('category'), 'id="category" class="form-control" required') ?>
+                        <?php echo form_dropdown('category', $categories, (isset($trade) ? $trade->trade_id_category : ''), 'id="category" class="form-control" required') ?>
                       </div>
                       <strong><i class="fa fa-star margin-r-5"></i>Interests</strong>
                       <div class="form-group">

@@ -278,8 +278,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<?= site_url('Category/listCategories') ?>"><i class="fa fa-flag"></i>Categories</a></li>
-            <li class="active"><a href="<?= site_url('User/listUsers') ?>"><i class="fa fa-users"></i>List Users</a></li>
+            <li class="active"><a href="<?= site_url('Category/listCategories') ?>">Categories</a></li>
+            <li class="active"><a href="<?= site_url('User/listUsers') ?>">List Users</a></li>
+            <li class="active"><a href="<?= site_url('Exchange/listTrades') ?>">List Trades</li>
           </ul>
         </li>    
       <?php endif; ?>
