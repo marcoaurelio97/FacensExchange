@@ -54,12 +54,12 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           
           <!-- Notifications: style can be found in dropdown.less -->
+          <?php if ($this->session->userdata('logged')) : ?>
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
@@ -133,6 +133,7 @@
               <?php endif; ?>
             </ul>
           </li>
+          <?php endif; ?>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -180,6 +181,7 @@
                 
               </li>
               <!-- Menu Body -->
+              <?php if($this->session->userdata('logged')) : ?>
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -194,11 +196,12 @@
                 </div>
                 <!-- /.row -->
               </li>
+              <?php endif; ?>
               <!-- Menu Footer-->
               <li class="user-footer">              
                   <div class="text-center">                  
-                    <a href="#" class="btn btn-primary btn-flat">Profile</a>   
-                      <?php if ($this->session->userdata('logged')) : ?>
+                    <?php if ($this->session->userdata('logged')) : ?>
+                        <a href="#" class="btn btn-primary btn-flat">Profile</a>   
                         <?php if ($this->session->userdata('idUser') <> 1) : ?>
                           <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
                         <?php endif; ?>
