@@ -41,6 +41,5 @@
 <script src="<?= site_url('dist/js/iconpicker.js')?>"></script>
 <script src="<?= site_url('dist/js/jquery.mask.min.js')?>"></script>
 
-
 </body>
 </html>
