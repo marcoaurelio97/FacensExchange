@@ -14,6 +14,7 @@
 |
 */
 $config['base_url']	= 'https://facens-exchange.herokuapp.com/';
+// $config['base_url']	= 'http://172.18.0.2/FacensExchange/';
 /*
 |--------------------------------------------------------------------------
 | Index File
