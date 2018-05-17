@@ -112,9 +112,9 @@
                 <li class="header">You have <?= count($this->session->userdata('offersNotifications')) ?> Offer(s)</li>
                 <li>
                   <ul class="menu">
-                    <?php foreach($this->session->userdata('offersNotifications') AS $row) : ?>
+                    <?php foreach ($this->session->userdata('offersNotifications') as $row) : ?>
                       <li>
-                        <a href="<?= site_url('Exchange/viewOffer/'.$row->trade_offer_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?= $row->trade_title; ?></a>
+                        <a href="<?= site_url('Exchange/viewOffer/' . $row->trade_offer_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?= $row->trade_title; ?></a>
                       </li>
                     <?php endforeach; ?>
                   </ul>
@@ -181,7 +181,7 @@
                 
               </li>
               <!-- Menu Body -->
-              <?php if($this->session->userdata('logged')) : ?>
+              <?php if ($this->session->userdata('logged')) : ?>
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
