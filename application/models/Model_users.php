@@ -77,4 +77,15 @@ class Model_users extends CI_Model {
         $arr = array('user_pro_id' => $idProfile);
         $this->db->update('users',$arr);
     }
+
+    public function hasProfile($idUser){
+        $this->db->where('user_id',$idUser);
+        $user = $this->db->get('users');
+        
+        if(is_null($user->user_pro_id)){
+            return false;
+        }
+
+        return true;
+    }
 }

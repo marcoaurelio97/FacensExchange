@@ -71,7 +71,10 @@ class Login extends CI_Controller
 				$this->session->set_userdata('userName', $this->model_users->getName($user));
 
 				$this->verifyAdmin($id_user);
-				redirect('Profile/register');
+				if(!$this->hasProfile($id_user)){
+					redirect('Profile/register');
+				}
+				redirect('home');
 			}
 
 			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Failed to login!</div>");
@@ -101,5 +104,15 @@ class Login extends CI_Controller
 		} else {
 			$this->session->set_userdata('admin', false);
 		}
+	}
+
+	public function hasProfile($idUser){
+		$hasProfile = $this->model_users->hasProfile($id_user);
+		
+		if ($hasProfile) {
+			return true;
+		} 
+		return false;
+		
 	}
 }
