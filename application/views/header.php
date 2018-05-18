@@ -200,13 +200,8 @@
               <!-- Menu Footer-->
               <li class="user-footer">              
                   <div class="text-center">                  
-<<<<<<< HEAD
-                    <a href="<?php echo site_url('profile/editProfile/'.$this->session->userdata('idUser'))?>" class="btn btn-primary btn-flat">Profile</a>   
-                      <?php if ($this->session->userdata('logged')) : ?>
-=======
                     <?php if ($this->session->userdata('logged')) : ?>
-                        <a href="#" class="btn btn-primary btn-flat">Profile</a>   
->>>>>>> df0e432a38c9b822a78ec65741298ca3533178a0
+                      <a href="<?php echo site_url('profile/editProfile/'.$this->session->userdata('idUser'))?>" class="btn btn-primary btn-flat">Profile</a>   
                         <?php if ($this->session->userdata('idUser') <> 1) : ?>
                           <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
                         <?php endif; ?>
