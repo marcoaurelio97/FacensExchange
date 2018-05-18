@@ -67,7 +67,7 @@
                 <span class="label label-warning"><i class="fa fa-tv "></i></span>
               </p>
 
-              <?php if (($trade->trade_id_user_from != $idUserLogged) && ($idUserLogged <> 1)) : ?>
+              <?php if (($trade->trade_id_user_from != $idUserLogged) && ($idUserLogged <> 1) && (!is_null($idUserLogged))) : ?>
                 <hr>
                 <div class="row no-print">
                   <div class="col-xs-12">                   
