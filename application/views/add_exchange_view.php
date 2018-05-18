@@ -4,9 +4,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Add Exchange
-      </h1>
+        <h1><?= isset($add) ? 'Add Exchange' : 'Edit Exchange' ?></h1>
     </section>
 
     <!-- Main content -->
@@ -23,7 +21,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form action="<?= site_url('Exchange/addTrade') ?>" method="post" enctype="multipart/form-data">                
+                <form action="<?= $actionForm ?>" method="post" enctype="multipart/form-data">                
                   <div class="box-body">
                     <div class="form-group">
                       <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
@@ -59,7 +57,7 @@
                   <!-- /.box-body -->
     
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                    <button type="submit" class="btn btn-primary pull-right"><?= isset($add) ? 'Submit' : 'Edit' ?></button>
                   </div>
                 </form>
               </div>

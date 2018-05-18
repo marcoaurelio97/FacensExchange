@@ -51,6 +51,8 @@ class Exchange extends CI_Controller
         }
 
         $this->load->model('model_categories');
+        $data['add'] = TRUE;
+        $data['actionForm'] = site_url('Exchange/addTrade');
         $data['categories'] = $this->model_categories->getCategoriesArray();
         $this->load->view('add_exchange_view', $data);
     }
@@ -136,19 +138,19 @@ class Exchange extends CI_Controller
         
         if($this->form_validation->run()) {
             $db_trade = array(
-                'trade_title' => $this->input->post('title'),
+                'trade_title'       => $this->input->post('title'),
                 'trade_description' => $this->input->post('description'),
                 'trade_id_category' => $this->input->post('category')
             );
 
             $this->db->trans_begin();
 
-            $this->model_trades->updateTrade($tradeId,$db_trade);
+            $this->model_trades->updateTrade($tradeId, $db_trade);
 
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while editing a trade!</div>");
-                redirect('Exchange/editTrade');
+                redirect('Exchange/editTrade/'.$tradeId);
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Trade edited with success!</div>");
@@ -157,6 +159,8 @@ class Exchange extends CI_Controller
         }
 
         $this->load->model('model_categories');
+        $data['edit'] = TRUE;
+        $data['actionForm'] = site_url('Exchange/editTrade/'.$tradeId);
         $data['categories'] = $this->model_categories->getCategoriesArray();    
         $data['trade'] = $this->trades->getTradeById($tradeId);
         $this->load->view('add_exchange_view',$data);

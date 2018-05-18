@@ -2,9 +2,7 @@
 
 <div class="content-wrapper">
     <section class="content-header">
-    <h1>
-        Exchanges
-    </h1>
+    <h1>Exchanges</h1>
     </section>
     <section class="content">
         <?php echo $this->session->userdata('item'); ?>
@@ -22,11 +20,11 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/editTrade/'.$row->trade_id) ?>">Edit</a>
-                        </div>
-                        <div class="box-body">
                             <?= $row->trade_description ?>
-                            <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id) ?>">More info</a>
+                            <div class="pull-right">
+                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id) ?>" style="margin-left: 4px;">More info</a>
+                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/editTrade/'.$row->trade_id) ?>">Edit</a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
