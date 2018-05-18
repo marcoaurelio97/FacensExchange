@@ -71,9 +71,11 @@ class Login extends CI_Controller
 				$this->session->set_userdata('userName', $this->model_users->getName($user));
 
 				$this->verifyAdmin($id_user);
+
 				if(!$this->hasProfile($id_user)){
 					redirect('Profile/register');
 				}
+
 				redirect('home');
 			}
 
@@ -107,12 +109,6 @@ class Login extends CI_Controller
 	}
 
 	public function hasProfile($idUser){
-		$hasProfile = $this->model_users->hasProfile($id_user);
-		
-		if ($hasProfile) {
-			return true;
-		} 
-		return false;
-		
+		return $this->model_users->hasProfile($idUser);
 	}
 }

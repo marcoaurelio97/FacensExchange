@@ -2,7 +2,7 @@
 
 <div class="content-wrapper">
     <section class="content-header">
-      <h1>Edit Users</h1>
+      <h1><?= $title ?></h1>
     </section>
 
     <section class="content">
@@ -26,7 +26,7 @@
                     </div>
                     <h3>Personal info</h3>
                     
-                    <form class="form-horizontal" method="post" action="<?php echo site_url('Profile/register')?>">
+                    <form class="form-horizontal" method="post" action="">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Name:</label>
                             <div class="col-lg-8">
@@ -42,13 +42,13 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">RG:</label>
                             <div class="col-lg-8">
-                            <input class="form-control" id="cpf" type="text" value="<?php echo (isset($profile)) ? $profile->pro_rg : ''?>" name="rg">
+                            <input class="form-control" id="rg" type="text" value="<?php echo (isset($profile)) ? $profile->pro_rg : ''?>" name="rg">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">CPF:</label>
                             <div class="col-lg-8">
-                            <input class="form-control" id="tel" type="text" value="<?php echo (isset($profile)) ? $profile->pro_cpf : ''?>" name="cpf">
+                            <input class="form-control" id="cpf" type="text" value="<?php echo (isset($profile)) ? $profile->pro_cpf : ''?>" name="cpf">
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Number:</label>
                             <div class="col-md-8">
-                            <input class="form-control" type="text" value="<?php echo (isset($profile)) ? $profile->address_street : ''?>" name="number">
+                            <input class="form-control" type="text" value="<?php echo (isset($profile)) ? $profile->address_number : ''?>" name="number">
                             </div>
                         </div>
                         <div class="form-group">
@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Zip Code:</label>
                             <div class="col-md-8">
-                            <input class="form-control" type="text" value="<?php echo (isset($profile)) ? $profile->address_zip_code : ''?>" name="zipCode">
+                            <input class="form-control" id="zip" type="text" value="<?php echo (isset($profile)) ? $profile->address_zip_code : ''?>" name="zipCode">
                             </div>
                         </div>
                         <div class="form-group">
@@ -102,9 +102,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label"></label>
                             <div class="col-md-8">
-                            <input type="submit" class="btn btn-primary" value="Save Changes">
-                            <span></span>
-                            <input type="reset" class="btn btn-default" value="Cancel">
+                                <input type="submit" class="btn btn-primary" value="Save Changes">
                             </div>
                         </div>
                     </form>
@@ -118,8 +116,8 @@
 <script>
     $(document).ready(function(){
         $('#tel').mask('(99) 99999-9999');
-        $('#rg').mask('99.999.999-9');
         $('#date').mask('99/99/9999');
         $('#cpf').mask('999.999.999-99');
-    };
+        $('#zip').mask('99999-999');
+    });
 </script>

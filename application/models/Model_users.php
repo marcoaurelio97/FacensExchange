@@ -11,6 +11,17 @@ class Model_users extends CI_Model {
         $this->db->insert('users', $user);
     }
 
+    public function getUserById($idUser){
+        $this->db->where('user_id', $idUser);
+        $user = $this->db->get('users');
+
+        if($user && $user->num_rows() > 0){
+            return $user->row();
+        }
+
+        return FALSE;
+    }
+
     public function checkEmailPassword($user){
         $this->db->where('user_email', $user->user_email);
         $this->db->where('user_password', $user->user_password);
@@ -61,7 +72,7 @@ class Model_users extends CI_Model {
 
     public function getUsers($id_user){
         
-        $sql = "SELECT user_name,user_email,user_date_add,user_role FROM users WHERE user_id <> ?";       
+        $sql = "SELECT user_name,user_email,user_date_add,user_role FROM users WHERE user_id <> ?";
 
         $users = $this->db->query($sql, array($id_user));
 
@@ -81,8 +92,8 @@ class Model_users extends CI_Model {
     public function hasProfile($idUser){
         $this->db->where('user_id',$idUser);
         $user = $this->db->get('users');
-        
-        if(is_null($user->user_pro_id)){
+
+        if(is_null($user->row()->user_pro_id)){
             return false;
         }
 

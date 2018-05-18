@@ -13,8 +13,9 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://facens-exchange.herokuapp.com/';
-// $config['base_url']	= 'http://172.18.0.2/FacensExchange/';
+// $config['base_url']	= 'https://facens-exchange.herokuapp.com/'; #FUNCIONAR ONLINE
+// $config['base_url']	= 'http://172.18.0.2/FacensExchange/'; #FUNCIONAR LOCAL
+$config['base_url']	= 'http://localhost/FacensExchange/'; #FUNCIONAR NO TRABALHO
 /*
 |--------------------------------------------------------------------------
 | Index File

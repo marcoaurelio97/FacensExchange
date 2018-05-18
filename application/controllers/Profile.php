@@ -12,7 +12,6 @@ class Profile extends CI_Controller
 		redirect('Home/listTrades');
     }
     public function register(){
-        // var_dump($this->input->post());die;
         $this->form_validation->set_rules('name','Name','required|trim','You must provide a %s.');
         $this->form_validation->set_rules('birth','Date of Birth','required|trim','You must provide a %s.');
         $this->form_validation->set_rules('rg','RG','required|trim','You must provide a %s.'); 
@@ -26,7 +25,6 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('uf','UF','required|trim','You must provide a %s.');        
         $this->form_validation->set_rules('telephone','Telephone','required|trim','You must provide a %s.');        
         
-
         if($this->form_validation->run()) {
             $this->load->model('Model_profiles', 'profiles');
             $this->load->model('Model_address', 'adress');
@@ -78,9 +76,10 @@ class Profile extends CI_Controller
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile added with success!</div>");
                 redirect('Home');
             }
-
         }
-        $this->load->view('profile');
+
+        $data['title'] = 'User Profile';
+        $this->load->view('profile', $data);
     }
 
     public function EditProfile($idUser) {
@@ -97,7 +96,6 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('neighborhood','Neighborhood','required|trim','You must provide a %s.');        
         $this->form_validation->set_rules('uf','UF','required|trim','You must provide a %s.');        
         $this->form_validation->set_rules('telephone','Telephone','required|trim','You must provide a %s.');        
-        
 
         if($this->form_validation->run()) {
             $this->load->model('Model_profiles', 'profiles');
@@ -106,19 +104,18 @@ class Profile extends CI_Controller
             
             $this->db->trans_begin();
 
+            $date = date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('birth'))));
+
             $db_profiles = array(
-                'pro_name' => $this->input->post('name'),
-                'pro_date_of_birth' => $this->input->post('birth'),
-                'pro_rg' => $this->input->post('rg'),
-                'pro_cpf' => $this->input->post('cpf')
+                'pro_name'          => $this->input->post('name'),
+                'pro_date_of_birth' => $date,
+                'pro_rg'            => $this->input->post('rg'),
+                'pro_cpf'           => $this->input->post('cpf')
             );
 
-            $this->profiles->update($db_profiles);
-
-            $idProfile = $this->db->insert_id();
+            $idProfile = $this->profiles->update($idUser, $db_profiles);
 
             $db_adress = array(
-                'address_pro_id' => $idProfile,
                 'address_street' => $this->input->post('street'),
                 'address_number' => $this->input->post('number'),
                 'address_complement' => $this->input->post('complement'),
@@ -128,32 +125,30 @@ class Profile extends CI_Controller
                 'address_uf_state' => $this->input->post('uf')
             );
 
-            $this->adress->update($db_adress);            
+            $this->adress->update($idProfile, $db_adress);            
 
             $db_telephone = array(
-                'tel_pro_id' => $idProfile,                
-                'tel_telephone' => $this->input->post('telephone'),
+                'tel_telephone' => $this->input->post('telephone')
             );
 
-            $this->telephone->update($db_telephone);  
+            $this->telephone->update($idProfile, $db_telephone);
             
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
-                $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while adding your profile!</div>");
+                $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while editing your profile!</div>");
                 redirect('Profile/register');
             } else {
                 $this->db->trans_commit();
-                $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile added with success!</div>");
+                $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile edited with success!</div>");
                 redirect('Home');
             }
-
         }
 
         $this->load->model('Model_profiles','profiles');
 
         $data['profile'] = $this->profiles->getProfileByUserId($idUser);
-        // var_dump($data['profile']);die;
-        // print_r($this->db->last_query());die;
+        $data['profile']->pro_date_of_birth = date('d/m/Y', strtotime($data['profile']->pro_date_of_birth));
+        $data['title']   = 'Edit User Profile';
         $this->load->view('profile',$data);
     }
 }

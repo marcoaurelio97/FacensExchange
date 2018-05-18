@@ -5,6 +5,7 @@ class Model_profiles extends CI_Model {
     
     public function __construct(){
         parent::__construct();
+        $this->load->model('model_users', 'users');
     }
 
     public function add($profile){
@@ -24,5 +25,18 @@ class Model_profiles extends CI_Model {
         }
         
         return false;
+    }
+
+    public function update($idUser, $db_profiles){
+        $user = $this->users->getUserById($idUser);
+
+        if(!is_null($user->user_pro_id)){
+            $this->db->where('pro_id', $user->user_pro_id);
+            $this->db->update('profiles', $db_profiles);
+
+            return $user->user_pro_id;
+        }
+
+        return FALSE;
     }
 }
