@@ -29,7 +29,7 @@ class Login extends CI_Controller
 		if ($this->input->post()) {
 			require_once dirname(__FILE__) . "../../libraries/class/user.php";
 			$user = new User();
-			$user->user_name = $this->input->post('name');
+			$user->user_username = $this->input->post('username');
 			$user->user_email = $this->input->post('email');
 			$user->user_password = md5($this->input->post('password'));
 			$user->user_date_add = date('Y-m-d H:i:s');
@@ -61,7 +61,7 @@ class Login extends CI_Controller
 			$user = new User();
 			$user->user_email = $this->input->post('email');
 			$user->user_password = md5($this->input->post('password'));
-
+			
 			$authorized = $this->model_users->checkEmailPassword($user);
 
 			if ($authorized) {
@@ -69,7 +69,6 @@ class Login extends CI_Controller
 				$id_user = $this->model_users->getUser($user);
 				$this->session->set_userdata('idUser', $id_user);
 				$this->session->set_userdata('userName', $this->model_users->getName($user));
-				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
 
 				$this->verifyAdmin($id_user);
 				redirect('Profile/register');
@@ -86,6 +85,7 @@ class Login extends CI_Controller
 	{
 		$this->session->unset_userdata('logged');
 		$this->session->unset_userdata('admin');
+		$this->session->unset_userdata('idUser');
 		$this->session->unset_userdata('offersNotifications');
 		$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User sign out with success!</div>");
 		redirect('Home');

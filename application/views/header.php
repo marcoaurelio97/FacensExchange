@@ -54,12 +54,12 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           
           <!-- Notifications: style can be found in dropdown.less -->
+          <?php if ($this->session->userdata('logged')) : ?>
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
@@ -112,9 +112,9 @@
                 <li class="header">You have <?= count($this->session->userdata('offersNotifications')) ?> Offer(s)</li>
                 <li>
                   <ul class="menu">
-                    <?php foreach($this->session->userdata('offersNotifications') AS $row) : ?>
+                    <?php foreach ($this->session->userdata('offersNotifications') as $row) : ?>
                       <li>
-                        <a href="<?= site_url('Exchange/viewOffer/'.$row->trade_offer_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?= $row->trade_title; ?></a>
+                        <a href="<?= site_url('Exchange/viewOffer/' . $row->trade_offer_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?= $row->trade_title; ?></a>
                       </li>
                     <?php endforeach; ?>
                   </ul>
@@ -133,6 +133,7 @@
               <?php endif; ?>
             </ul>
           </li>
+          <?php endif; ?>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -180,6 +181,7 @@
                 
               </li>
               <!-- Menu Body -->
+              <?php if ($this->session->userdata('logged')) : ?>
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -194,11 +196,17 @@
                 </div>
                 <!-- /.row -->
               </li>
+              <?php endif; ?>
               <!-- Menu Footer-->
               <li class="user-footer">              
                   <div class="text-center">                  
+<<<<<<< HEAD
                     <a href="<?php echo site_url('profile/editProfile/'.$this->session->userdata('idUser'))?>" class="btn btn-primary btn-flat">Profile</a>   
                       <?php if ($this->session->userdata('logged')) : ?>
+=======
+                    <?php if ($this->session->userdata('logged')) : ?>
+                        <a href="#" class="btn btn-primary btn-flat">Profile</a>   
+>>>>>>> df0e432a38c9b822a78ec65741298ca3533178a0
                         <?php if ($this->session->userdata('idUser') <> 1) : ?>
                           <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
                         <?php endif; ?>
