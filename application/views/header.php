@@ -201,7 +201,7 @@
               <li class="user-footer">              
                   <div class="text-center">                  
                     <?php if ($this->session->userdata('logged')) : ?>
-                        <a href="#" class="btn btn-primary btn-flat">Profile</a>   
+                      <a href="<?php echo site_url('profile/editProfile/'.$this->session->userdata('idUser'))?>" class="btn btn-primary btn-flat">Profile</a>   
                         <?php if ($this->session->userdata('idUser') <> 1) : ?>
                           <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
                         <?php endif; ?>
