@@ -30,7 +30,7 @@ class User extends CI_Controller
             $this->load->view('edit_users', $data);
         } else {
             $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>You shall not pass!</div>");
-			redirect('home');
+			redirect('Home/listTrades');
         }
     }
 }

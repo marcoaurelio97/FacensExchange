@@ -7,7 +7,7 @@ class Category extends CI_Controller
     {
         if (!$this->session->userdata('admin')) {
             $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>You shall not pass!</div>");
-            redirect('home');
+            redirect('Home/listTrades');
         }
 
         $this->load->model('model_categories');
@@ -34,7 +34,7 @@ class Category extends CI_Controller
         } else {
             $this->db->trans_commit();
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Category added with success!</div>");
-            redirect('Home');
+            redirect('Home/listTrades');
         }
     }
 

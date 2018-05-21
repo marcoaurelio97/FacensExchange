@@ -74,7 +74,7 @@ class Profile extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile added with success!</div>");
-                redirect('Home');
+                redirect('Home/listTrades');
             }
         }
 
@@ -140,7 +140,7 @@ class Profile extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile edited with success!</div>");
-                redirect('Home');
+                redirect('Home/listTrades');
             }
         }
 

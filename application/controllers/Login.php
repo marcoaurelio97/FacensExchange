@@ -76,7 +76,8 @@ class Login extends CI_Controller
 					redirect('Profile/register');
 				}
 
-				redirect('home');
+				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
+				redirect('Home/listTrades');
 			}
 
 			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Failed to login!</div>");
@@ -93,7 +94,7 @@ class Login extends CI_Controller
 		$this->session->unset_userdata('idUser');
 		$this->session->unset_userdata('offersNotifications');
 		$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User sign out with success!</div>");
-		redirect('Home');
+		redirect('Home/listTrades');
 	}
 
 	public function verifyAdmin($id_user)

@@ -46,7 +46,7 @@ class Exchange extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Trade added with success!</div>");
-                redirect('Home');
+                redirect('Home/listTrades');
             }
         }
 
@@ -124,7 +124,7 @@ class Exchange extends CI_Controller
         } else {
             $this->db->trans_commit();
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Offer sent with success!</div>");
-            redirect('Home');
+            redirect('Home/listTrades');
         }
     }
 
@@ -154,7 +154,7 @@ class Exchange extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Trade edited with success!</div>");
-                redirect('Home');
+                redirect('Home/listTrades');
             }
         }
 
@@ -216,7 +216,7 @@ class Exchange extends CI_Controller
         } else {
             $this->db->trans_commit();
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The exchange was successful!</div>");
-            redirect('Home');
+            redirect('Home/listTrades');
         }
     }
 
