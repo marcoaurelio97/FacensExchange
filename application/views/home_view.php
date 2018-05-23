@@ -21,18 +21,19 @@
           <div class="row">
           <?php if ($trades) { ?>
           <?php foreach ($trades as $row) { ?>
-          <div class="col-md-4" style="min-height: 500px;">
+          <div class="col-md-3" style="min-height: 500px;">
               <div class="box box-solid box-primary">
                 <div class="box-header">
                   <h3 class="box-title"><?= $row->trade_title ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  
-                  <!-- <img class="img-responsive pad" src="dist/img/photo2.png" alt="Photo"> -->
                   <div class="container" id="fotinho">
-                    <img width="200" height="200" class="img-responsive pad" src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                    <?php if ($row->trade_pic_picture) : ?>
+                      <img class="img-responsive pad" src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                    <?php else : ?>
+                      <img class="img-responsive pad" src="<?= site_url('dist/img/default_trade.png'); ?>" alt="Photo">
+                    <?php endif; ?>
                   </div>
-                
                 </div><!-- /.box-body -->
                 <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
                   <div class="box-body">

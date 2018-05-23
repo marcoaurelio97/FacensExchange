@@ -31,6 +31,10 @@ class Model_trades extends CI_Model {
             $this->db->where('trade_id_category', $idCategory);
         }
 
+        if($this->session->userdata('idUser')){
+            $this->db->where('trade_id_user_from !=', $this->session->userdata('idUser'));
+        }
+
         $this->db->where('trade_status', '0');
         $this->db->order_by('trade_date_add', 'desc');
         $trades = $this->db->get('trades');
@@ -53,6 +57,7 @@ class Model_trades extends CI_Model {
     public function getTradesUser($idUser){
         $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
         $this->db->where('trade_id_user_from', $idUser);
+        $this->db->where('trade_status != ', '2');
         $trades = $this->db->get('trades');
 
         if($trades && $trades->num_rows() > 0){
@@ -134,5 +139,10 @@ class Model_trades extends CI_Model {
     public function updateTradeOffer($idTradeOffer, $db){
         $this->db->where('trade_offer_id', $idTradeOffer);
         $this->db->update('trade_offers', $db);
+    }
+
+    public function deleteTrade($idTrade){
+        $this->db->where('trade_id', $idTrade);
+        $this->db->update('trades', array('trade_status' => '2'));
     }
 }

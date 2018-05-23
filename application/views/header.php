@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Facens Exchange</title>
+  <link rel="icon" href="<?= site_url('dist/img/icon_title.png') ?>" type="image/x-icon" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -137,19 +138,19 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <?php if ($this->session->userdata('logged')) { ?>                
-                   <img src="<?= site_url('dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image">      
+            <?php if ($this->session->userdata('logged')) { ?>
+                   <img src="<?= site_url('dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image">
                <?php 
-            } else { ?>                  
-                      <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">      
+            } else { ?>            
+                      <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
               <?php 
             } ?>
             
               <span class="hidden-xs">
-              <?php if ($this->session->userdata('logged')) { ?>                
-                    <?php echo $this->session->userdata('userName'); ?>            
+              <?php if ($this->session->userdata('logged')) { ?>          
+                    <?php echo $this->session->userdata('userName'); ?>      
                <?php 
-            } else { ?>                  
+            } else { ?>            
                     Guest       
               <?php 
             } ?>

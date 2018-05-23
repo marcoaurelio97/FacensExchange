@@ -22,8 +22,9 @@
                         <div class="box-body">
                             <?= $row->trade_description ?>
                             <div class="pull-right">
-                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id) ?>" style="margin-left: 4px;">More info</a>
-                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/editTrade/'.$row->trade_id) ?>">Edit</a>
+                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/deleteTrade/'.$row->trade_id) ?>">Delete</a>
+                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/editTrade/'.$row->trade_id) ?>" style="margin-right: 4px;">Edit</a>
+                                <a class="btn btn-primary pull-right" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id) ?>" style="margin-right: 4px;">More info</a>
                             </div>
                         </div>
                     </div>
