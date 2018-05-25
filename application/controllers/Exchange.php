@@ -9,6 +9,7 @@ class Exchange extends CI_Controller
         parent::__construct();
 
         $this->load->model('model_trades');
+        $this->load->model('model_notifications', 'notifications');
     }
 
     public function tradeDetails($idTrade)
@@ -96,21 +97,21 @@ class Exchange extends CI_Controller
         $idUser = $this->session->userdata('idUser');
 
         $data['trade'] = $this->model_trades->getTrades($idTrade);
-        $data['myTrades'] = $this->model_trades->getTradesUser($idUser);
+        $data['myTrades'] = $this->model_trades->getTradesUser($idUser, TRUE);
 
         $this->load->view('choose_offers_trades_view', $data);
     }
 
     public function sendOffer($idTradeWant, $idTradeHave)
     {
-        $tradeWant = $this->model_trades->getTrades($idTradeWant);
-        $tradeHave = $this->model_trades->getTrades($idTradeHave);
+        $tradeWant = $this->model_trades->getTradeForOffer($idTradeWant);
+        $tradeHave = $this->model_trades->getTradeForOffer($idTradeHave);
 
         $db = array(
-            'trade_offer_idtrade_from' => $idTradeHave, // who is sending an offer
-            'trade_offer_idtrade_to'   => $idTradeWant, // who is receiving an offer
-            'trade_offer_iduser_from'  => $tradeHave->trade_id_user_from,
-            'trade_offer_iduser_to'    => $tradeWant->trade_id_user_from
+            'trade_offer_idtrade_from' => $idTradeHave,
+            'trade_offer_idtrade_to'   => $idTradeWant,
+            'trade_offer_iduser_from'  => $tradeHave->trade_id_user_from,// who is sending an offer
+            'trade_offer_iduser_to'    => $tradeWant->trade_id_user_from // who is receiving an offer
         );
 
         $this->db->trans_begin();
@@ -170,8 +171,8 @@ class Exchange extends CI_Controller
     public function viewOffer($idTradeOffer)
     {
         $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $data['tradeHave'] = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_to);
-        $data['tradeWant'] = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_from);
+        $data['tradeHave'] = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
+        $data['tradeWant'] = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
         $data['idTradeOffer'] = $idTradeOffer;
         $this->load->view('view_offer_trade', $data);
     }
@@ -179,12 +180,14 @@ class Exchange extends CI_Controller
     public function responseOffer($type, $idTradeOffer)
     {
         $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $tradeHave  = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_to);
-        $tradeWant  = $this->model_trades->getTrades($tradeOffer->trade_offer_idtrade_from);
+        $tradeHave  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
+        $tradeWant  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
 
         $this->db->trans_begin();
         
         if($type == '1'){
+            $messageNotification = "Offer of <strong>$tradeWant->trade_title</strong> accepted!";
+
             $db = array(
                 'trade_status'     => $type,
                 'trade_id_user_to' => $tradeWant->trade_id_user_from
@@ -202,12 +205,23 @@ class Exchange extends CI_Controller
     
             $this->model_trades->updateTradeOffer($idTradeOffer, $db);
         } else {
+            $messageNotification = "Offer of <strong>$tradeWant->trade_title</strong> recused!";
+
             $db = array(
                 'trade_offer_status' => $type
             );
     
             $this->model_trades->updateTradeOffer($idTradeOffer, $db);
         }
+
+        $dbNotification = array(
+            'notif_iduser'   => $tradeHave->trade_id_user_from,
+            'notif_date_add' => date('Y-m-d H:i:s'),
+            'notif_status'   => '0',
+            'notif_message'  => $messageNotification
+        );
+
+        $this->notifications->addNotification($dbNotification);
 
         if ($this->db->trans_status() === false) {
             $this->db->trans_rollback();

@@ -26,11 +26,9 @@ class Model_trades extends CI_Model {
         if($idTrade){
             $this->db->where('trade_id', $idTrade);
         }
-
         if($idCategory){
             $this->db->where('trade_id_category', $idCategory);
         }
-
         if($this->session->userdata('idUser')){
             $this->db->where('trade_id_user_from !=', $this->session->userdata('idUser'));
         }
@@ -50,14 +48,34 @@ class Model_trades extends CI_Model {
         return FALSE;
     }
 
+    public function getTradeForOffer($idTrade){
+        $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
+        $this->db->join('categories', 'category_id = trade_id_category', 'left');
+        $this->db->where('trade_id', $idTrade);
+        $this->db->where('trade_status', '0');
+        $trade = $this->db->get('trades');
+
+        if($trade && $trade->num_rows() > 0){
+            return $trade->row();
+        }
+
+        return FALSE;
+    }
+
     public function insertPicTrade($db){
         $this->db->insert('trade_pictures', $db);
     }
 
-    public function getTradesUser($idUser){
+    public function getTradesUser($idUser, $status = false){
         $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
         $this->db->where('trade_id_user_from', $idUser);
-        $this->db->where('trade_status != ', '2');
+
+        if ($status) {
+            $this->db->where('trade_status', '0');
+        } else {
+            $this->db->where('trade_status != ', '2');
+        }
+
         $trades = $this->db->get('trades');
 
         if($trades && $trades->num_rows() > 0){
