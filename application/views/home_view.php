@@ -21,7 +21,7 @@
           <div class="row">
           <?php if ($trades) { ?>
           <?php foreach ($trades as $row) { ?>
-          <div class="col-md-3" style="min-height: 500px;">
+          <div class="col-md-4" style="min-height: 500px;">
               <div class="box box-solid box-primary">
                 <div class="box-header">
                   <h3 class="box-title"><?= $row->trade_title ?></h3>

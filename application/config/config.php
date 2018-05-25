@@ -13,9 +13,9 @@
 | path to your installation.
 |
 */
-// $config['base_url']	= 'https://facens-exchange.herokuapp.com/'; #FUNCIONAR ONLINE
+$config['base_url']	= 'https://facens-exchange.herokuapp.com/'; #FUNCIONAR ONLINE
 // $config['base_url']	= 'http://172.18.0.2/FacensExchange/'; #FUNCIONAR LOCAL
-$config['base_url']	= 'http://localhost/FacensExchange/'; #FUNCIONAR NO TRABALHO
+// $config['base_url']	= 'http://localhost/FacensExchange/'; #FUNCIONAR NO TRABALHO
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -226,15 +226,19 @@ $config['encryption_key'] = '';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 7200;
-$config['sess_expire_on_close']	= FALSE;
-$config['sess_encrypt_cookie']	= FALSE;
-$config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'ci_sessions';
-$config['sess_match_ip']		= FALSE;
-$config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update']	= 300;
+$config['sess_cookie_name']		   = 'ci_session';
+$config['sess_expiration']		   = 7200;
+$config['sess_expire_on_close']	   = FALSE;
+$config['sess_encrypt_cookie']	   = FALSE;
+$config['sess_use_database']	   = FALSE;
+$config['sess_table_name']		   = 'ci_sessions';
+$config['sess_match_useragent']	   = TRUE;
+$config['sess_time_to_update']	   = 300;
+$config['proxy_ips']               = '';
+$config['sess_driver']             = 'files';
+$config['sess_save_path']          = sys_get_temp_dir();
+$config['sess_match_ip']           = TRUE;
+$config['sess_regenerate_destroy'] = FALSE;
 /*
 |--------------------------------------------------------------------------
 | Cookie Related Variables
@@ -328,13 +332,6 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
 |
 */
-$config['proxy_ips'] = '';
-$config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = 7200;
-$config['sess_save_path'] = sys_get_temp_dir();
-$config['sess_match_ip'] = TRUE;
-$config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
+
 /* End of file config.php */
 /* Location: ./application/config/config.php */
