@@ -19,12 +19,8 @@ class Exchange extends CI_Controller
     {
         $current = ($current == 'FALSE') ? FALSE : TRUE;
         $data['idUserLogged'] = $this->session->userdata('idUser');
-<<<<<<< HEAD
         $data['trade'] = $this->model_trades->getTrades($idTrade,FALSE,TRUE,$current);
         // var_dump($data['trade']);die;
-=======
-        $data['trade'] = $this->model_trades->getTradeDetails($idTrade);
->>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
         $this->load->view('trade_details_view', $data);
     }
 

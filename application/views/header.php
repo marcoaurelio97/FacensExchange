@@ -126,12 +126,8 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-<<<<<<< HEAD
-            <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) { ?>
-=======
             <?php if ($this->session->userdata('logged')) { ?>
                 <?php if ($this->session->userdata('proPicture')) { ?>
->>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
                    <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="user-image" alt="User Image">
                 <?php } else { ?>
                   <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
@@ -155,17 +151,12 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-<<<<<<< HEAD
-              <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) { ?>                
-                   <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image">      
-=======
               <?php if ($this->session->userdata('logged')) { ?>                
                 <?php if ($this->session->userdata('proPicture')) { ?>
                    <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="user-image" alt="User Image">
                 <?php } else { ?>
                   <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
                 <?php } ?>
->>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
                <?php 
             } else { ?>                  
                       <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="img-circle" alt="User Image">      

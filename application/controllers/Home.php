@@ -30,16 +30,12 @@ class Home extends CI_Controller {
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));
-<<<<<<< HEAD
 		if($this->session->userdata('logged')) {
 			$this->session->set_userdata('proPicture', $this->model_profiles->getProfileByUserId($idUser)->pro_picture);
 			$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);
 		}
 		// var_dump($this->session->userdata());die;
 
-=======
-	
->>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
 		$this->load->view('home_view', $data);
 	}
 }
