@@ -57,4 +57,9 @@ class Model_profiles extends CI_Model {
         $this->db->where('pro_id', $idProfile);
         $this->db->update('profiles', $db_rating);
     }
+
+    public function insertPicProfile($db,$idProfile){
+        $this->db->where('pro_id',$idProfile);
+        $this->db->update('profiles', $db);
+    }
 }

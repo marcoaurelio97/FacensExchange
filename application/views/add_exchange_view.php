@@ -46,13 +46,13 @@
                         <a href="#"><span class="label label-info pull-left"><i class="fa fa-motorcycle"></i></span></a>
                       </div>
                   <br>
-            <div class="form-group">
-                <p><strong><i class="fa fa-file-image-o margin-r-5"></i> Images</strong></p>
-               
-                <input type="file" id="exampleInputFile" name="image">
+                  <div class="form-group">
+                    <p><strong><i class="fa fa-file-image-o margin-r-5"></i> Images</strong></p>
+                    
+                    <input type="file" id="exampleInputFile" name="image">
 
-                <p class="help-block">Add images for your exchange.</p>
-              </div>
+                    <p class="help-block">Add images for your exchange.</p>
+                  </div>
                   </div>
                   <!-- /.box-body -->
     

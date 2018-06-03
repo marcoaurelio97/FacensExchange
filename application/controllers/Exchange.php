@@ -12,6 +12,7 @@ class Exchange extends CI_Controller
         $this->load->model('model_notifications', 'notifications');
         $this->load->model('model_profiles', 'profiles');
         $this->load->model('model_rating', 'rating');
+        $this->load->model('model_upload');
     }
 
     public function tradeDetails($idTrade)
@@ -24,6 +25,7 @@ class Exchange extends CI_Controller
     public function addTrade()
     {
         if ($this->input->post()) {
+            // var_dump($_FILES);die;
             require_once dirname(__FILE__) . "../../libraries/class/trade.php";
             $trade = new Trade();
             $trade->trade_id_user_from = $this->session->userdata('idUser');
@@ -39,7 +41,7 @@ class Exchange extends CI_Controller
             $idTrade = $this->db->insert_id();
 
             if ($_FILES) {
-                $this->uploadImages($idTrade);
+                $this->model_upload->uploadImagesTrades($idTrade);
             }
 
             if ($this->db->trans_status() === false) {
@@ -58,33 +60,6 @@ class Exchange extends CI_Controller
         $data['actionForm'] = site_url('Exchange/addTrade');
         $data['categories'] = $this->model_categories->getCategoriesArray();
         $this->load->view('add_exchange_view', $data);
-    }
-
-    public function uploadImages($idTrade)
-    {
-        $nameImage = $_FILES['image']['name'];
-
-        $config = array(
-            'upload_path' => './dist/img/',
-            'allowed_types' => '*',
-            'file_name' => $nameImage,
-            'max_size' => '1000000'
-        );
-
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload('image')) {
-            $db = array(
-                'trade_pic_idtrade' => $idTrade,
-                'trade_pic_picture' => $nameImage
-            );
-
-            $this->model_trades->insertPicTrade($db);
-
-            return true;
-        } else {
-            echo $this->upload->display_errors();
-        }
     }
 
     public function searchOffers()
@@ -240,8 +215,7 @@ class Exchange extends CI_Controller
             'notif_iduser'          => $tradeB->trade_id_user_from,
             'notif_date_add'        => date('Y-m-d H:i:s'),
             'notif_status'          => '1',
-            'notif_message'         => $messageToB,
-            'notif_tradeoffer_id'   => $idTradeOffer
+            'notif_message'         => $messageToB
         );
 
         $this->notifications->addNotification($dbNotification);

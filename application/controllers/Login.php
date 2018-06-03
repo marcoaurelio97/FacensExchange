@@ -7,6 +7,7 @@ class Login extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('model_users');
+		$this->load->model('model_profiles');
 	}
 
 	public function index()
@@ -69,7 +70,9 @@ class Login extends CI_Controller
 				$id_user = $this->model_users->getUser($user);
 				$this->session->set_userdata('idUser', $id_user);
 				$this->session->set_userdata('userName', $this->model_users->getName($user));
-
+				$this->session->set_userdata('proPicture', $this->model_profiles->getProfileByUserId($id_user)->pro_picture);
+				$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);
+				
 				$this->verifyAdmin($id_user);
 
 				if(!$this->hasProfile($id_user)){

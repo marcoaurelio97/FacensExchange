@@ -12,6 +12,7 @@ class Home extends CI_Controller {
 		$this->load->model('model_trades');
 		$this->load->model('model_categories');
 		$this->load->model('model_notifications');
+		$this->load->model('model_profiles');
 
 		$idUser = $this->session->userdata('idUser') ? $this->session->userdata('idUser') : FALSE;
 
@@ -19,6 +20,8 @@ class Home extends CI_Controller {
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));
+		$this->session->set_userdata('proPicture', $this->model_profiles->getProfileByUserId($idUser)->pro_picture);
+		$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);
 	
 		// var_dump($this->session->userdata());die;
 

@@ -5,7 +5,11 @@ class Profile extends CI_Controller
     public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_users');
+        $this->load->model('Model_profiles', 'profiles');
+        $this->load->model('Model_address', 'adress');
+        $this->load->model('Model_telephone', 'telephone');
+        $this->load->model('Model_users', 'users');
+        $this->load->model('model_upload');        
     }
     public function index()
 	{
@@ -26,11 +30,6 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('telephone','Telephone','required|trim','You must provide a %s.');        
         
         if($this->form_validation->run()) {
-            $this->load->model('Model_profiles', 'profiles');
-            $this->load->model('Model_address', 'adress');
-            $this->load->model('Model_telephone', 'telephone');
-            $this->load->model('Model_users', 'users');
-            
             $this->db->trans_begin();
 
             $db_profiles = array(
@@ -46,6 +45,10 @@ class Profile extends CI_Controller
             $this->profiles->add($db_profiles);
 
             $idProfile = $this->db->insert_id();
+
+            if ($_FILES) {
+                $this->model_upload->uploadImagesProfile($idProfile);
+            }
 
             $db_adress = array(
                 'address_pro_id' => $idProfile,
@@ -101,6 +104,8 @@ class Profile extends CI_Controller
         $this->form_validation->set_rules('telephone','Telephone','required|trim','You must provide a %s.');        
 
         if($this->form_validation->run()) {
+            // var_dump($_FILES);die;
+
             $this->load->model('Model_profiles', 'profiles');
             $this->load->model('Model_address', 'adress');
             $this->load->model('Model_telephone', 'telephone');
@@ -118,6 +123,13 @@ class Profile extends CI_Controller
 
             $idProfile = $this->profiles->update($idUser, $db_profiles);
 
+            if ($_FILES) {
+                // var_dump('boa');die;    
+                
+                $this->model_upload->uploadImagesProfile($idProfile);
+            }
+            // var_dump('vou chorar');die;    
+            
             $db_adress = array(
                 'address_street' => $this->input->post('street'),
                 'address_number' => $this->input->post('number'),

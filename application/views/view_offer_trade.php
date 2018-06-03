@@ -29,7 +29,7 @@
                 </div><!-- /.box -->
             </div>
             <div class="col-md-4">
-                <a class="btn btn-block btn-success btn-flat" href="<?= site_url('Exchange/responseOffer/1/'.$idTradeOffer) ?>" style="margin-top: 375px;">Start to negotiate</a>
+                <a class="btn btn-block btn-success btn-flat" href="<?= site_url('Exchange/responseOffer/1/'.$idTradeOffer) ?>" style="margin-top: 375px;">Accept the offer</a>
                 <a class="btn btn-block btn-danger btn-flat"  href="<?= site_url('Exchange/responseOffer/2/'.$idTradeOffer) ?>">Decline the offer</a>
             </div>
             <div class="col-md-4 pull-right" style="min-height: 500px;">

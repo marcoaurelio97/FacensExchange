@@ -127,7 +127,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <?php if ($this->session->userdata('logged')) { ?>
-                   <img src="<?= site_url('dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image">
+                   <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="user-image" alt="User Image">
                <?php 
             } else { ?>            
                       <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
@@ -148,7 +148,7 @@
               <!-- User image -->
               <li class="user-header">
               <?php if ($this->session->userdata('logged')) { ?>                
-                   <img src="<?= site_url('dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image">      
+                   <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image">      
                <?php 
             } else { ?>                  
                       <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="img-circle" alt="User Image">      
@@ -157,7 +157,7 @@
                 <?php if ($this->session->userdata('logged')) { ?>                
                     <p>
                     <?php echo $this->session->userdata('userName'); ?>        
-                    <small>Member since Abr. 2018</small>
+                    <small><?php echo $this->session->userdata('email'); ?></small>
                     </p>              
                 <?php 
               } else { ?>                  
@@ -215,7 +215,7 @@
       <?php if ($this->session->userdata('logged')) : ?>  
         <div class="user-panel">
         <div class="pull-left image">
-           <img src="<?= site_url('dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image"> 
+           <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image"> 
         </div>
         <div class="pull-left info">
           <p><?php echo $this->session->userdata('userName'); ?></p>
