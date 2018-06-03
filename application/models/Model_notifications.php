@@ -12,6 +12,12 @@ class Model_notifications extends CI_Model {
         $this->db->insert('notifications', $dbNotification);
     }
 
+    public function updateNotification($dbNotification,$idNotification)
+    {
+        $this->db->where('notif_id',$idNotification);
+        $this->db->update('notifications', $dbNotification);
+    }
+
     public function getNotifications($idUser)
     {
         if (!$idUser) {
@@ -19,7 +25,7 @@ class Model_notifications extends CI_Model {
         }
 
         $this->db->where('notif_iduser', $idUser);
-        $this->db->where('notif_status', '0');
+        $this->db->where('notif_status', '1');
         $notifications = $this->db->get('notifications');
 
         if ($notifications && $notifications->num_rows() > 0) {

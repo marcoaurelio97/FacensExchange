@@ -110,15 +110,16 @@ class Model_trades extends CI_Model {
 
         $offers = $this->db->query("
             SELECT 
-                *
+                *, t.trade_title AS myTrade, f.trade_title AS offeredToMe
             FROM
-                trade_offers
+                trade_offers AS o
                     LEFT JOIN
-                trades
-                ON trade_id = trade_offer_idtrade_from
+                trades AS f ON f.trade_id = o.trade_offer_idtrade_from
+                    JOIN
+                trades AS t ON t.trade_id = o.trade_offer_idtrade_to
             WHERE
-                trade_offer_iduser_to = {$idUser}
-                AND trade_offer_status = '0'
+                o.trade_offer_iduser_to = {$idUser}
+                AND o.trade_offer_status = '0'
         ");
 
         if($offers && $offers->num_rows() > 0){

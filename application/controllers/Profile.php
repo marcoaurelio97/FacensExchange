@@ -37,7 +37,10 @@ class Profile extends CI_Controller
                 'pro_name' => $this->input->post('name'),
                 'pro_date_of_birth' => $this->input->post('birth'),
                 'pro_rg' => $this->input->post('rg'),
-                'pro_cpf' => $this->input->post('cpf')
+                'pro_cpf' => $this->input->post('cpf'),
+                'pro_rating' => '0',
+                'pro_number_of_evaluations' => '0',
+                'pro_sum_rating' => '0'
             );
 
             $this->profiles->add($db_profiles);

@@ -27,6 +27,19 @@ class Model_profiles extends CI_Model {
         return false;
     }
 
+    public function getRatingProfile($idProfile) {
+        $this->db->select('pro_number_of_evaluations, pro_sum_rating, pro_rating');
+        $this->db->where('pro_id',$idProfile);
+
+        $result = $this->db->get('profiles');
+
+        if($result && $result->num_rows() > 0) {
+            return $result->row();
+        }
+        
+        return false;
+    }
+
     public function update($idUser, $db_profiles){
         $user = $this->users->getUserById($idUser);
 
@@ -38,5 +51,10 @@ class Model_profiles extends CI_Model {
         }
 
         return FALSE;
+    }
+
+    public function updateRatingProfile($idProfile, $db_rating){
+        $this->db->where('pro_id', $idProfile);
+        $this->db->update('profiles', $db_rating);
     }
 }

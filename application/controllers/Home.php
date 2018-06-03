@@ -20,6 +20,8 @@ class Home extends CI_Controller {
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));
 	
+		// var_dump($this->session->userdata());die;
+
 		$this->load->view('home_view', $data);
 	}
 }

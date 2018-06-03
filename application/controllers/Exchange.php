@@ -10,6 +10,8 @@ class Exchange extends CI_Controller
 
         $this->load->model('model_trades');
         $this->load->model('model_notifications', 'notifications');
+        $this->load->model('model_profiles', 'profiles');
+        $this->load->model('model_rating', 'rating');
     }
 
     public function tradeDetails($idTrade)
@@ -102,16 +104,17 @@ class Exchange extends CI_Controller
         $this->load->view('choose_offers_trades_view', $data);
     }
 
-    public function sendOffer($idTradeWant, $idTradeHave)
+    public function sendOffer($idTradeA, $idTradeB)
     {
-        $tradeWant = $this->model_trades->getTradeForOffer($idTradeWant);
-        $tradeHave = $this->model_trades->getTradeForOffer($idTradeHave);
+        $tradeA = $this->model_trades->getTradeForOffer($idTradeA);
+        $tradeB = $this->model_trades->getTradeForOffer($idTradeB);
 
         $db = array(
-            'trade_offer_idtrade_from' => $idTradeHave,
-            'trade_offer_idtrade_to'   => $idTradeWant,
-            'trade_offer_iduser_from'  => $tradeHave->trade_id_user_from,// who is sending an offer
-            'trade_offer_iduser_to'    => $tradeWant->trade_id_user_from // who is receiving an offer
+            'trade_offer_status'        => '0',
+            'trade_offer_idtrade_from'  => $idTradeB,
+            'trade_offer_idtrade_to'    => $idTradeA,
+            'trade_offer_iduser_from'   => $tradeB->trade_id_user_from,// who is sending an offer
+            'trade_offer_iduser_to'     => $tradeA->trade_id_user_from // who is receiving an offer
         );
 
         $this->db->trans_begin();
@@ -121,7 +124,7 @@ class Exchange extends CI_Controller
         if ($this->db->trans_status() === false) {
             $this->db->trans_rollback();
             $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while sending an offer!</div>");
-            redirect('Exchange/chooseOffer/'.$idTradeWant);
+            redirect('Exchange/chooseOffer/'.$idTradeB);
         } else {
             $this->db->trans_commit();
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Offer sent with success!</div>");
@@ -177,48 +180,68 @@ class Exchange extends CI_Controller
         $this->load->view('view_offer_trade', $data);
     }
 
-    public function responseOffer($type, $idTradeOffer)
+    public function responseOffer($reply, $idTradeOffer)
     {
+        // var_dump($reply,$idTradeOffer);die;
         $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $tradeHave  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
-        $tradeWant  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
+        $tradeA  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
+        $tradeB  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
 
         $this->db->trans_begin();
         
-        if($type == '1'){
-            $messageNotification = "Offer of <strong>$tradeWant->trade_title</strong> accepted!";
+        if($reply == '1'){
+            $messageToA = "You just accepted the offer. Don't forget to rate the other user";
+            $messageToB = "The owner of <strong>$tradeA->trade_title</strong> accepted your trade! Don't forget to rate the other user";
 
-            $db = array(
-                'trade_status'     => $type,
-                'trade_id_user_to' => $tradeWant->trade_id_user_from
-            );
 
-            $this->model_trades->updateTrade($tradeHave->trade_id, $db);
-
-            $db['trade_id_user_to'] = $tradeHave->trade_id_user_from;
-
-            $this->model_trades->updateTrade($tradeWant->trade_id, $db);
-
-            $db = array(
-                'trade_offer_status' => $type
+            $dbA = array(
+                'trade_status'     => '1',
+                'trade_id_user_to' => $tradeB->trade_id_user_from
             );
     
+            $this->model_trades->updateTrade($tradeA->trade_id, $dbA);
+    
+            $dbB = array(
+                'trade_status'     => '1',
+                'trade_id_user_to' => $tradeA->trade_id_user_from
+            );
+    
+            $this->model_trades->updateTrade($tradeB->trade_id, $dbB);
+    
+            $db = array(
+                'trade_offer_status'     => '1',
+            );
+
             $this->model_trades->updateTradeOffer($idTradeOffer, $db);
+
         } else {
-            $messageNotification = "Offer of <strong>$tradeWant->trade_title</strong> recused!";
+            $messageToA = "You refused to trade!";
+            $messageToB = "The owner of <strong>$tradeA->trade_title</strong> refused to trade with you!";
+            
 
             $db = array(
-                'trade_offer_status' => $type
+                'trade_offer_status' => '2'
             );
     
             $this->model_trades->updateTradeOffer($idTradeOffer, $db);
         }
 
         $dbNotification = array(
-            'notif_iduser'   => $tradeHave->trade_id_user_from,
-            'notif_date_add' => date('Y-m-d H:i:s'),
-            'notif_status'   => '0',
-            'notif_message'  => $messageNotification
+            'notif_iduser'          => $tradeA->trade_id_user_from,
+            'notif_date_add'        => date('Y-m-d H:i:s'),
+            'notif_status'          => '1',
+            'notif_message'         => $messageToA,
+            'notif_tradeoffer_id'   => $idTradeOffer
+        );
+
+        $this->notifications->addNotification($dbNotification);
+
+        $dbNotification = array(
+            'notif_iduser'          => $tradeB->trade_id_user_from,
+            'notif_date_add'        => date('Y-m-d H:i:s'),
+            'notif_status'          => '1',
+            'notif_message'         => $messageToB,
+            'notif_tradeoffer_id'   => $idTradeOffer
         );
 
         $this->notifications->addNotification($dbNotification);
@@ -232,6 +255,77 @@ class Exchange extends CI_Controller
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The exchange was successful!</div>");
             redirect('Home/listTrades');
         }
+    }
+
+    public function exchangeConfirmation($idNotification,$idTradeOffer = FALSE){
+        if(!$idTradeOffer) {
+            $this->notifications->updateNotification(array('notif_status' => '0'),$idNotification);
+            redirect('Home/listTrades');
+        }
+
+        $this->form_validation->set_rules('rating','Rating','required');        
+        
+        if($this->form_validation->run()) {
+            $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
+            if($tradeOffer->trade_offer_iduser_from != $this->session->userdata('idUser')) {
+                $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);
+            } else {
+                $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);            
+            }
+            
+            $this->db->trans_begin();
+            
+            $rating = $this->input->post('rating');
+            $idProfile = $userToBeRated->pro_id;
+            
+            $db_rating = array(
+                'rat_idprofile' => $idProfile,
+                'rat_rating' => $rating,
+                'rat_comments' => $this->input->post('comments'),
+            );
+            // var_dump($db_rating);die;
+            $this->rating->add($db_rating);
+            
+            $ratUser = $this->profiles->getRatingProfile($idProfile);
+            
+            $soma = $ratUser->pro_sum_rating + $rating;
+            $nbOfEvaluations = $ratUser->pro_number_of_evaluations + 1;
+            $newRating = $soma / $nbOfEvaluations;
+            
+            $db_rating = array(
+                'pro_sum_rating' => $soma,
+                'pro_number_of_evaluations' => $nbOfEvaluations,
+                'pro_rating' => $newRating
+            );
+            
+            $ratUser = $this->profiles->updateRatingProfile($idProfile,$db_rating);
+
+            $this->notifications->updateNotification(array('notif_status'=> '0'), $idNotification);
+            
+            if ($this->db->trans_status() === false) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while rating!</div>");
+                redirect('Exchange/exchangeConfirmation');
+            } else {
+                $this->db->trans_commit();
+                $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User rated with success!</div>");
+                redirect('Home/listTrades');
+            }
+        }
+
+        $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
+        $data['tradeOffer'] = $tradeOffer;
+        if($tradeOffer->trade_offer_iduser_from != $this->session->userdata('idUser')) {
+            $data['userToBeRated'] = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);
+        } else {
+            $data['userToBeRated'] = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);            
+        }
+        
+        $this->load->view('exchange_confirmation',$data);
+    }
+
+    public function declineExchange(){
+        
     }
 
     public function listTrades() {
