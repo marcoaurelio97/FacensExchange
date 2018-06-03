@@ -90,14 +90,20 @@ class Login extends CI_Controller
 		$this->load->view('login_view');
 	}
 
-	public function signOut()
+	public function signOut($redirect = false)
 	{
 		$this->session->unset_userdata('logged');
 		$this->session->unset_userdata('admin');
 		$this->session->unset_userdata('idUser');
 		$this->session->unset_userdata('offersNotifications');
-		$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User sign out with success!</div>");
-		redirect('Home/listTrades');
+
+		// if (!$redirect) {
+			$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User sign out with success!</div>");
+			redirect('Home/listTrades');
+		// } else {
+		// 	echo json_encode(array('url' => base_url('Home/listTrades')));
+		// 	die;
+		// }
 	}
 
 	public function verifyAdmin($id_user)
@@ -114,5 +120,55 @@ class Login extends CI_Controller
 
 	public function hasProfile($idUser){
 		return $this->model_users->hasProfile($idUser);
+	}
+
+	public function loginGoogle()
+	{
+		if ($this->input->post()) {
+			$idGoogle = $this->input->post('id');
+
+			$user = $this->model_users->checkUserGoogle($idGoogle);
+
+			if ($user) {
+				$this->session->set_userdata('logged', true);
+				$this->session->set_userdata('idUser', $user->user_id);
+				$this->session->set_userdata('userName', $user->user_username);
+				$this->session->set_userdata('loginGoogle', TRUE);
+			} else {
+				require_once dirname(__FILE__) . "../../libraries/class/user.php";
+				$user = new User();
+				$user->user_username = $this->input->post('name');
+				$user->user_email    = $this->input->post('email');
+				$user->user_password = NULL;
+				$user->user_date_add = date('Y-m-d H:i:s');
+				$user->user_idgoogle = $idGoogle;
+				$this->db->trans_begin();
+				
+				$this->model_users->addUser($user);
+				$idUser = $this->db->insert_id();
+
+				if ($this->db->trans_status() === false) {
+					$this->db->trans_rollback();
+				} else {
+					$this->db->trans_commit();
+					$this->session->set_userdata('logged', true);
+					$this->session->set_userdata('idUser', $idUser);
+					$this->session->set_userdata('userName', $user->user_username);
+					$this->session->set_userdata('loginGoogle', TRUE);
+				}
+			}
+
+			if (!$this->hasProfile($this->session->userdata('idUser'))) {
+				echo json_encode(array('url' => base_url('Profile/register')));
+				die;
+			}
+
+			// $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
+			// redirect('Home/listTrades');
+			echo json_encode(array('url' => base_url('Home/listTrades')));
+			die;
+		}
+
+		$this->load->view('login_view');
 	}
 }

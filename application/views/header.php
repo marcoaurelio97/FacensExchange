@@ -7,6 +7,7 @@
   <link rel="icon" href="<?= site_url('dist/img/icon_title.png') ?>" type="image/x-icon" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="google-signin-client_id" content="529581074299-ptsebcdfpuo5q6mjjmb5lscksg42p50q.apps.googleusercontent.com">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?= site_url('bower_components/bootstrap/dist/css/bootstrap.min.css') ?>">
   <!-- Font Awesome -->
@@ -35,7 +36,6 @@
   <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/themes/grey-theme/jquery.fonticonpicker.grey.min.css') ?>"/>
   <!-- Font -->
   <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/demo/fontello-7275ca86/css/fontello.css') ?>"/>
-  <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/demo/icomoon/icomoon.css') ?>"/>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -126,9 +126,17 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<<<<<<< HEAD
             <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) { ?>
+=======
+            <?php if ($this->session->userdata('logged')) { ?>
+                <?php if ($this->session->userdata('proPicture')) { ?>
+>>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
                    <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="user-image" alt="User Image">
-               <?php 
+                <?php } else { ?>
+                  <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
+                <?php } ?>
+            <?php 
             } else { ?>            
                       <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
               <?php 
@@ -147,8 +155,17 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
+<<<<<<< HEAD
               <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) { ?>                
                    <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image">      
+=======
+              <?php if ($this->session->userdata('logged')) { ?>                
+                <?php if ($this->session->userdata('proPicture')) { ?>
+                   <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="user-image" alt="User Image">
+                <?php } else { ?>
+                  <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="user-image" alt="User Image">
+                <?php } ?>
+>>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
                <?php 
             } else { ?>                  
                       <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="img-circle" alt="User Image">      
@@ -194,7 +211,12 @@
                         <?php if ($this->session->userdata('idUser') <> 1) : ?>
                           <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
                         <?php endif; ?>
-                        <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>
+                        <?php if ($this->session->userdata('loginGoogle')) : ?>
+                          <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>
+                          <!-- <a href="#" class="btn btn-danger btn-flat" onclick="signOut();">Sign out</a> -->
+                        <?php else : ?>
+                          <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>
+                        <?php endif; ?>
                       <?php else : ?>
                         <a href="<?= site_url('Login') ?>" class="btn btn-success btn-flat">Sign in</a>
                       <?php endif; ?>
@@ -215,7 +237,11 @@
       <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) : ?>  
         <div class="user-panel">
         <div class="pull-left image">
-           <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image"> 
+            <?php if ($this->session->userdata('proPicture')) { ?>
+                   <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image">
+                <?php } else { ?>
+                  <img src="<?= site_url('dist/img/user-default.jpg') ?>" class="img-circle" alt="User Image">
+                <?php } ?>
         </div>
         <div class="pull-left info">
           <p><?php echo $this->session->userdata('userName'); ?></p>

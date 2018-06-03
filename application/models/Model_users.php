@@ -99,4 +99,16 @@ class Model_users extends CI_Model {
 
         return true;
     }
+
+    public function checkUserGoogle($idGoogle)
+    {
+        $this->db->where('user_idgoogle', $idGoogle);
+        $user = $this->db->get('users');
+
+        if($user && $user->num_rows() > 0) {
+            return $user->row();
+        }
+
+        return FALSE;
+    }
 }

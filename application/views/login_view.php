@@ -47,11 +47,9 @@
                       Facebook</a>
                     <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
                       Google+</a>
+                      <div class="g-signin2" data-onsuccess="onSignIn"></div>
                   </div>
                   <!-- /.social-auth-links -->
-              
-                  <a href="#">I forgot my password</a><br>
-                  <a href="register.html" class="text-center">Register a new membership</a>
                 </div>  </div>  
                 </div>
 </div>
@@ -102,8 +100,6 @@
           <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
             Google+</a>
         </div>
-    
-        <a href="login.html" class="text-center">I already have a membership</a>
       </div>
   </div>
   </div>
@@ -114,3 +110,23 @@
 <!-- ./wrapper -->
 
 <?php $this->load->view('footer') ?>
+
+<script>
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+
+    var data        = {};
+    data.id         = profile.getId();
+    data.name       = profile.getName();
+    data.givenName  = profile.getGivenName();
+    data.familyName = profile.getFamilyName();
+    data.imageURL   = profile.getImageUrl();
+    data.email      = profile.getEmail();
+
+    url = "<?= base_url('Login/loginGoogle'); ?>";
+
+    $.post(url, data, function(resp){
+      window.location.href = resp.url;
+    }, 'json');
+  }
+</script>

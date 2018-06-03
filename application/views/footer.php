@@ -39,6 +39,21 @@
 <script src="<?= site_url('bower_components/iconpicker/jquery.fonticonpicker.min.js') ?>"></script>
 <script src="<?= site_url('dist/js/iconpicker.js') ?>"></script>
 <script src="<?= site_url('dist/js/jquery.mask.min.js') ?>"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script>
+  function signOut() {
+    debugger;
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      url = "<?= base_url('Login/SignOut/0'); ?>";
+
+      $.post(url, data, function(resp){
+        window.location.href = resp.url;
+      }, 'json');
+    });
+  }
+</script>
 
 </body>
 </html>

@@ -10,4 +10,5 @@ class User {
     public $user_rg;
     public $user_cpf;
     public $user_role = "Normal";
+    public $user_idgoogle;
 }

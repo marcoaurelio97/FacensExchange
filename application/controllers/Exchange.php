@@ -19,15 +19,18 @@ class Exchange extends CI_Controller
     {
         $current = ($current == 'FALSE') ? FALSE : TRUE;
         $data['idUserLogged'] = $this->session->userdata('idUser');
+<<<<<<< HEAD
         $data['trade'] = $this->model_trades->getTrades($idTrade,FALSE,TRUE,$current);
         // var_dump($data['trade']);die;
+=======
+        $data['trade'] = $this->model_trades->getTradeDetails($idTrade);
+>>>>>>> 4212ab69ec64de8c7846799e9b2ea3abd31e5b93
         $this->load->view('trade_details_view', $data);
     }
 
     public function addTrade()
     {
         if ($this->input->post()) {
-            // var_dump($_FILES);die;
             require_once dirname(__FILE__) . "../../libraries/class/trade.php";
             $trade = new Trade();
             $trade->trade_id_user_from = $this->session->userdata('idUser');
@@ -233,7 +236,7 @@ class Exchange extends CI_Controller
         }
     }
 
-    public function exchangeConfirmation($idNotification,$idTradeOffer = FALSE){
+    public function exchangeConfirmation($idNotification, $idTradeOffer = FALSE){
         if(!$idTradeOffer) {
             $this->notifications->updateNotification(array('notif_status' => '0'),$idNotification);
             redirect('Home/listTrades');
@@ -295,6 +298,7 @@ class Exchange extends CI_Controller
 
         $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
         $data['tradeOffer'] = $tradeOffer;
+
         if($tradeOffer->trade_offer_iduser_from != $this->session->userdata('idUser')) {
             $data['userToBeRated'] = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);
         } else {
