@@ -15,10 +15,12 @@ class Exchange extends CI_Controller
         $this->load->model('model_upload');
     }
 
-    public function tradeDetails($idTrade)
+    public function tradeDetails($idTrade,$current = 'TRUE')
     {
+        $current = ($current == 'FALSE') ? FALSE : TRUE;
         $data['idUserLogged'] = $this->session->userdata('idUser');
-        $data['trade'] = $this->model_trades->getTrades($idTrade);
+        $data['trade'] = $this->model_trades->getTrades($idTrade,FALSE,TRUE,$current);
+        // var_dump($data['trade']);die;
         $this->load->view('trade_details_view', $data);
     }
 
@@ -157,13 +159,13 @@ class Exchange extends CI_Controller
 
     public function responseOffer($reply, $idTradeOffer)
     {
-        // var_dump($reply,$idTradeOffer);die;
         $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
         $tradeA  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
         $tradeB  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
-
+        
         $this->db->trans_begin();
         
+        // var_dump($tradeA,$tradeB);die;
         if($reply == '1'){
             $messageToA = "You just accepted the offer. Don't forget to rate the other user";
             $messageToB = "The owner of <strong>$tradeA->trade_title</strong> accepted your trade! Don't forget to rate the other user";
@@ -243,8 +245,11 @@ class Exchange extends CI_Controller
             $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
             if($tradeOffer->trade_offer_iduser_from != $this->session->userdata('idUser')) {
                 $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);
+                $userThatRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);
+                
             } else {
-                $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);            
+                $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);
+                $userThatRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);                  
             }
             
             $this->db->trans_begin();
@@ -256,6 +261,7 @@ class Exchange extends CI_Controller
                 'rat_idprofile' => $idProfile,
                 'rat_rating' => $rating,
                 'rat_comments' => $this->input->post('comments'),
+                'rat_idprofile_sender' => $userThatRated->pro_id,
             );
             // var_dump($db_rating);die;
             $this->rating->add($db_rating);
@@ -296,10 +302,6 @@ class Exchange extends CI_Controller
         }
         
         $this->load->view('exchange_confirmation',$data);
-    }
-
-    public function declineExchange(){
-        
     }
 
     public function listTrades() {

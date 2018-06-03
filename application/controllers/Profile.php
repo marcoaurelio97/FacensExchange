@@ -166,4 +166,58 @@ class Profile extends CI_Controller
         $data['title']   = 'Edit User Profile';
         $this->load->view('profile',$data);
     }
+
+    public function ViewProfile($idUser) {
+        $data['profile'] = $this->profiles->getProfileByUserId($idUser);
+        $data['roundRating'] = number_format($data['profile']->pro_rating,0);
+        
+        // $roundRating = number_format($data['profile']->pro_rating,0);
+
+        // if($roundRating == '1') {
+        //     $data['roundRating']['1'] = 'glyphicon-star';
+        //     $data['roundRating']['2'] = 'glyphicon-star-empty';
+        //     $data['roundRating']['3'] = 'glyphicon-star-empty'; 
+        //     $data['roundRating']['4'] = 'glyphicon-star-empty'; 
+        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
+            
+        // }
+        // else if($roundRating == '2') {
+        //     $data['roundRating']['1'] = 'glyphicon-star';
+        //     $data['roundRating']['2'] = 'glyphicon-star';
+        //     $data['roundRating']['3'] = 'glyphicon-star-empty'; 
+        //     $data['roundRating']['4'] = 'glyphicon-star-empty'; 
+        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
+        // }
+        // else if($roundRating == '3') {
+        //     $data['roundRating']['1'] = 'glyphicon-star';
+        //     $data['roundRating']['2'] = 'glyphicon-star';
+        //     $data['roundRating']['3'] = 'glyphicon-star'; 
+        //     $data['roundRating']['4'] = 'glyphicon-star-empty'; 
+        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
+        // }
+        // else if($roundRating == '4') {
+        //     $data['roundRating']['1'] = 'glyphicon-star';
+        //     $data['roundRating']['2'] = 'glyphicon-star';
+        //     $data['roundRating']['3'] = 'glyphicon-star'; 
+        //     $data['roundRating']['4'] = 'glyphicon-star'; 
+        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
+        // }
+        // else if($roundRating == '5') {
+        //     $data['roundRating']['1'] = 'glyphicon-star';
+        //     $data['roundRating']['2'] = 'glyphicon-star';
+        //     $data['roundRating']['3'] = 'glyphicon-star'; 
+        //     $data['roundRating']['4'] = 'glyphicon-star'; 
+        //     $data['roundRating']['5'] = 'glyphicon-star'; 
+        // }
+        // var_dump($data);die;
+        $data['title'] = 'View Profile';
+        $this->load->view('view_profile',$data);
+    }
+
+    public function Comments($idProfile){
+        $data['comments'] = $this->profiles->getCommentsProfile($idProfile);
+        // var_dump($data['comments']);die;
+        $this->load->view('comments',$data);
+        
+    }
 }

@@ -13,6 +13,7 @@ class Model_profiles extends CI_Model {
     }
 
     public function getProfileByUserId($idUser) {
+
         $this->db->where('user_id',$idUser);
         $this->db->join('users','user_pro_id = pro_id');
         $this->db->join('profiles_address','address_pro_id = pro_id');
@@ -51,6 +52,20 @@ class Model_profiles extends CI_Model {
         }
 
         return FALSE;
+    }
+
+    public function getCommentsProfile($idProfile) {
+        $this->db->where('rat_idprofile',$idProfile);
+        $this->db->join('profiles','rat_idprofile_sender = pro_id','left');
+        $this->db->join('users','user_pro_id = pro_id','left');        
+        $result = $this->db->get('profiles_rating');
+        // print_r($this->db->last_query());die;
+
+        if($result && $result->num_rows() > 0) {
+            return $result->result();
+        }
+        
+        return false;
     }
 
     public function updateRatingProfile($idProfile, $db_rating){

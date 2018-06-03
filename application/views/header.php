@@ -126,7 +126,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <?php if ($this->session->userdata('logged')) { ?>
+            <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) { ?>
                    <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="user-image" alt="User Image">
                <?php 
             } else { ?>            
@@ -147,7 +147,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-              <?php if ($this->session->userdata('logged')) { ?>                
+              <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) { ?>                
                    <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image">      
                <?php 
             } else { ?>                  
@@ -212,7 +212,7 @@
     <section class="sidebar">
       <!-- Sidebar user panel -->
 
-      <?php if ($this->session->userdata('logged')) : ?>  
+      <?php if ($this->session->userdata('logged') AND !is_null($this->session->userdata('proPicture'))) : ?>  
         <div class="user-panel">
         <div class="pull-left image">
            <img src="<?= site_url('dist/img/'.$this->session->userdata('proPicture')) ?>" class="img-circle" alt="User Image"> 

@@ -73,6 +73,7 @@
                   <div class="col-xs-12">                   
                     <a class="btn btn-success btn-lg btn-flat" href="<?= site_url('Exchange/chooseOffer/'.$trade->trade_id) ?>"><i class="fa fa-exchange"></i> Exchange</a>
                     <a class="btn btn-primary btn-lg btn-flat" href="#"><i class="fa fa-commenting-o"></i> Contact</a>
+                    <a class="btn btn-info btn-lg btn-flat" href="<?= site_url('Profile/viewProfile/'.$trade->user_id) ?>"><i class="fa fa-commenting-o"></i> See <?= $trade->user_username?> Profile</a>                    
                   </div>
                 </div>
               <?php endif; ?>

@@ -13,7 +13,9 @@ class User extends CI_Controller
     {
         $idUser = $this->session->userdata('idUser');
 
-        $data['trades'] = $this->model_trades->getTradesUser($idUser);
+        $data['tradesCurrent'] = $this->model_trades->getTradesUser($idUser,TRUE);
+        $data['tradesFinalized'] = $this->model_trades->getTradesUser($idUser,FALSE);
+        
 
         $this->load->view('trades_user_view', $data);
     }
