@@ -16,7 +16,7 @@ class Model_trades extends CI_Model {
         $this->db->update('trades',$array);
     }
 
-    public function getTrades($idTrade = false, $idCategory = false, $getUser= FALSE){
+    public function getTrades($idTrade = false, $idCategory = false, $getUser = FALSE){
         $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
         $this->db->join('categories', 'category_id = trade_id_category', 'left');
 
@@ -163,5 +163,18 @@ class Model_trades extends CI_Model {
     public function deleteTrade($idTrade){
         $this->db->where('trade_id', $idTrade);
         $this->db->update('trades', array('trade_status' => '2'));
+    }
+
+    public function getTradeDetails($idTrade) {
+        $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
+        $this->db->join('categories', 'category_id = trade_id_category', 'left');
+        $this->db->where('trade_id', $idTrade);
+        $trade = $this->db->get('trades');
+
+        if($trade && $trade->num_rows() > 0){
+            return $trade->row();
+        }
+
+        return FALSE;
     }
 }
