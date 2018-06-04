@@ -181,14 +181,11 @@
               <?php if ($this->session->userdata('logged')) : ?>
               <li class="user-body">
                 <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
+                  <div class="col-xs-6 text-center">
+                    <a href="#"><i class="fa fa-fw fa-star"></i> Favorites</a>
                   </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="<?= site_url('User/listTrades') ?>">Exchanges</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
+                  <div class="col-xs-6 text-center">
+                    <a href="<?= site_url('User/listTrades') ?>"><i class="fa fa-fw fa-exchange"></i> Exchanges</a>
                   </div>
                 </div>
                 <!-- /.row -->
