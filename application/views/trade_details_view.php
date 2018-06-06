@@ -59,13 +59,14 @@
                   </ul>
                 </div>
 
+              <?php if($wishes):?>
               <strong><i class="fa fa-pencil margin-r-5"></i>Interests</strong>
-              <p>
-                <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                <span class="label label-success"><i class="fa fa-book"></i></span>
-                <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                <span class="label label-warning"><i class="fa fa-tv "></i></span>
-              </p>
+                <p>
+                  <?php foreach($wishes AS $row):?>
+                    <i class="<?=$row->typ_class?>" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
+                  <?php endforeach;?>
+                </p>              
+              <?php endif;?>                                          
 
               <?php if (($trade->trade_id_user_from != $idUserLogged) && ($idUserLogged <> 1) && (!is_null($idUserLogged))) : ?>
                 <hr>

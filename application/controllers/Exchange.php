@@ -12,6 +12,7 @@ class Exchange extends CI_Controller
         $this->load->model('model_notifications', 'notifications');
         $this->load->model('model_profiles', 'profiles');
         $this->load->model('model_rating', 'rating');
+        $this->load->model('model_wishes', 'wishes');
         $this->load->model('model_upload');
     }
 
@@ -20,6 +21,7 @@ class Exchange extends CI_Controller
         $current = ($current == 'FALSE') ? FALSE : TRUE;
         $data['idUserLogged'] = $this->session->userdata('idUser');
         $data['trade'] = $this->model_trades->getTrades($idTrade,FALSE,TRUE,$current);
+        $data['wishes'] = $this->wishes->getWishesById($idTrade);
         // var_dump($data['trade']);die;
         $this->load->view('trade_details_view', $data);
     }
@@ -35,12 +37,23 @@ class Exchange extends CI_Controller
             $trade->trade_title = $this->input->post('title');
             $trade->trade_description = $this->input->post('description');
             $trade->trade_id_category = $this->input->post('category');
-
+            
             $this->db->trans_begin();
-
+            
             $this->model_trades->addTrade($trade);
             $idTrade = $this->db->insert_id();
-
+            
+            $wishes = $this->input->post('wishes');
+            
+            foreach($wishes AS $key=>$value){
+                $db_wishes[] = array(
+                    'tra_wish_trade' => $idTrade,
+                    'tra_wish_wish'  => $value
+                )
+            ;}
+            $this->wishes->addWishes($db_wishes);
+                // var_dump($db_wishes);die;
+                
             if ($_FILES) {
                 $this->model_upload->uploadImagesTrades($idTrade);
             }
@@ -58,6 +71,7 @@ class Exchange extends CI_Controller
 
         $this->load->model('model_categories');
         $data['add'] = TRUE;
+        $data['wishes'] = $this->wishes->getWishes();        
         $data['actionForm'] = site_url('Exchange/addTrade');
         $data['categories'] = $this->model_categories->getCategoriesArray();
         $this->load->view('add_exchange_view', $data);

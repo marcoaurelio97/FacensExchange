@@ -14,6 +14,8 @@ class Home extends CI_Controller {
 		$this->load->model('model_categories');
 		$this->load->model('model_notifications');
 		$this->load->model('model_profiles');
+		$this->load->model('model_wishes','wishes');
+		
 
 		$idUser = $this->session->userdata('idUser') ? $this->session->userdata('idUser') : FALSE;
 
@@ -27,6 +29,10 @@ class Home extends CI_Controller {
 		}
 
 		$data['trades'] = $this->model_trades->getTrades(FALSE, $idCategory);
+		foreach($data['trades'] AS $trade){
+			$trade->wishes = $this->wishes->getWishesById($trade->trade_id);
+		}
+		// var_dump($data['trades']);die;
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));

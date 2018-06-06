@@ -1,5 +1,24 @@
 <?php $this->load->view('header') ?>
 
+<style>
+.fancy-checkbox input[type="checkbox"],
+.fancy-checkbox .checked {
+    display: none;
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .checked
+{
+    /* display: inline-block; */
+    color: blue;
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .unchecked
+{
+    /* display: none; */
+    color: red;
+    font-size: 1.5em;    
+}
+</style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -35,16 +54,24 @@
                         <strong><i class="fa fa-th-list margin-r-5"></i>Category</strong>
                         <?php echo form_dropdown('category', $categories, (isset($trade) ? $trade->trade_id_category : ''), 'id="category" class="form-control" required') ?>
                       </div>
-                      <strong><i class="fa fa-star margin-r-5"></i>Interests</strong>
-                      <div class="form-group">
-                        <a href="#"><span class="label label-danger pull-left"><i class="fa fa-gamepad"></i></span></a>
-                        <a href="#"><span class="label label-success pull-left"><i class="fa fa-book"></i></span></a>
-                        <a href="#"><span class="label label-info pull-left"><i class="fa fa-mobile-phone"></i></span></a>
-                        <a href="#"><span class="label label-warning pull-left"><i class="fa fa-tv"></i></span></a>
-                        <a href="#"><span class="label label-danger pull-left"><i class="fa fa-futbol-o"></i></span></a>
-                        <a href="#"><span class="label label-success pull-left"><i class="fa fa-automobile"></i></span></a>
-                        <a href="#"><span class="label label-info pull-left"><i class="fa fa-motorcycle"></i></span></a>
-                      </div>
+                      <?php if($wishes):?>
+                        <div class="form-group">
+                        <strong><i class="fa fa-pencil margin-r-5"></i>Interests</strong>
+                            <p>
+                              <?php
+                              $id = 0;
+                              foreach($wishes AS $row):?>
+                              <label class="fancy-checkbox">
+                                <input type="checkbox" name="wishes[]"  value="<?=$id?>"></input>
+                                  <i class="<?=$row->typ_class?> unchecked" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
+                                  <i class="<?=$row->typ_class?> checked" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
+                              </label>
+                              <?php
+                              $id++;
+                              endforeach;?>
+                            </p>             
+                      <?php endif;?>
+                    </div>
                   <br>
                   <div class="form-group">
                     <p><strong><i class="fa fa-file-image-o margin-r-5"></i> Images</strong></p>
@@ -72,3 +99,9 @@
   </div>
 
 <?php $this->load->view('footer') ?>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>

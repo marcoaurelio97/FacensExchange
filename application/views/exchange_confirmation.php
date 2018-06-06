@@ -12,7 +12,7 @@
         <?= $this->session->userdata('item'); ?>
         <div class="row">
             <div class="col-md-12" style="min-height: 500px;">
-                <h2>Rate the user <?= $nameUserToBeRated ?></h2>
+                <h2>Rate the user <?= $userToBeRated->pro_name ?></h2>
                 <form action="" method="post" id="form">
                     <div class="col-lg-12">
                         <div class="star-rating">

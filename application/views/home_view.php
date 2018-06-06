@@ -44,10 +44,13 @@
                     <div class="box-body"  style="margin-left:10px;">
                         <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
                         <p>
-                          <span class="label label-danger"><i class="fa fa-gamepad"></i></span>
-                          <span class="label label-success"><i class="fa fa-book"></i></span>
-                          <span class="label label-info"><i class="fa fa-mobile-phone"></i></span>
-                          <span class="label label-warning"><i class="fa fa-tv "></i></span>
+                          <?php if($row->wishes): ?>
+                            <?php foreach($row->wishes AS $teste):?>
+                              <i class="<?=$teste->typ_class?>" data-toggle="tooltip" title="<?=$teste->typ_name?>"></i>
+                            <?php endforeach;?>
+                          <?php else: ?>
+                            <?='There is no interests'?>
+                          <?php endif;?>
                         </p>
                       </div>
 

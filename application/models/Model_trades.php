@@ -18,7 +18,7 @@ class Model_trades extends CI_Model {
 
     public function getTrades($idTrade = false, $idCategory = false, $getUser= FALSE, $current=TRUE){
         $this->db->join('trade_pictures', 'trade_id = trade_pic_idtrade', 'left');
-        $this->db->join('categories', 'category_id = trade_id_category', 'left');
+        $this->db->join('categories', 'category_id = trade_id_category', 'left');     
 
         if($getUser) {
             $this->db->join('users', 'trade_id_user_from = user_id', 'left');          
