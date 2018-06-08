@@ -43,13 +43,8 @@
               
                   <div class="social-auth-links text-center">
                     <p>- OR -</p>
-                    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-                      Facebook</a>
-                    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-                      Google+</a>
-                      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                      <div class="g-signin2" data-onsuccess="onSignIn" data-width="720" data-theme="dark" data-longtitle="true"></div>
                   </div>
-                  <!-- /.social-auth-links -->
                 </div>  </div>  
                 </div>
 </div>
@@ -93,13 +88,7 @@
           </div>
         </form>
     
-        <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
-            Facebook</a>
-          <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
-            Google+</a>
-        </div>
+        
       </div>
   </div>
   </div>

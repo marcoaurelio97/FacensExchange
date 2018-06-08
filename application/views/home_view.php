@@ -62,7 +62,7 @@
           } ?>
             <?php 
           } else { ?>
-              <div class="container">
+              <div class="container pull-left" style="width:100%;">
                   <div class='alert alert-info alert-dismissible'>
                       No trades available
                   </div>

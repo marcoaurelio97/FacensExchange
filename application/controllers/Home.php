@@ -53,7 +53,13 @@ class Home extends CI_Controller {
 		$this->load->model('model_users', 'users');
 
 		$data['countTrades']    = $this->trades->getCountTrades(array('0', '1'));
-		$data['countFinalized'] = number_format((($this->trades->getCountTrades(array('1'))/$data['countTrades'])*100), 0);
+
+		$aux = $data['countTrades'];
+
+		if($aux == 0)
+		$aux = 1;
+		
+		$data['countFinalized'] = number_format((($this->trades->getCountTrades(array('1'))/$aux)*100), 0);
 		$data['countUsers']		= $this->users->getCountUsers(array('1'));
 
 		$this->load->view('dashboard', $data);
