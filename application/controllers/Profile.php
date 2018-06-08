@@ -167,50 +167,12 @@ class Profile extends CI_Controller
         $this->load->view('profile',$data);
     }
 
-    public function ViewProfile($idUser) {
-        $data['profile'] = $this->profiles->getProfileByUserId($idUser);
+    public function ViewProfile($idProfile) {
+        $data['profile'] = $this->profiles->getProfileById($idProfile);
         $data['roundRating'] = number_format($data['profile']->pro_rating,0);
-        
-        // $roundRating = number_format($data['profile']->pro_rating,0);
-
-        // if($roundRating == '1') {
-        //     $data['roundRating']['1'] = 'glyphicon-star';
-        //     $data['roundRating']['2'] = 'glyphicon-star-empty';
-        //     $data['roundRating']['3'] = 'glyphicon-star-empty'; 
-        //     $data['roundRating']['4'] = 'glyphicon-star-empty'; 
-        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
-            
-        // }
-        // else if($roundRating == '2') {
-        //     $data['roundRating']['1'] = 'glyphicon-star';
-        //     $data['roundRating']['2'] = 'glyphicon-star';
-        //     $data['roundRating']['3'] = 'glyphicon-star-empty'; 
-        //     $data['roundRating']['4'] = 'glyphicon-star-empty'; 
-        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
-        // }
-        // else if($roundRating == '3') {
-        //     $data['roundRating']['1'] = 'glyphicon-star';
-        //     $data['roundRating']['2'] = 'glyphicon-star';
-        //     $data['roundRating']['3'] = 'glyphicon-star'; 
-        //     $data['roundRating']['4'] = 'glyphicon-star-empty'; 
-        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
-        // }
-        // else if($roundRating == '4') {
-        //     $data['roundRating']['1'] = 'glyphicon-star';
-        //     $data['roundRating']['2'] = 'glyphicon-star';
-        //     $data['roundRating']['3'] = 'glyphicon-star'; 
-        //     $data['roundRating']['4'] = 'glyphicon-star'; 
-        //     $data['roundRating']['5'] = 'glyphicon-star-empty'; 
-        // }
-        // else if($roundRating == '5') {
-        //     $data['roundRating']['1'] = 'glyphicon-star';
-        //     $data['roundRating']['2'] = 'glyphicon-star';
-        //     $data['roundRating']['3'] = 'glyphicon-star'; 
-        //     $data['roundRating']['4'] = 'glyphicon-star'; 
-        //     $data['roundRating']['5'] = 'glyphicon-star'; 
-        // }
-        // var_dump($data);die;
+        $data['loggedProf'] = $this->profiles->getProfileByUserId($this->session->userdata('idUser'))->pro_id;
         $data['title'] = 'View Profile';
+        $data['notFavorite'] = $this->profiles->checkFavorite($idProfile,$data['loggedProf']);
         $this->load->view('view_profile',$data);
     }
 
@@ -219,5 +181,44 @@ class Profile extends CI_Controller
         // var_dump($data['comments']);die;
         $this->load->view('comments',$data);
         
+    }
+
+    public function addFavorite($idProfile, $idFavorite) {
+        // var_dump($idProfile,$idFavorite);die;
+        $db = array(
+            'fav_id_profile'        => $idProfile,
+            'fav_id_fav_profile'    => $idFavorite,
+            'fav_status' => '1'            
+        );
+        
+        $hasPreviousData = $this->profiles->hasPreviousData($idFavorite,$idProfile);
+        if(!$hasPreviousData) {
+            $this->profiles->addFavorite($db);
+        } else {
+            $this->profiles->updateFavorite($db,$hasPreviousData);            
+        }
+
+
+        $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile added to your favorites with success!</div>");
+        redirect('Profile/viewProfile/'.$idFavorite);
+    }
+
+    public function removeFavorite($idProfile, $idFavorite) {
+        // var_dump($idProfile,$idFavorite);die;
+        $db = array(
+            'fav_status' => '0'
+        );
+        $this->profiles->removeFavorite($db,$idFavorite,$idProfile);
+
+        $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile removed to your favorites with success!</div>");
+        redirect('Profile/viewProfile/'.$idFavorite);
+    }
+
+    public function Favorites($idUser = FALSE){
+        $idUser = ($idUser) ? $idUser : $this->session->userdata('idUser');
+        $idProfile = $this->profiles->getProfileByUserId($idUser)->pro_id;
+        $data['favUsers'] = $this->profiles->getFavoriteUsers($idProfile);
+        // var_dump($data);die;
+        $this->load->view('favorites',$data);
     }
 }

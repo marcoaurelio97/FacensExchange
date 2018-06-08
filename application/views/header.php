@@ -179,7 +179,7 @@
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-6 text-center">
-                    <a href="#"><i class="fa fa-fw fa-star"></i> Favorites</a>
+                    <a href="<?= site_url('Profile/favorites/'.$this->session->userdata('idUser')) ?>"><i class="fa fa-fw fa-star"></i> Favorites</a>
                   </div>
                   <div class="col-xs-6 text-center">
                     <a href="<?= site_url('User/listTrades') ?>"><i class="fa fa-fw fa-exchange"></i> Exchanges</a>

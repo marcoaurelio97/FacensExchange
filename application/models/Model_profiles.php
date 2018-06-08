@@ -28,6 +28,22 @@ class Model_profiles extends CI_Model {
         return false;
     }
 
+    public function getProfileById($idProfile) {
+
+        $this->db->where('pro_id',$idProfile);
+        $this->db->join('users','user_pro_id = pro_id');
+        $this->db->join('profiles_address','address_pro_id = pro_id');
+        $this->db->join('profiles_telephone','tel_pro_id = pro_id');
+
+        $result = $this->db->get('profiles');
+
+        if($result && $result->num_rows() > 0) {
+            return $result->row();
+        }
+        
+        return false;
+    }
+
     public function getRatingProfile($idProfile) {
         $this->db->select('pro_number_of_evaluations, pro_sum_rating, pro_rating');
         $this->db->where('pro_id',$idProfile);
@@ -76,5 +92,64 @@ class Model_profiles extends CI_Model {
     public function insertPicProfile($db,$idProfile){
         $this->db->where('pro_id',$idProfile);
         $this->db->update('profiles', $db);
+    }
+
+    public function addFavorite($db) {
+        $this->db->insert('profiles_favorites', $db);
+    }
+
+    public function updateFavorite($db,$idFavorite) {
+        $this->db->where('fav_id',$idFavorite);        
+        $this->db->update('profiles_favorites', $db);
+    }
+    
+    public function removeFavorite($db,$idProfile,$idLogged) {
+        $this->db->where('fav_id_profile',$idLogged);
+        $this->db->where('fav_id_fav_profile',$idProfile);
+        $this->db->update('profiles_favorites', $db);
+    }
+
+    public function checkFavorite($idProfile,$idLogged) {
+        $this->db->where('fav_id_profile',$idLogged);
+        $this->db->where('fav_id_fav_profile',$idProfile);
+        $this->db->where('fav_status','1');
+        
+        
+        $result = $this->db->get('profiles_favorites');
+
+        if($result && $result->num_rows() > 0) {
+            return FALSE;
+        }
+        
+        return TRUE;
+    }
+    public function hasPreviousData($idProfile,$idLogged) {
+        $this->db->where('fav_id_profile',$idLogged);
+        $this->db->where('fav_id_fav_profile',$idProfile);
+        $this->db->where('fav_status','0');
+        
+        $result = $this->db->get('profiles_favorites');
+
+        if($result && $result->num_rows() > 0) {
+            return $result->row()->fav_id;
+        }
+        
+        return FALSE;
+    }
+    
+
+    public function getFavoriteUsers($idProfile){
+        $this->db->where('fav_id_profile',$idProfile);
+        $this->db->where('fav_status','1');        
+        $this->db->join('profiles_favorites','fav_id_fav_profile = pro_id');
+        $this->db->join('users','user_pro_id = pro_id');
+        
+        $result = $this->db->get('profiles');
+
+        if($result && $result->num_rows() > 0) {
+            return $result->result();
+        }
+        
+        return FALSE;
     }
 }
