@@ -7,6 +7,8 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->model('model_trades');
+        $this->load->model('model_wishes','wishes');
+        
     }
 
     public function listTrades()
@@ -14,7 +16,13 @@ class User extends CI_Controller
         $idUser = $this->session->userdata('idUser');
 
         $data['tradesCurrent'] = $this->model_trades->getTradesUser($idUser,TRUE);
+        foreach($data['tradesCurrent'] AS $trade){
+			$trade->wishes = $this->wishes->getWishesById($trade->trade_id);
+		}
         $data['tradesFinalized'] = $this->model_trades->getTradesUser($idUser,FALSE);
+        foreach($data['tradesFinalized'] AS $trade){
+			$trade->wishes = $this->wishes->getWishesById($trade->trade_id);
+		}
 
         $this->load->view('trades_user_view', $data);
     }
