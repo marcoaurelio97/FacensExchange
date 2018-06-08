@@ -59,7 +59,7 @@
         <div class="col-md-8">                
           <!-- Info Boxes Style 2 -->
           <div class="info-box bg-yellow">
-            <span class="info-box-icon"><i class="ion ion-ios-book-outline"></i></span>
+          <span class="info-box-icon"><i class="fa fa-book"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Books</span>
@@ -76,7 +76,7 @@
           </div>
           <!-- /.info-box -->
           <div class="info-box bg-green">
-            <span class="info-box-icon"><i class="ion ion-ios-car-outline"></i></span>
+          <span class="info-box-icon"><i class="fa fa-car"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Cars</span>
@@ -93,7 +93,7 @@
           </div>
           <!-- /.info-box -->
           <div class="info-box bg-red">
-            <span class="info-box-icon"><i class="ion ion-ios-laptop-outline"></i></span>
+          <span class="info-box-icon"><i class="fa fa-laptop"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Technology</span>
@@ -110,7 +110,7 @@
           </div>
           <!-- /.info-box -->
           <div class="info-box bg-aqua">
-            <span class="info-box-icon"><i class="ion ion-ios-game-controller-outline"></i></span>
+          <span class="info-box-icon"><i class="fa fa-gamepad"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Games</span>
