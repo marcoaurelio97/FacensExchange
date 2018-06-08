@@ -232,7 +232,8 @@ class Exchange extends CI_Controller
             'notif_iduser'          => $tradeB->trade_id_user_from,
             'notif_date_add'        => date('Y-m-d H:i:s'),
             'notif_status'          => '1',
-            'notif_message'         => $messageToB
+            'notif_message'         => $messageToB,
+            'notif_tradeoffer_id'   => $idTradeOffer            
         );
 
         $this->notifications->addNotification($dbNotification);
