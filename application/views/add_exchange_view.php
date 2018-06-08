@@ -59,7 +59,7 @@
                         <strong><i class="fa fa-pencil margin-r-5"></i>Interests</strong>
                             <p>
                               <?php
-                              $id = 0;
+                              $id = 1;
                               foreach($wishes AS $row):?>
                               <label class="fancy-checkbox">
                                 <input type="checkbox" name="wishes[]"  value="<?=$id?>"></input>

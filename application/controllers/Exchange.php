@@ -22,7 +22,8 @@ class Exchange extends CI_Controller
         $data['idUserLogged'] = $this->session->userdata('idUser');
         $data['trade'] = $this->model_trades->getTrades($idTrade,FALSE,TRUE,$current);
         $data['wishes'] = $this->wishes->getWishesById($idTrade);
-        // var_dump($data['trade']);die;
+        $data['idProfile'] = $this->profiles->getProfileByUserId($data['trade']->user_id)->pro_id;
+        // var_dump($data);die;
         $this->load->view('trade_details_view', $data);
     }
 

@@ -79,11 +79,13 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <div class="panel-footer">
-                                        <span class="pull-right">
-                                        <a href="#" class="btn btn-primary">Add to favorites</a>
-                                        </span>
-                                    </div>
+                                    <?php if($notFavorite):?>
+                                        <div class="panel-footer">
+                                            <span class="pull-right">
+                                            <a href="<?= site_url('Profile/addFavorite/'.$loggedProf.'/'.$profile->pro_id)?>" class="btn btn-primary">Add to favorites</a>
+                                            </span>
+                                        </div>
+                                    <?php endif;?>
                                 </div>
                             </div>
                         </div>
