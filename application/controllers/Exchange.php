@@ -249,7 +249,7 @@ class Exchange extends CI_Controller
     }
 
     public function exchangeConfirmation($idNotification, $idTradeOffer = FALSE){
-        if($idTradeOffer) {
+        if(!$idTradeOffer) {
             $this->notifications->updateNotification(array('notif_status' => '0'),$idNotification);
             redirect('Home/listTrades');
         }
