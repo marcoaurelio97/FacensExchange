@@ -187,11 +187,30 @@ class Profile extends CI_Controller
         // var_dump($idProfile,$idFavorite);die;
         $db = array(
             'fav_id_profile'        => $idProfile,
-            'fav_id_fav_profile'    => $idFavorite
+            'fav_id_fav_profile'    => $idFavorite,
+            'fav_status' => '1'            
         );
-        $this->profiles->addFavorite($db);
+        
+        $hasPreviousData = $this->profiles->hasPreviousData($idFavorite,$idProfile);
+        if(!$hasPreviousData) {
+            $this->profiles->addFavorite($db);
+        } else {
+            $this->profiles->updateFavorite($db,$hasPreviousData);            
+        }
+
 
         $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile added to your favorites with success!</div>");
+        redirect('Profile/viewProfile/'.$idFavorite);
+    }
+
+    public function removeFavorite($idProfile, $idFavorite) {
+        // var_dump($idProfile,$idFavorite);die;
+        $db = array(
+            'fav_status' => '0'
+        );
+        $this->profiles->removeFavorite($db,$idFavorite,$idProfile);
+
+        $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile removed to your favorites with success!</div>");
         redirect('Profile/viewProfile/'.$idFavorite);
     }
 
