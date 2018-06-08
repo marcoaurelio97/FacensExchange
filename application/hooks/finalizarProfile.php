@@ -15,9 +15,11 @@ class finalizarProfile
         $action     = $this->ci->router->method;
         $controller = $this->ci->router->class;
 
-        if($this->ci->session->userdata('idUser')){
-            if ($action !== 'register' && !$this->ci->users->hasProfile($this->ci->session->userdata('idUser'))){
-                redirect('Profile/register');
+        if ($this->ci->session->userdata('idUser')) {
+            if ($action !== 'signOut') {
+                if ($action !== 'register' && !$this->ci->users->hasProfile($this->ci->session->userdata('idUser'))) {
+                    redirect('Profile/register');
+                }
             }
         }
     }
