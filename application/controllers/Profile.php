@@ -32,15 +32,19 @@ class Profile extends CI_Controller
         if($this->form_validation->run()) {
             $this->db->trans_begin();
 
+            $date = date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('birth'))));
+
             $db_profiles = array(
                 'pro_name' => $this->input->post('name'),
-                'pro_date_of_birth' => $this->input->post('birth'),
+                'pro_date_of_birth' => $date,
                 'pro_rg' => $this->input->post('rg'),
                 'pro_cpf' => $this->input->post('cpf'),
                 'pro_rating' => '0',
                 'pro_number_of_evaluations' => '0',
                 'pro_sum_rating' => '0'
             );
+
+
 
             $this->profiles->add($db_profiles);
 
