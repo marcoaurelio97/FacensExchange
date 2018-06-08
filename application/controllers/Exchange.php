@@ -45,13 +45,14 @@ class Exchange extends CI_Controller
             $idTrade = $this->db->insert_id();
             
             $wishes = $this->input->post('wishes');
-            
-            foreach($wishes AS $key=>$value){
-                $db_wishes[] = array(
-                    'tra_wish_trade' => $idTrade,
-                    'tra_wish_wish'  => $value
-                )
-            ;}
+            if($wishes){
+                foreach($wishes AS $key=>$value){
+                    $db_wishes[] = array(
+                        'tra_wish_trade' => $idTrade,
+                        'tra_wish_wish'  => $value
+                    )
+                ;}
+            }
             $this->wishes->addWishes($db_wishes);
                 // var_dump($db_wishes);die;
                 
