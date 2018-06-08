@@ -26,7 +26,7 @@
                         </div>                        
                     <?php endforeach;
                 else:  ?>             
-                    <p>No favorites were.</p>               
+                    <p>No favorites were found.</p>               
                 <?php endif; ?>  
             </div>
         </div>

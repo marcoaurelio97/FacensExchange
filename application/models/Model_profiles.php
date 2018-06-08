@@ -150,6 +150,6 @@ class Model_profiles extends CI_Model {
             return $result->result();
         }
         
-        return TRUE;
+        return FALSE;
     }
 }
