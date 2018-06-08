@@ -43,7 +43,7 @@
               
                   <div class="social-auth-links text-center">
                     <p>- OR -</p>
-                      <div class="g-signin2" data-onsuccess="onSignIn" data-width="720" data-theme="dark" data-longtitle="true"></div>
+                      <div class="g-signin2" data-onsuccess="onSignIn" data-width="200" data-theme="dark" data-longtitle="true"></div>
                   </div>
                 </div>  </div>  
                 </div>
