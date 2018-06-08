@@ -80,7 +80,12 @@ class Login extends CI_Controller
 				}
 
 				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
-				redirect('Home/listTrades');
+
+				if ($this->session->userdata('admin')) {
+					redirect('Home/dashboardAdmin');
+				} else {
+					redirect('Home/listTrades');
+				}
 			}
 
 			$this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Failed to login!</div>");
@@ -108,7 +113,6 @@ class Login extends CI_Controller
 
 	public function verifyAdmin($id_user)
 	{
-
 		$is_admin = $this->model_users->verifyAdmin($id_user);
 
 		if ($is_admin) {

@@ -5,7 +5,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Facens Exchange</title>
   <link rel="icon" href="<?= site_url('dist/img/icon_title.png') ?>" type="image/x-icon" />
-  <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta name="google-signin-client_id" content="529581074299-ptsebcdfpuo5q6mjjmb5lscksg42p50q.apps.googleusercontent.com">
   <!-- Bootstrap 3.3.7 -->
@@ -16,8 +15,6 @@
   <link rel="stylesheet" href="<?= site_url('bower_components/Ionicons/css/ionicons.min.css') ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= site_url('dist/css/AdminLTE.min.css') ?>">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?= site_url('dist/css/skins/_all-skins.min.css') ?>">
   <!-- Morris chart -->
   <link rel="stylesheet" href="<?= site_url('bower_components/morris.js/morris.css') ?>">
@@ -286,7 +283,7 @@
           <ul class="treeview-menu">
             <li class="active"><a href="<?= site_url('Category/listCategories') ?>">Categories</a></li>
             <li class="active"><a href="<?= site_url('User/listUsers') ?>">List Users</a></li>
-            <li class="active"><a href="<?= site_url('Exchange/listTrades') ?>">List Trades</li>
+            <li class="active"><a href="<?= site_url('Exchange/listTrades') ?>">List Trades</a></li>
           </ul>
         </li>    
       <?php endif; ?>

@@ -63,13 +63,12 @@
             <?php 
           } else { ?>
               <div class="container">
-                <div class="row">
-                  <p>No trades available</p>
-                </div>
+                  <div class='alert alert-info alert-dismissible'>
+                      No trades available
+                  </div>
               </div>
             <?php 
           } ?>
-            
           </div>
       </div>
     </section>

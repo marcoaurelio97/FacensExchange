@@ -1,19 +1,19 @@
 <?php $this->load->view('header') ?>
 
 <style>
-  #fotinho img {
-      width:250px;
-      height:200px;
-  }
+    #fotinho img {
+        width:250px;
+        height:200px;
+    }
 </style>
 
 <div class="content-wrapper">
+    <?php echo $this->session->userdata('item'); ?>
     <?php if($tradesCurrent): ?>
     <section class="content-header">
     <h1>Current Exchanges</h1>
     </section>
     <section class="content">
-        <?php echo $this->session->userdata('item'); ?>
         <div class="row">
                 <?php foreach($tradesCurrent AS $row): ?>
                     <div class="col-md-4" style="min-height: 500px;">
@@ -77,26 +77,27 @@
                                         <img src="<?= site_url('dist/img/default_trade.png'); ?>" alt="Photo">
                                     <?php endif; ?>
                                 </div>
-                            <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
-                                <ul>
-                                    <li><?= $row->trade_description ?></li>
-                                </ul>
+                                    <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
+                                    <ul>
+                                        <li><?= $row->trade_description ?></li>
+                                    </ul>
                                 <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
                                 <p>
-                                    <?php if($row->wishes): ?>
-                                        <?php foreach($row->wishes AS $teste):?>
-                                        <i class="<?=$teste->typ_class?>" data-toggle="tooltip" title="<?=$teste->typ_name?>"></i>
-                                        <?php endforeach;?>
-                                    <?php else: ?>
-                                        <?='There is no interests'?>
-                                    <?php endif;?>
+                                <?php if($row->wishes): ?>
+                                    <?php foreach($row->wishes AS $teste):?>
+                                    <i class="<?=$teste->typ_class?>" data-toggle="tooltip" title="<?=$teste->typ_name?>"></i>
+                                    <?php endforeach;?>
+                                <?php else: ?>
+                                    <?='There is no interests'?>
+                                <?php endif;?>
                                 </p>
-                        <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id.'/FALSE') ?>">More info</a>
+                            </div>
+                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id.'/TRUE') ?>">More info</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
-        </section>        
+        </section>
     <?php endif; ?>
     <?php if (!$tradesCurrent && !$tradesFinalized) : ?>
         <br>

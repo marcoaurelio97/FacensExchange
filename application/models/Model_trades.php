@@ -183,4 +183,10 @@ class Model_trades extends CI_Model {
 
         return FALSE;
     }
+
+    public function getCountTrades($status)
+    {
+        $this->db->where_in('trade_status', $status);
+        return $this->db->count_all_results('trades');
+    }
 }

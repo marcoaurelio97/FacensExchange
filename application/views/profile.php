@@ -4,7 +4,6 @@
     <section class="content-header">
       <h1><?= $title ?></h1>
     </section>
-
     <section class="content">
         <div class="row">
             <form class="form-horizontal" method="post" action="" enctype="multipart/form-data">

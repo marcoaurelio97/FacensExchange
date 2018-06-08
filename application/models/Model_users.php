@@ -111,4 +111,10 @@ class Model_users extends CI_Model {
 
         return FALSE;
     }
+
+    public function getCountUsers($status)
+    {
+        $this->db->where_in('user_status', $status);
+        return $this->db->count_all_results('users');
+    }
 }
