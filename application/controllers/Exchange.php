@@ -155,6 +155,7 @@ class Exchange extends CI_Controller
 
         $this->load->model('model_categories');
         $data['edit'] = TRUE;
+        $data['wishes'] = $this->wishes->getWishesById($tradeId);
         $data['actionForm'] = site_url('Exchange/editTrade/'.$tradeId);
         $data['categories'] = $this->model_categories->getCategoriesArray();    
         $data['trade'] = $this->trades->getTradeById($tradeId);
