@@ -133,7 +133,7 @@ class Exchange extends CI_Controller
         $this->form_validation->set_rules('category', 'Category','required|trim','You must select a %s for this trade.');
         
         if($this->form_validation->run()) {
-            var_dump($this->input->post());die;
+            // var_dump($this->input->post());die;
             $db_trade = array(
                 'trade_title'       => $this->input->post('title'),
                 'trade_description' => $this->input->post('description'),
