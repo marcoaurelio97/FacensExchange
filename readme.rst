@@ -27,6 +27,12 @@ Download the docker php image
 docker pull lhuggler/php-xdebug
 
 ***************
+Path of the folder
+***************
+
+open the terminal inside the folder and run the command "pwd"
+
+***************
 Mapping the port with the folder
 ***************
 
@@ -37,3 +43,9 @@ Give permission for the folder
 ***************
 
 sudo chown -R nomeusuario:nomeusuario public_html/
+
+***************
+Clone the project inside the folder
+***************
+
+git clone https://github.com/marcoaurelio97/FacensExchange.git
