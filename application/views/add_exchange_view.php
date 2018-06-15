@@ -62,7 +62,7 @@
                               $id = 1;
                               foreach($wishes AS $row):?>
                               <label class="fancy-checkbox">
-                                <input type="checkbox" name="wishes[]"  value="<?=$id?>"></input>
+                                  <input type="checkbox" name="wishes[]"  value="<?=$id?>" <?php if(isset($wishesTrade[$id])){ echo 'checked'; }?>></input>
                                   <i class="<?=$row->typ_class?> unchecked" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
                                   <i class="<?=$row->typ_class?> checked" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
                               </label>

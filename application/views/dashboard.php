@@ -144,6 +144,7 @@
                 <table class="table no-margin">
                   <thead>
                   <tr>
+                    <th>#</th>
                     <th>Exchange ID</th>
                     <th>Name</th>
                     <th>Description</th>
@@ -152,37 +153,28 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td><a href="#">EX2149</a></td>
-                    <td>Call of Duty IV</td>
-                    <td>Game of the year | 2013</td>
-                    <td><a href="#">João Pedro</a>
-                    <td><span class="label label-danger">Finished</span></td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">EX1848</a></td>
-                    <td>Samsung Smart TV</td>
-                    <td>New, 2015, 3 months used</td>                   
-                    <td><a href="#">Marc Silva</a>
-                    <td><span class="label label-warning">Exchanging</span></td>
-                  </tr>
-                  <tr>
-                    <td><a href="pages/examples/invoice.html">EX7429</a></td>
-                    <td>iPhone 6 Plus</td>
-                    <td>New</td>                    
-                    <td><a href="#">Glauco Todesco</a>
-                    <td><span class="label label-success">To exchange</span></td>
-                  </tr>                  
+                  <?php $count = 1; if($last_trades){ ?>
+                  <?php foreach($last_trades AS $row){ ?>
+                    <tr>
+                      <td><?=$count?></td>
+                      <td><?= $row->trade_id ?></td>
+                      <td><?= $row->trade_title ?></td>
+                      <td><?= $row->trade_description ?></td>
+                      <td><?= $row->user_username ?></td>
+                      <td><span class="label label-<?php echo $row->trade_status_format;?>"><?= $row->trade_status?></span></td>  
+                    </tr> 
+                  <?php $count++;} ?>
+                <?php } else { ?>             
+                  <p>No trades added.</p>               
+                <?php } ?>  
+                                  
                   </tbody>
                 </table>
               </div>
               <!-- /.table-responsive -->
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-right">View All Exchanges</a>
-            </div>
+           
             </div>
             <!-- /.box-footer -->          
 

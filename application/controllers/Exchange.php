@@ -133,6 +133,7 @@ class Exchange extends CI_Controller
         $this->form_validation->set_rules('category', 'Category','required|trim','You must select a %s for this trade.');
         
         if($this->form_validation->run()) {
+            // var_dump($this->input->post());die;
             $db_trade = array(
                 'trade_title'       => $this->input->post('title'),
                 'trade_description' => $this->input->post('description'),
@@ -156,7 +157,13 @@ class Exchange extends CI_Controller
 
         $this->load->model('model_categories');
         $data['edit'] = TRUE;
-        $data['wishes'] = $this->wishes->getWishesById($tradeId);
+        $data['wishes'] = $this->wishes->getWishes();                
+        $wishesTrade = $this->wishes->getWishesById($tradeId);
+        $idsTrade = array();
+        foreach($wishesTrade AS $wish) {
+            $idsTrade[$wish->typ_id] = $wish;
+        }        
+        $data['wishesTrade'] = $idsTrade;
         $data['actionForm'] = site_url('Exchange/editTrade/'.$tradeId);
         $data['categories'] = $this->model_categories->getCategoriesArray();    
         $data['trade'] = $this->trades->getTradeById($tradeId);
@@ -330,7 +337,7 @@ class Exchange extends CI_Controller
 	
 		$this->load->view('list_trades', $data);
     }
-
+   
     public function deleteTrade($idTrade){
         $this->model_trades->deleteTrade($idTrade);
         $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The trade was deleted!</div>");

@@ -52,7 +52,7 @@ class Home extends CI_Controller {
 		$this->load->model('model_trades', 'trades');
 		$this->load->model('model_users', 'users');
 
-		$data['countTrades']    = $this->trades->getCountTrades(array('0', '1'));
+		$data['countTrades'] = $this->trades->getCountTrades(array('0', '1'));
 
 		$aux = $data['countTrades'];
 
@@ -60,8 +60,13 @@ class Home extends CI_Controller {
 		$aux = 1;
 		
 		$data['countFinalized'] = number_format((($this->trades->getCountTrades(array('1'))/$aux)*100), 0);
-		$data['countUsers']		= $this->users->getCountUsers(array('1'));
+		$data['countUsers'] = $this->users->getCountUsers(array('1'));
+
+		$data['last_trades'] = $this->trades->getLastExchanges();	
 
 		$this->load->view('dashboard', $data);
 	}
+
+
+    
 }
