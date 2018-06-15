@@ -3,22 +3,37 @@ Installation
 ###################
 
 ***************
-Guide
+Create a "public_html" folder
 ***************
 
--- CREATE A "public_html" FOLDER --
+mkdir public_html
 
--- INSTALL DOCKER --
+***************
+Install docker
+***************
+
 sudo apt install docker.io
 
--- GIVE PERMISSION FOR YOUR ACCOUNT --
+***************
+Give permission for your account
+***************
+
 sudo usermod -a -G docker nomeusuario
 
--- DOWNLOAD THE DOCKER PHP IMAGE --
+***************
+Download the docker php image
+***************
+
 docker pull lhuggler/php-xdebug
 
--- MAPPING THE PORT WITH THE FOLDER --
+***************
+Mapping the port with the folder
+***************
+
 docker run -p 80:80 -v /home/nomeusuario/public_html:/var/www/html --name phpx -ti lhuggler/php-xdebug
 
--- GIVE PERMISSION FOR THE FOLDER --
+***************
+Give permission for the folder
+***************
+
 sudo chown -R nomeusuario:nomeusuario public_html/
