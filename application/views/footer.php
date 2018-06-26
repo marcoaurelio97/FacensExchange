@@ -40,6 +40,7 @@
 <script src="<?= site_url('dist/js/iconpicker.js') ?>"></script>
 <script src="<?= site_url('dist/js/jquery.mask.min.js') ?>"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="<?= site_url('bower_components/daterangepicker.js') ?>"></script>
 
 <script>
   function signOut() {

@@ -10,7 +10,32 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>Home</h1>
+      <div class="row">
+      <h1 class="col-md-6">Home</h1>
+      <form class="form-horizontal pull-right" method="post" action="">
+        <div class="col-md-8">
+          <div class="form-group">
+            <div class="input-group">
+              <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                <span name="cu">
+                  <i class="fa fa-calendar"></i> Date range
+                </span>
+                  <i class="fa fa-caret-down"></i>
+              </button>
+            </div>
+          </div>
+          <input name="start" id="start" type="text" style="display:none;">
+          <input name="end"   id="end" type="text" style="display:none;">
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <button type="submit" class="btn btn-info pull-right" id="daterange-btn"> Filter</button>
+            </div>
+          </div>
+        </div>
+      </form>
+</div>
     </section>
 
     <!-- Main content -->
@@ -18,6 +43,7 @@
       <!-- Small boxes (Stat box) -->
       <?= $this->session->userdata('item'); ?>
       <div>
+
           <div class="row">
           <?php if ($trades) { ?>
           <?php foreach ($trades as $row) { ?>
@@ -76,3 +102,27 @@
 <!-- ./wrapper -->
 
 <?php $this->load->view('footer') ?>
+
+<script>
+  $(function(){
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#start').val(start.format('YYYY-M-D'));
+        $('#end').val(end.format('YYYY-M-D'));        
+      }
+    )
+  });
+</script>

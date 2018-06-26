@@ -10,6 +10,7 @@ class Home extends CI_Controller {
 	
 	public function listTrades($idCategory = false)
 	{
+		// var_dump($this->input->post());die;
 		$this->load->model('model_trades');
 		$this->load->model('model_categories');
 		$this->load->model('model_notifications');
@@ -17,6 +18,14 @@ class Home extends CI_Controller {
 		$this->load->model('model_wishes','wishes');
 
 		$idUser = $this->session->userdata('idUser') ? $this->session->userdata('idUser') : FALSE;
+		// var_dump(date('Y-m-d H:i:s'));die;
+		$interval = array();
+		if(!empty($this->input->post())){
+			$interval['start'] = $this->input->post('start');
+			$interval['end'] = $this->input->post('end');
+		} else {
+			$interval = FALSE;
+		}
 
 		if ($idUser) {
 			$profile = $this->model_profiles->getProfileByUserId($idUser);
@@ -27,13 +36,15 @@ class Home extends CI_Controller {
 			}
 		}
 
-		$data['trades'] = $this->model_trades->getTrades(FALSE, $idCategory);
-
+		$data['trades'] = $this->model_trades->getTrades(FALSE, $idCategory, FALSE, TRUE, $interval);
+		// print_r($this->db->last_query());die;
 		if ($data['trades']) {
 			foreach($data['trades'] AS $trade){
 				$trade->wishes = $this->wishes->getWishesById($trade->trade_id);
 			}
 		}
+
+		$data['interval'] = $interval;
 
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));

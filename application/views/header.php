@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/themes/grey-theme/jquery.fonticonpicker.grey.min.css') ?>"/>
   <!-- Font -->
   <link rel="stylesheet" href="<?= site_url('bower_components/iconpicker/demo/fontello-7275ca86/css/fontello.css') ?>"/>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<?= site_url('bower_components/daterangepicker-bs3.css') ?>"/>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
