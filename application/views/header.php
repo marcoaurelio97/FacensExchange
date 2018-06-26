@@ -285,7 +285,7 @@
           <ul class="treeview-menu">
             <li class="active"><a href="<?= site_url('Category/listCategories') ?>">Categories</a></li>
             <li class="active"><a href="<?= site_url('User/listUsers') ?>">List Users</a></li>
-            <li class="active"><a href="<?= site_url('Exchange/listTrades') ?>">List Trades</a></li>
+            <!-- <li class="active"><a href="<?= site_url('Exchange/listTrades') ?>">List Trades</a></li> -->
           </ul>
         </li>    
       <?php endif; ?>
