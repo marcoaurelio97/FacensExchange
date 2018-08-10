@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	   => '',
-	'hostname' => 'ns776.hostgator.com.br',
-	'username' => 'lksvn159_facens',
-	'password' => 'segredo',
-	'database' => 'lksvn159_facens_exchange',
+	'hostname' => '142.93.127.246',
+	'username' => 'root',
+	'password' => 'RIPmarc666',
+	'database' => 'facensexchange',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
