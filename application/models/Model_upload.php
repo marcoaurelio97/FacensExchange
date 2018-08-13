@@ -2,9 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_upload extends CI_Model {
-    public function uploadImagesTrades($idTrade)
+    public function uploadImagesItem($idItem)
     {
-        $this->load->model('Model_trades', 'trades');
+        $this->load->model('Model_itens', 'itens');
 
         $nameImage = $_FILES['image']['name'];
 
@@ -19,11 +19,11 @@ class Model_upload extends CI_Model {
 
         if ($this->upload->do_upload('image')) {
             $db = array(
-                'trade_pic_idtrade' => $idTrade,
-                'trade_pic_picture' => $nameImage
+                'itempic_iditem' => $idItem,
+                'itempic_picture' => $nameImage
             );
 
-            $this->trades->insertPicTrade($db);
+            $this->itens->insertPicItem($db);
 
             return true;
         } else {

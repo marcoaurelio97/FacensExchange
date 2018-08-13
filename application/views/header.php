@@ -196,7 +196,7 @@
                     <?php if ($this->session->userdata('logged')) : ?>
                       <a href="<?php echo site_url('profile/editProfile/'.$this->session->userdata('idUser'))?>" class="btn btn-primary btn-flat">Profile</a>   
                         <?php if ($this->session->userdata('idUser') <> 1) : ?>
-                          <a href="<?= site_url('Exchange/addTrade') ?>" class="btn btn-warning btn-flat">Add Trade</a>
+                          <a href="<?= site_url('Item/addItem') ?>" class="btn btn-warning btn-flat">Add Item</a>
                         <?php endif; ?>
                         <?php if ($this->session->userdata('loginGoogle')) : ?>
                           <a href="<?= site_url('Login/signOut') ?>" class="btn btn-danger btn-flat">Sign out</a>
@@ -264,7 +264,7 @@
           <ul class="treeview-menu">
             <?php if ($this->session->userdata('categories')) : ?>
               <?php foreach ($this->session->userdata('categories') as $row) : ?>
-                <li class="active"><a href="<?= site_url('home/listTrades/' . $row->category_id) ?>"><?= $row->category_name ?></a></li>
+                <li class="active"><a href="<?= site_url('Home/' . $row->category_id) ?>"><?= $row->category_name ?></a></li>
             <!-- <li class="active"><a href="index.html"><i class="fa fa-car"></i> Car</a></li>
             <li class="active"><a href="index.html"><i class="fa fa-legal"></i> Tools</a></li>
             <li class="active"><a href="index.html"><i class="fa fa-gamepad"></i> Toys</a></li>

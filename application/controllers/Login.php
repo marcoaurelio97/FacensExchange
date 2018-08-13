@@ -73,18 +73,19 @@ class Login extends CI_Controller
 				$this->session->set_userdata('proPicture', $this->model_profiles->getProfileByUserId($id_user)->pro_picture);
 				$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);
 				
-				$this->verifyAdmin($id_user);
-
-				if(!$this->hasProfile($id_user)){
-					redirect('Profile/register');
+				if(!$this->verifyAdmin($id_user)){
+					if(!$this->hasProfile($id_user)){
+						redirect('Profile/register');
+					}
 				}
+
 
 				$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
 
 				if ($this->session->userdata('admin')) {
 					redirect('Home/dashboardAdmin');
 				} else {
-					redirect('Home/listTrades');
+					redirect('Home');
 				}
 			}
 
@@ -104,9 +105,9 @@ class Login extends CI_Controller
 
 		// if (!$redirect) {
 			$this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User sign out with success!</div>");
-			redirect('Home/listTrades');
+			redirect('Home');
 		// } else {
-		// 	echo json_encode(array('url' => base_url('Home/listTrades')));
+		// 	echo json_encode(array('url' => base_url('Home')));
 		// 	die;
 		// }
 	}
@@ -117,8 +118,10 @@ class Login extends CI_Controller
 
 		if ($is_admin) {
 			$this->session->set_userdata('admin', true);
+			return TRUE;
 		} else {
 			$this->session->set_userdata('admin', false);
+			return FALSE;		
 		}
 	}
 
@@ -168,8 +171,8 @@ class Login extends CI_Controller
 			}
 
 			// $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User logged with success!</div>");
-			// redirect('Home/listTrades');
-			echo json_encode(array('url' => base_url('Home/listTrades')));
+			// redirect('Home');
+			echo json_encode(array('url' => base_url('Home')));
 			die;
 		}
 

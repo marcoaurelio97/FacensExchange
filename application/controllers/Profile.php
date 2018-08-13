@@ -13,7 +13,7 @@ class Profile extends CI_Controller
     }
     public function index()
 	{
-		redirect('Home/listTrades');
+		redirect('Home');
     }
     public function register(){
         $this->form_validation->set_rules('name','Name','required|trim','You must provide a %s.');
@@ -84,7 +84,7 @@ class Profile extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile added with success!</div>");
-                redirect('Home/listTrades');
+                redirect('Home');
             }
         }
 
@@ -159,7 +159,7 @@ class Profile extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Profile edited with success!</div>");
-                redirect('Home/listTrades');
+                redirect('Home');
             }
         }
 

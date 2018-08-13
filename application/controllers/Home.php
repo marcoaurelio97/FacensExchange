@@ -5,9 +5,13 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		redirect('Home/listTrades');
+		if($this->session->userdata('admin')){
+			redirect('Home/dashboardAdmin');
+		} else {
+			redirect('Home/listTrades');
+		}
 	}
-	
+
 	public function listTrades($idCategory = false)
 	{
 		// var_dump($this->input->post());die;
@@ -50,7 +54,7 @@ class Home extends CI_Controller {
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));
 
-		if ($this->session->userdata('logged')) {
+		if ($this->session->userdata('logged') AND !$this->session->userdata('admin')) {
 			$this->session->set_userdata('proPicture', $this->model_profiles->getProfileByUserId($idUser)->pro_picture);
 			$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);
 		}

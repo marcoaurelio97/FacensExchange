@@ -17,7 +17,7 @@ class finalizarProfile
 
         if ($this->ci->session->userdata('idUser')) {
             if ($action !== 'signOut') {
-                if ($action !== 'register' && !$this->ci->users->hasProfile($this->ci->session->userdata('idUser'))) {
+                if ($action !== 'register' && !$this->ci->users->hasProfile($this->ci->session->userdata('idUser')) && !$this->ci->users->verifyadmin($this->ci->session->userdata('idUser'))) {
                     redirect('Profile/register');
                 }
             }

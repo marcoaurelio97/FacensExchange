@@ -8,7 +8,7 @@ class Model_wishes extends CI_Model {
     }
 
     public function getWishes(){
-        $result = $this->db->get('trade_wishes_types');
+        $result = $this->db->get('itens_wishes_types');
 
         if($result AND $result->num_rows() > 0) {
             return $result->result();
@@ -30,6 +30,6 @@ class Model_wishes extends CI_Model {
     }
 
     public function addWishes($db){
-        $this->db->insert_batch('trade_wishes',$db);
+        $this->db->insert_batch('itens_wishes',$db);
     }
 }

@@ -72,24 +72,16 @@ class Model_trades extends CI_Model {
 
     public function getLastExchanges(){
         
-        $sql = " SELECT 
-        T0.trade_id,
-        T0.trade_title,
-        T0.trade_description,
-        T1.user_username,
-        CASE 
-             WHEN T0.trade_status = 0 THEN 'To Exchange'
-             WHEN T0.trade_status = 1 THEN 'Exchanging'
-             WHEN T0.trade_status = 2 THEN 'Finished'
-        END AS trade_status,
-        CASE 
-             WHEN T0.trade_status = 0 THEN 'success'
-             WHEN T0.trade_status = 1 THEN 'warning'
-             WHEN T0.trade_status = 2 THEN 'danger'
-        END AS trade_status_format
-     FROM lksvn159_facens_exchange.trades T0
-     INNER JOIN lksvn159_facens_exchange.users T1
-     ON T0.trade_id_user_from = T1.user_id";
+        $sql = " 
+            SELECT 
+                T0.trade_id,
+                T0.trade_title,
+                T0.trade_description,
+                T1.user_username,
+                T0.trade_status
+            FROM trades T0
+            INNER JOIN users T1
+            ON T0.trade_id_user_from = T1.user_id";
 
         $last_exchanges = $this->db->query($sql);
 
