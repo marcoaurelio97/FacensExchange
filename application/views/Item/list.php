@@ -9,35 +9,35 @@
 
 <div class="content-wrapper">
     <?php echo $this->session->userdata('item'); ?>
-    <?php if($tradesCurrent): ?>
+    <?php if($currentItems): ?>
     <section class="content-header">
-    <h1>Current Exchanges</h1>
+    <h1>Current Items</h1>
     </section>
     <section class="content">
         <div class="row">
-                <?php foreach($tradesCurrent AS $row): ?>
+                <?php foreach($currentItems AS $row): ?>
                     <div class="col-md-4" style="min-height: 500px;">
                         <div class="box box-solid box-primary">
                             <div class="box-header">
-                                <h3 class="box-title"><?= $row->trade_title ?></h3>
+                                <h3 class="box-title"><?= $row->item_title ?></h3>
                             </div>
                             <div class="box-body">
                                 <div class="text-right">
                                     <div class="btn-group">
-                                        <a class="btn btn-warning btn-flat" href="<?= site_url('Exchange/editTrade/'.$row->trade_id) ?>"><i class="fa fa-fw fa-pencil"></i></a>
-                                        <a class="btn btn-danger btn-flat" href="<?= site_url('Exchange/deleteTrade/'.$row->trade_id) ?>"><i class="fa fa-fw fa-trash"></i></a>
+                                        <a class="btn btn-warning btn-flat" href="<?= site_url('Item/editItem/'.$row->item_id) ?>"><i class="fa fa-fw fa-pencil"></i></a>
+                                        <a class="btn btn-danger btn-flat" href="<?= site_url('Item/deleteItem/'.$row->item_id) ?>"><i class="fa fa-fw fa-trash"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center" id="fotinho">
-                                    <?php if ($row->trade_pic_picture) : ?>
-                                        <img src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                                    <?php if ($row->itempic_picture) : ?>
+                                        <img src="<?= site_url('dist/img/' . $row->itempic_picture); ?>" alt="Photo">
                                     <?php else : ?>
                                         <img src="<?= site_url('dist/img/default_trade.png'); ?>" alt="Photo">
                                     <?php endif; ?>
                                 </div>
                                     <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
                                     <ul>
-                                        <li><?= $row->trade_description ?></li>
+                                        <li><?= $row->item_description ?></li>
                                     </ul>
                                 <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
                                 <p>
@@ -50,36 +50,36 @@
                                 <?php endif;?>
                                 </p>
                             </div>
-                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id.'/TRUE') ?>">More info</a>
+                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Item/itemDetails/'.$row->item_id.'/TRUE') ?>">More info</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </section>
     <?php endif; ?>
-    <?php if($tradesFinalized): ?>
+    <?php if($tradedItems): ?>
     <section class="content-header">
-    <h1>Finalized Exchanges</h1>
+    <h1>Traded Items</h1>
     </section>
     <section class="content">
         <div class="row">
-                <?php foreach($tradesFinalized AS $row): ?>
+                <?php foreach($tradedItems AS $row): ?>
                     <div class="col-md-4" style="min-height: 500px;">
                         <div class="box box-solid box-primary">
                             <div class="box-header">
-                                <h3 class="box-title"><?= $row->trade_title ?></h3>
+                                <h3 class="box-title"><?= $row->item_title ?></h3>
                             </div>
                             <div class="box-body">
                                 <div class="text-center" id="fotinho">
-                                    <?php if ($row->trade_pic_picture) : ?>
-                                        <img src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                                    <?php if ($row->itempic_picture) : ?>
+                                        <img src="<?= site_url('dist/img/' . $row->itempic_picture); ?>" alt="Photo">
                                     <?php else : ?>
                                         <img src="<?= site_url('dist/img/default_trade.png'); ?>" alt="Photo">
                                     <?php endif; ?>
                                 </div>
                                     <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
                                     <ul>
-                                        <li><?= $row->trade_description ?></li>
+                                        <li><?= $row->item_description ?></li>
                                     </ul>
                                 <strong><i class="fa fa-pencil margin-r-5" ></i>Interests</strong>
                                 <p>
@@ -92,14 +92,14 @@
                                 <?php endif;?>
                                 </p>
                             </div>
-                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->trade_id.'/TRUE') ?>">More info</a>
+                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->item_id.'/TRUE') ?>">More info</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </section>
     <?php endif; ?>
-    <?php if (!$tradesCurrent && !$tradesFinalized) : ?>
+    <?php if (!$currentItems && !$tradedItems) : ?>
         <br>
         <div class="container">
             <div class='alert alert-info alert-dismissible'>

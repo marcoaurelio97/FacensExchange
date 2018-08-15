@@ -17,10 +17,10 @@ class Model_wishes extends CI_Model {
         return FALSE;
     }
 
-    public function getWishesById($idTrade){
-        $this->db->join('trade_wishes','typ_id = tra_wish_wish');
-        $this->db->where('tra_wish_trade',$idTrade);
-        $result = $this->db->get('trade_wishes_types');
+    public function getWishesByIdItem($idItem){
+        $this->db->join('itens_wishes','typ_id = iw_wish');
+        $this->db->where('iw_item',$idItem);
+        $result = $this->db->get('itens_wishes_types');
 
         if($result AND $result->num_rows() > 0) {
             return $result->result();

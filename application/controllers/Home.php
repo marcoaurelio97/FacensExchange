@@ -14,41 +14,31 @@ class Home extends CI_Controller {
 
 	public function listTrades($idCategory = false)
 	{
-		// var_dump($this->input->post());die;
 		$this->load->model('model_trades');
 		$this->load->model('model_categories');
 		$this->load->model('model_notifications');
 		$this->load->model('model_profiles');
 		$this->load->model('model_wishes','wishes');
+		$this->load->model('model_itens','itens');
 
 		$idUser = $this->session->userdata('idUser') ? $this->session->userdata('idUser') : FALSE;
-		// var_dump(date('Y-m-d H:i:s'));die;
-		$interval = array();
-		if(!empty($this->input->post())){
-			$interval['start'] = $this->input->post('start');
-			$interval['end'] = $this->input->post('end');
-		} else {
-			$interval = FALSE;
-		}
 
 		if ($idUser) {
 			$profile = $this->model_profiles->getProfileByUserId($idUser);
-			
 			if ($profile) {
+				$this->session->set_userdata('idProfile', $profile->pro_id);
 				$this->session->set_userdata('proPicture', $profile->pro_picture);
 				$this->session->set_userdata('email', $profile->user_email);
 			}
 		}
 
-		$data['trades'] = $this->model_trades->getTrades(FALSE, $idCategory, FALSE, TRUE, $interval);
+		$data['items'] = $this->itens->getHomeItems($profile->pro_id);
 		// print_r($this->db->last_query());die;
-		if ($data['trades']) {
-			foreach($data['trades'] AS $trade){
-				$trade->wishes = $this->wishes->getWishesById($trade->trade_id);
+		if ($data['items']) {
+			foreach($data['items'] AS $item){
+				$item->wishes = $this->wishes->getWishesByIdItem($item->item_id);
 			}
 		}
-
-		$data['interval'] = $interval;
 
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
@@ -59,7 +49,7 @@ class Home extends CI_Controller {
 			$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);
 		}
 
-		$this->load->view('home_view', $data);
+		$this->load->view('home', $data);
 	}
 
 	public function dashboardAdmin()

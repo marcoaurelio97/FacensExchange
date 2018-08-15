@@ -6,9 +6,6 @@ class User {
     public $user_username;
     public $user_email;
     public $user_password;
-    public $user_date_of_birth;
-    public $user_rg;
-    public $user_cpf;
     public $user_role = "Normal";
     public $user_idgoogle;
 }

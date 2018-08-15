@@ -69,6 +69,7 @@ class Login extends CI_Controller
 				$this->session->set_userdata('logged', true);
 				$id_user = $this->model_users->getUser($user);
 				$this->session->set_userdata('idUser', $id_user);
+				$this->session->set_userdata('idProfile', $this->model_profiles->getProfileByUserId($id_user)->pro_id);
 				$this->session->set_userdata('userName', $this->model_users->getName($user));
 				$this->session->set_userdata('proPicture', $this->model_profiles->getProfileByUserId($id_user)->pro_picture);
 				$this->session->set_userdata('email', $this->model_profiles->getProfileByUserId($idUser)->user_email);

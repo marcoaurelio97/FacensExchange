@@ -11,31 +11,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="row">
-      <h1 class="col-md-6">Home</h1>
-      <form class="form-horizontal pull-right" method="post" action="">
-        <div class="col-md-8">
-          <div class="form-group">
-            <div class="input-group">
-              <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-                <span name="cu">
-                  <i class="fa fa-calendar"></i> Date range
-                </span>
-                  <i class="fa fa-caret-down"></i>
-              </button>
-            </div>
-          </div>
-          <input name="start" id="start" type="text" style="display:none;">
-          <input name="end"   id="end" type="text" style="display:none;">
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <div class="input-group">
-              <button type="submit" class="btn btn-info pull-right" id="daterange-btn"> Filter</button>
-            </div>
-          </div>
-        </div>
-      </form>
-</div>
+        <h1 class="col-md-6">Home</h1>
+      </div>
     </section>
 
     <!-- Main content -->
@@ -45,17 +22,17 @@
       <div>
 
           <div class="row">
-          <?php if ($trades) { ?>
-          <?php foreach ($trades as $row) { ?>
+          <?php if ($items) { ?>
+          <?php foreach ($items as $row) { ?>
           <div class="col-md-4" style="min-height: 500px;">
               <div class="box box-solid box-primary">
                 <div class="box-header">
-                  <h3 class="box-title"><?= $row->trade_title ?></h3>
+                  <h3 class="box-title"><?= $row->item_title ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <div class="container" id="fotinho">
-                    <?php if ($row->trade_pic_picture) : ?>
-                      <img class="img-responsive pad" src="<?= site_url('dist/img/' . $row->trade_pic_picture); ?>" alt="Photo">
+                    <?php if ($row->itempic_picture) : ?>
+                      <img class="img-responsive pad" src="<?= site_url('dist/img/' . $row->itempic_picture); ?>" alt="Photo">
                     <?php else : ?>
                       <img class="img-responsive pad" src="<?= site_url('dist/img/default_trade.png'); ?>" alt="Photo">
                     <?php endif; ?>
@@ -64,7 +41,7 @@
                 <strong><i class="fa fa-th-list margin-r-5" style="margin-left:20px;"></i>Description</strong>
                   <div class="box-body">
                       <ul>
-                        <li><?= $row->trade_description ?></li>
+                        <li><?= $row->item_description ?></li>
                       </ul>
                     </div>
                     <div class="box-body"  style="margin-left:10px;">
@@ -81,7 +58,7 @@
                       </div>
 
                 <!-- <button type="button" class="btn btn-block btn-primary btn-flat" >More info</button> -->
-                <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/' . $row->trade_id) ?>">More info</a>
+                <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Item/itemDetails/' . $row->item_id) ?>">More info</a>
               </div><!-- /.box -->
             </div>
             <?php 
@@ -90,7 +67,7 @@
           } else { ?>
               <div class="container pull-left" style="width:100%;">
                   <div class='alert alert-info alert-dismissible'>
-                      No trades available
+                      No items available
                   </div>
               </div>
             <?php 
