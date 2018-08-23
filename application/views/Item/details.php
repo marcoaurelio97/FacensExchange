@@ -72,7 +72,7 @@
                 <hr>
                 <div class="row no-print">
                   <div class="col-xs-12">                   
-                    <a class="btn btn-success btn-lg btn-flat" href="<?= site_url('Exchange/chooseOffer/'.$item->item_id) ?>"><i class="fa fa-exchange"></i> Exchange</a>
+                    <a class="btn btn-success btn-lg btn-flat" href="<?= site_url('Trade/makeAnOffer/'.$item->item_id) ?>"><i class="fa fa-exchange"></i> Exchange</a>
                     <a class="btn btn-primary btn-lg btn-flat" href="#"><i class="fa fa-commenting-o"></i> Contact</a>
                     <a class="btn btn-info btn-lg btn-flat" href="<?= site_url('Profile/viewProfile/'.$profileItem) ?>"><i class="fa fa-commenting-o"></i> See <?= $item->user_username?> Profile</a>                    
                   </div>

@@ -129,27 +129,23 @@ class Model_trades extends CI_Model {
         return FALSE;
     }
 
-    public function addTradeOffer($db){
-        $this->db->insert('trade_offers', $db);
-    }
-
-    public function getOffersNotifications($idUser){
-        if(!$idUser){
+    public function getOffersNotifications($idProfile){
+        if(!$idProfile){
             return array();
         }
 
         $offers = $this->db->query("
             SELECT 
-                *, t.trade_title AS myTrade, f.trade_title AS offeredToMe
+                *, rec_item.item_title AS myTrade, sen_item.item_title AS offeredToMe
             FROM
-                trade_offers AS o
-                    LEFT JOIN
-                trades AS f ON f.trade_id = o.trade_offer_idtrade_from
+                trades AS t
                     JOIN
-                trades AS t ON t.trade_id = o.trade_offer_idtrade_to
-            WHERE
-                o.trade_offer_iduser_to = {$idUser}
-                AND o.trade_offer_status = '0'
+                itens AS rec_item ON rec_item.item_id = t.trade_iditem_receiver
+                    JOIN
+                profiles ON rec_item.item_idprofile = pro_id AND pro_id = {$idProfile}
+                    JOIN
+                itens AS sen_item ON sen_item.item_id = t.trade_iditem_sender
+            WHERE t.trade_status = '0'
         ");
 
         if($offers && $offers->num_rows() > 0){

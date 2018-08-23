@@ -55,8 +55,10 @@ class Model_itens extends CI_Model {
         return FALSE;
     }
 
-    public function getHomeItems($idProfile){
-        $this->db->where('item_idprofile !=',$idProfile);
+    public function getHomeItems($idProfile = FALSE){
+        if($idProfile){
+            $this->db->where('item_idprofile !=',$idProfile);
+        }
         $this->db->join('itens_pictures', 'item_id = itempic_iditem', 'left');
         $this->db->where('item_status = "0"');
         $items = $this->db->get('itens');

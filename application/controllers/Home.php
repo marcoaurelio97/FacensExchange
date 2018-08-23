@@ -31,9 +31,10 @@ class Home extends CI_Controller {
 				$this->session->set_userdata('email', $profile->user_email);
 			}
 		}
+		$idProfile = $this->session->Userdata('idProfile') ? $this->session->Userdata('idProfile') : FALSE;
 
-		$data['items'] = $this->itens->getHomeItems($profile->pro_id);
-		// print_r($this->db->last_query());die;
+		$data['items'] = $this->itens->getHomeItems(isset($profile) ? $profile->pro_id : FALSE);
+
 		if ($data['items']) {
 			foreach($data['items'] AS $item){
 				$item->wishes = $this->wishes->getWishesByIdItem($item->item_id);
@@ -41,7 +42,7 @@ class Home extends CI_Controller {
 		}
 
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
-		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idUser));
+		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idProfile));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));
 
 		if ($this->session->userdata('logged') AND !$this->session->userdata('admin')) {

@@ -102,7 +102,7 @@
                   <ul class="menu">
                     <?php foreach ($this->session->userdata('offersNotifications') as $row) : ?>
                       <li>
-                        <a href="<?= site_url('Exchange/viewOffer/' . $row->trade_offer_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?=  '<strong>'.$row->offeredToMe.'</strong> for your <strong>'.$row->myTrade.'</strong>'; ?></a>
+                        <a href="<?= site_url('Exchange/viewOffer/' . $row->trade_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?=  '<strong>'.$row->offeredToMe.'</strong> for your <strong>'.$row->myTrade.'</strong>'; ?></a>
                       </li>
                     <?php endforeach; ?>
                   </ul>

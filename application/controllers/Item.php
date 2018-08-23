@@ -31,7 +31,8 @@ class Item extends CI_Controller
                 'item_status' => '0',
                 'item_title' => $this->input->post('title'),
                 'item_description' => $this->input->post('description'),
-                'item_idcategory' => $this->input->post('category')
+                'item_idcategory' => $this->input->post('category'),
+                'item_idprofile' => $this->session->userdata('idProfile'),
             );
             
             $this->db->trans_begin();
