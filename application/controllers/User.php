@@ -20,10 +20,22 @@ class User extends CI_Controller
             $tradesCurrent = array();
             foreach($trades AS $trade){
                 $trade = $this->trades->getTradeAndItensByIdTrade($trade->trade_id);
-                $trade['receiver']->wishes = $this->wishes->getWishesByIdItem($trade['receiver']->item_id);
-                $trade['sender']->wishes = $this->wishes->getWishesByIdItem($trade['sender']->item_id); 
-                
-                $tradesCurrent[] = $trade;
+                $t = array();
+
+                if($idUser == $trade['receiver']->user_id){
+                    $t['trade'] = $trade['trade'];
+                    $t['left'] = $trade['receiver'];
+                    $t['right'] = $trade['sender'];
+                    $t['arrow'] = 'esq';
+                    $t['rec'] = TRUE;
+                } else if($idUser == $trade['sender']->user_id){
+                    $t['trade'] = $trade['trade'];
+                    $t['left'] = $trade['sender'];
+                    $t['right'] = $trade['receiver'];
+                    $t['arrow'] = 'dir';
+                    $t['rec'] = FALSE;
+                }
+                $tradesCurrent[] = $t;
             }
             $data['tradesCurrent'] = $tradesCurrent;
         }
@@ -33,15 +45,23 @@ class User extends CI_Controller
             $tradesFinalized = array();
             foreach($trades AS $trade){
                 $trade = $this->trades->getTradeAndItensByIdTrade($trade->trade_id);
-                $trade['receiver']->wishes = $this->wishes->getWishesByIdItem($trade['receiver']->item_id);
-                $trade['sender']->wishes = $this->wishes->getWishesByIdItem($trade['sender']->item_id); 
+                $t = array();
 
-                $tradesFinalized[] = $trade;
+                if($idUser == $trade['receiver']->user_id){
+                    $t['trade'] = $trade['trade'];
+                    $t['left'] = $trade['receiver'];
+                    $t['right'] = $trade['sender'];
+                    $t['arrow'] = 'esq';
+                } else if($idUser == $trade['sender']->user_id){
+                    $t['trade'] = $trade['trade'];
+                    $t['left'] = $trade['sender'];
+                    $t['right'] = $trade['receiver'];
+                    $t['arrow'] = 'dir';
+                }
+                $tradesFinalized[] = $t;
             }
             $data['tradesFinalized'] = $tradesFinalized;
         }        
-
-        // var_dump($data['tradesCurrent']);die;
         $this->load->view('Trade/list', $data);
     }
 

@@ -116,6 +116,18 @@ class Item extends CI_Controller
 
             $this->itens->updateItem($idItem, $db_item);
 
+            $wishes = $this->input->post('wishes');
+            if($wishes){
+                foreach($wishes AS $key=>$value){
+                    $db_wishes[] = array(
+                        'iw_item' => $idItem,
+                        'iw_wish'  => $value
+                    );
+                }
+                $this->wishes->deleteWishesByIdItem($idItem);
+                $this->wishes->addWishes($db_wishes);
+            }
+
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while editing a Item!</div>");

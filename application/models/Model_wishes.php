@@ -32,4 +32,9 @@ class Model_wishes extends CI_Model {
     public function addWishes($db){
         $this->db->insert_batch('itens_wishes',$db);
     }
+
+    public function deleteWishesByIdItem($idItem){
+        $this->db->where('iw_item',$idItem);
+        $this->db->delete('itens_wishes');
+    }
 }

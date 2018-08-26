@@ -189,13 +189,14 @@ class Model_trades extends CI_Model {
         return FALSE;
     }
 
-    public function getTrades($current = false){
+    public function getTrades($current = FALSE){
 
         if ($current) {
             $this->db->where('trade_status', '0');
         } else {
             $this->db->where('trade_status', '1');
         }
+        $this->db->order_by('trade_date_add','DESC');
 
         $trades = $this->db->get('trades');
         if($trades && $trades->num_rows() > 0){

@@ -117,63 +117,82 @@ class Trade extends CI_Controller
         $itemRec = $this->itens->getItemById($trade->trade_iditem_receiver);
         $itemSender = $this->itens->getItemById($trade->trade_iditem_sender);
         // var_dump($itemRec,$itemSender);die;
-        $this->db->trans_begin();
+        if($this->verifyItemsActive($itemRec,$itemSender)){
+            $this->db->trans_begin();
+            if($reply == '1'){
+                $messageToReceiver = "You just accepted the offer. Don't forget to rate the other user";
+                $messageToSender = "The owner of <strong>$itemRec->item_title</strong> accepted your trade! Don't forget to rate him";
+    
+                $this->itens->updateItem($itemRec->item_id, array('item_status'=> '1'));    
+                $this->itens->updateItem($itemSender->item_id, array('item_status'=> '1'));
+    
+                $db = array(
+                    'trade_status'     => '1',
+                    'trade_date_completed' => date('Y-m-d H:i:s')
+                );
+    
+                $this->trades->updateTrade($idTrade, $db);
+    
+            } else {
+                $messageToReceiver = "You refused to trade!";
+                $messageToSender = "The owner of <strong>$itemRec->trade_title</strong> refused to trade with you!";
+                
+                $db = array(
+                    'trade_status'     => '2',
+                    'trade_date_declined' => date('Y-m-d H:i:s')
+                );
         
-        if($reply == '1'){
-            $messageToReceiver = "You just accepted the offer. Don't forget to rate the other user";
-            $messageToSender = "The owner of <strong>$itemRec->item_title</strong> accepted your trade! Don't forget to rate him";
-
-            $this->itens->updateItem($itemRec->item_id, array('item_status'=> '1'));    
-            $this->itens->updateItem($itemSender->item_id, array('item_status'=> '1'));
-
-            $db = array(
-                'trade_status'     => '1',
-                'trade_date_completed' => date('Y-m-d H:i:s')
+                $this->trades->updateTrade($idTrade, $db);
+            }
+    
+            $dbNotification = array(
+                'notif_iduser'          => $itemRec->user_id,
+                'notif_date_add'        => date('Y-m-d H:i:s'),
+                'notif_status'          => '1',
+                'notif_message'         => $messageToReceiver,
+                'notif_tradeoffer_id'   => $idTrade
             );
-
-            $this->trades->updateTrade($idTrade, $db);
-
+    
+            $this->notifications->addNotification($dbNotification);
+    
+            $dbNotification = array(
+                'notif_iduser'          => $itemSender->user_id,
+                'notif_date_add'        => date('Y-m-d H:i:s'),
+                'notif_status'          => '1',
+                'notif_message'         => $messageToSender,
+                'notif_tradeoffer_id'   => $idTrade
+            );
+    
+            $this->notifications->addNotification($dbNotification);
+    
+            if ($this->db->trans_status() === false) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while trading!</div>");
+                redirect('Trade/viewOffer/'.$idTrade);
+            } else {
+                $this->db->trans_commit();
+                $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The exchange was successful!</div>");
+                redirect('Home');
+            }
         } else {
-            $messageToReceiver = "You refused to trade!";
-            $messageToSender = "The owner of <strong>$itemRec->trade_title</strong> refused to trade with you!";
-            
             $db = array(
                 'trade_status'     => '2',
                 'trade_date_declined' => date('Y-m-d H:i:s')
             );
     
-            $this->trades->updateTrade($idTradeOffer, $db);
+            $this->trades->updateTrade($idTrade, $db);
+            
+            $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>One of the items are not available to trade anymore!</div>");
+            redirect('User/listTrades');
+        }
+    }
+
+    public function verifyItemsActive($itemRec,$itemSender){
+        if($itemRec->item_status != '0' || $itemSender->item_status != '0'){
+            return FALSE;
         }
 
-        $dbNotification = array(
-            'notif_iduser'          => $itemRec->user_id,
-            'notif_date_add'        => date('Y-m-d H:i:s'),
-            'notif_status'          => '1',
-            'notif_message'         => $messageToReceiver,
-            'notif_tradeoffer_id'   => $idTrade
-        );
-
-        $this->notifications->addNotification($dbNotification);
-
-        $dbNotification = array(
-            'notif_iduser'          => $itemSender->user_id,
-            'notif_date_add'        => date('Y-m-d H:i:s'),
-            'notif_status'          => '1',
-            'notif_message'         => $messageToSender,
-            'notif_tradeoffer_id'   => $idTrade
-        );
-
-        $this->notifications->addNotification($dbNotification);
-
-        if ($this->db->trans_status() === false) {
-            $this->db->trans_rollback();
-            $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while trading!</div>");
-            redirect('Trade/viewOffer/'.$idTrade);
-        } else {
-            $this->db->trans_commit();
-            $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The exchange was successful!</div>");
-            redirect('Home');
-        }
+        return TRUE;
     }
 
     public function tradeConfirmation($idNotification, $idTrade = FALSE){

@@ -45,17 +45,17 @@
                   <div class="box-body">
                     <div class="form-group">
                       <strong><i class="fa fa-edit margin-r-5"></i>Title</strong>
-                      <input type="text" class="form-control" name="title" id="title" value="<?php echo (isset($trade)) ? $trade->trade_title : "";?>" placeholder="Enter a title of Item" required>
+                      <input type="text" class="form-control" name="title" id="title" value="<?php echo (isset($item)) ? $item->item_title : "";?>" placeholder="Enter a title of Item" required>
                       <?php echo form_error('title'); ?>
                     </div>
                     <div class="form-group">
                       <strong><i class="fa fa-th-list margin-r-5"></i>Description</strong>
-                      <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of Item" required><?php echo (isset($trade)) ? $trade->trade_description : "";?></textarea>
+                      <textarea class="form-control" rows="5" name="description" placeholder="Enter a description of Item" required><?php echo (isset($item)) ? $item->item_description : "";?></textarea>
                       <?php echo form_error('description'); ?>
                     </div>
                     <div class="form-group">
                       <strong><i class="fa fa-th-list margin-r-5"></i>Category</strong>
-                      <?php echo form_dropdown('category', $categories, (isset($trade) ? $trade->trade_id_category : ''), 'id="category" class="form-control" required') ?>
+                      <?php echo form_dropdown('category', $categories, (isset($item) ? $item->item_idcategory : ''), 'id="category" class="form-control" required') ?>
                       <?php echo form_error('category'); ?>                    
                     </div>
                       <?php if($wishes):?>
@@ -65,7 +65,7 @@
                               <?php
                               foreach($wishes AS $row):?>
                               <label class="fancy-checkbox">
-                                  <input type="checkbox" name="wishes[]"  value="<?=$row->typ_id?>" <?php if(isset($wishesTrade[$row->typ_id])){ echo 'checked'; }?>></input>
+                                  <input type="checkbox" name="wishes[]"  value="<?=$row->typ_id?>" <?php if(isset($wishesItem[$row->typ_id])){ echo 'checked'; }?>>
                                   <i class="<?=$row->typ_class?> unchecked" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
                                   <i class="<?=$row->typ_class?> checked" data-toggle="tooltip" title="<?=$row->typ_name?>"></i>
                               </label>
