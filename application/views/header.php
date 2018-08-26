@@ -72,7 +72,7 @@
                 <ul class="menu">
                   <?php foreach ($this->session->userdata('notifications') AS $row) : ?>
                     <li>
-                      <a href="<?= site_url('Exchange/exchangeConfirmation/'.$row->notif_id.'/'.$row->notif_tradeoffer_id) ?>"><i class="fa fa-exchange text-aqua"></i> <?= $row->notif_message ?></a>
+                      <a href="<?= site_url('Trade/tradeConfirmation/'.$row->notif_id.'/'.$row->notif_tradeoffer_id) ?>"><i class="fa fa-exchange text-aqua"></i> <?= $row->notif_message ?></a>
                     </li>
                   <?php endforeach; ?>
                 </ul>
@@ -102,7 +102,7 @@
                   <ul class="menu">
                     <?php foreach ($this->session->userdata('offersNotifications') as $row) : ?>
                       <li>
-                        <a href="<?= site_url('Exchange/viewOffer/' . $row->trade_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?=  '<strong>'.$row->offeredToMe.'</strong> for your <strong>'.$row->myTrade.'</strong>'; ?></a>
+                        <a href="<?= site_url('Trade/viewOffer/' . $row->trade_id) ?>"><i class="fa fa-shopping-cart text-green"></i> <?=  '<strong>'.$row->offeredToMe.'</strong> for your <strong>'.$row->myTrade.'</strong>'; ?></a>
                       </li>
                     <?php endforeach; ?>
                   </ul>

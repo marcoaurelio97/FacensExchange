@@ -101,77 +101,66 @@ class Trade extends CI_Controller
         
     }
 
-    public function viewOffer($idTradeOffer)
+    public function viewOffer($idTrade)
     {
-        $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $data['tradeHave'] = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
-        $data['tradeWant'] = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
-        $data['idTradeOffer'] = $idTradeOffer;
-        $this->load->view('view_offer_trade', $data);
+        $trade = $this->trades->getTradeById($idTrade);
+        $data['itemUser'] = $this->itens->getItemById($trade->trade_iditem_receiver);
+        $data['itemOffered'] = $this->itens->getItemById($trade->trade_iditem_sender);
+        $data['idTrade'] = $idTrade;
+        // var_dump($data);die;
+        $this->load->view('Trade/viewOffer', $data);
     }
 
-    public function responseOffer($reply, $idTradeOffer)
+    public function responseOffer($reply, $idTrade)
     {
-        $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $tradeA  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_to);
-        $tradeB  = $this->model_trades->getTradeForOffer($tradeOffer->trade_offer_idtrade_from);
-        
+        $trade = $this->trades->getTradeById($idTrade);
+        $itemRec = $this->itens->getItemById($trade->trade_iditem_receiver);
+        $itemSender = $this->itens->getItemById($trade->trade_iditem_sender);
+        // var_dump($itemRec,$itemSender);die;
         $this->db->trans_begin();
         
-        // var_dump($tradeA,$tradeB);die;
         if($reply == '1'){
-            $messageToA = "You just accepted the offer. Don't forget to rate the other user";
-            $messageToB = "The owner of <strong>$tradeA->trade_title</strong> accepted your trade! Don't forget to rate the other user";
+            $messageToReceiver = "You just accepted the offer. Don't forget to rate the other user";
+            $messageToSender = "The owner of <strong>$itemRec->item_title</strong> accepted your trade! Don't forget to rate him";
 
+            $this->itens->updateItem($itemRec->item_id, array('item_status'=> '1'));    
+            $this->itens->updateItem($itemSender->item_id, array('item_status'=> '1'));
 
-            $dbA = array(
-                'trade_status'     => '1',
-                'trade_id_user_to' => $tradeB->trade_id_user_from
-            );
-    
-            $this->model_trades->updateTrade($tradeA->trade_id, $dbA);
-    
-            $dbB = array(
-                'trade_status'     => '1',
-                'trade_id_user_to' => $tradeA->trade_id_user_from
-            );
-    
-            $this->model_trades->updateTrade($tradeB->trade_id, $dbB);
-    
             $db = array(
-                'trade_offer_status'     => '1',
+                'trade_status'     => '1',
+                'trade_date_completed' => date('Y-m-d H:i:s')
             );
 
-            $this->model_trades->updateTradeOffer($idTradeOffer, $db);
+            $this->trades->updateTrade($idTrade, $db);
 
         } else {
-            $messageToA = "You refused to trade!";
-            $messageToB = "The owner of <strong>$tradeA->trade_title</strong> refused to trade with you!";
+            $messageToReceiver = "You refused to trade!";
+            $messageToSender = "The owner of <strong>$itemRec->trade_title</strong> refused to trade with you!";
             
-
             $db = array(
-                'trade_offer_status' => '2'
+                'trade_status'     => '2',
+                'trade_date_declined' => date('Y-m-d H:i:s')
             );
     
-            $this->model_trades->updateTradeOffer($idTradeOffer, $db);
+            $this->trades->updateTrade($idTradeOffer, $db);
         }
 
         $dbNotification = array(
-            'notif_iduser'          => $tradeA->trade_id_user_from,
+            'notif_iduser'          => $itemRec->user_id,
             'notif_date_add'        => date('Y-m-d H:i:s'),
             'notif_status'          => '1',
-            'notif_message'         => $messageToA,
-            'notif_tradeoffer_id'   => $idTradeOffer
+            'notif_message'         => $messageToReceiver,
+            'notif_tradeoffer_id'   => $idTrade
         );
 
         $this->notifications->addNotification($dbNotification);
 
         $dbNotification = array(
-            'notif_iduser'          => $tradeB->trade_id_user_from,
+            'notif_iduser'          => $itemSender->user_id,
             'notif_date_add'        => date('Y-m-d H:i:s'),
             'notif_status'          => '1',
-            'notif_message'         => $messageToB,
-            'notif_tradeoffer_id'   => $idTradeOffer            
+            'notif_message'         => $messageToSender,
+            'notif_tradeoffer_id'   => $idTrade
         );
 
         $this->notifications->addNotification($dbNotification);
@@ -179,7 +168,7 @@ class Trade extends CI_Controller
         if ($this->db->trans_status() === false) {
             $this->db->trans_rollback();
             $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while trading!</div>");
-            redirect('Exchange/viewOffer/'.$idTradeOffer);
+            redirect('Trade/viewOffer/'.$idTrade);
         } else {
             $this->db->trans_commit();
             $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The exchange was successful!</div>");
@@ -187,23 +176,22 @@ class Trade extends CI_Controller
         }
     }
 
-    public function exchangeConfirmation($idNotification, $idTradeOffer = FALSE){
-        if(!$idTradeOffer) {
+    public function tradeConfirmation($idNotification, $idTrade = FALSE){
+        if(!$idTrade) {
             $this->notifications->updateNotification(array('notif_status' => '0'),$idNotification);
             redirect('Home');
         }
-
         $this->form_validation->set_rules('rating','Rating','required');        
         
         if($this->form_validation->run()) {
-            $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-            if($tradeOffer->trade_offer_iduser_from != $this->session->userdata('idUser')) {
-                $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);
-                $userThatRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);
-                
+            $trade = $this->trades->getTradeAndItensByIdTrade($idTrade);
+            
+            if($trade['receiver']->user_id == $this->session->userdata('idUser')) {        
+                $userToBeRated = $this->profiles->getProfileByUserId($trade['sender']->user_id);
+                $userThatRated = $this->profiles->getProfileByUserId($trade['receiver']->user_id);
             } else {
-                $userToBeRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);
-                $userThatRated = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);                  
+                $userThatRated = $this->profiles->getProfileByUserId($trade['receiver']->user_id);                 
+                $userToBeRated = $this->profiles->getProfileByUserId($trade['sender']->user_id);
             }
             
             $this->db->trans_begin();
@@ -217,7 +205,7 @@ class Trade extends CI_Controller
                 'rat_comments' => $this->input->post('comments'),
                 'rat_idprofile_sender' => $userThatRated->pro_id,
             );
-            // var_dump($db_rating);die;
+
             $this->rating->add($db_rating);
             
             $ratUser = $this->profiles->getRatingProfile($idProfile);
@@ -239,7 +227,7 @@ class Trade extends CI_Controller
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while rating!</div>");
-                redirect('Exchange/exchangeConfirmation');
+                redirect('Trade/confirmation');
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>User rated with success!</div>");
@@ -247,16 +235,15 @@ class Trade extends CI_Controller
             }
         }
 
-        $tradeOffer = $this->model_trades->getTradeOffer($idTradeOffer);
-        $data['tradeOffer'] = $tradeOffer;
+        $trade = $this->trades->getTradeAndItensByIdTrade($idTrade);
+        $data['trade'] = $trade;
 
-        if($tradeOffer->trade_offer_iduser_from != $this->session->userdata('idUser')) {
-            $data['userToBeRated'] = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_from);
+        if($trade['receiver']->user_id == $this->session->userdata('idUser')) {
+            $data['userToBeRated'] = $this->profiles->getProfileByUserId($trade['sender']->user_id);
         } else {
-            $data['userToBeRated'] = $this->profiles->getProfileByUserId($tradeOffer->trade_offer_iduser_to);            
+            $data['userToBeRated'] = $this->profiles->getProfileByUserId($trade['receiver']->user_id);                       
         }
-        
-        $this->load->view('exchange_confirmation',$data);
+        $this->load->view('Trade/confirmation',$data);
     }
 
     public function listTrades() {

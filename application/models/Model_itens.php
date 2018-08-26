@@ -36,7 +36,7 @@ class Model_itens extends CI_Model {
 
     public function updateItem($idItem,$array){
         $this->db->where('item_id',$idItem);
-        $this->db->update('items',$array);
+        $this->db->update('itens',$array);
     }
 
     public function getItemById($idItem) {

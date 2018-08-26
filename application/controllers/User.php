@@ -6,31 +6,43 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('model_trades');
+        $this->load->model('model_trades','trades');
         $this->load->model('model_wishes','wishes');
+        $this->load->model('model_itens','itens');
         
     }
 
     public function listTrades()
     {
         $idUser = $this->session->userdata('idUser');
-
-        $data['tradesCurrent'] = $this->model_trades->getTradesUser($idUser,TRUE);
-        if($data['tradesCurrent']){
-            foreach($data['tradesCurrent'] AS $trade){
-                $trade->wishes = $this->wishes->getWishesById($trade->trade_id);
+        $trades = $this->trades->getTrades(TRUE);
+        if($trades){
+            $tradesCurrent = array();
+            foreach($trades AS $trade){
+                $trade = $this->trades->getTradeAndItensByIdTrade($trade->trade_id);
+                $trade['receiver']->wishes = $this->wishes->getWishesByIdItem($trade['receiver']->item_id);
+                $trade['sender']->wishes = $this->wishes->getWishesByIdItem($trade['sender']->item_id); 
+                
+                $tradesCurrent[] = $trade;
             }
+            $data['tradesCurrent'] = $tradesCurrent;
         }
 
-        $data['tradesFinalized'] = $this->model_trades->getTradesUser($idUser,FALSE);
-        
-        if($data['tradesFinalized']){
-            foreach($data['tradesFinalized'] AS $trade){
-                $trade->wishes = $this->wishes->getWishesById($trade->trade_id);
-            }
-        }
+        $trades = $this->trades->getTrades(FALSE);
+        if($trades){
+            $tradesFinalized = array();
+            foreach($trades AS $trade){
+                $trade = $this->trades->getTradeAndItensByIdTrade($trade->trade_id);
+                $trade['receiver']->wishes = $this->wishes->getWishesByIdItem($trade['receiver']->item_id);
+                $trade['sender']->wishes = $this->wishes->getWishesByIdItem($trade['sender']->item_id); 
 
-        $this->load->view('trades_user_view', $data);
+                $tradesFinalized[] = $trade;
+            }
+            $data['tradesFinalized'] = $tradesFinalized;
+        }        
+
+        // var_dump($data['tradesCurrent']);die;
+        $this->load->view('Trade/list', $data);
     }
 
     public function listUsers()
