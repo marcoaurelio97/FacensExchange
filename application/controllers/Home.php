@@ -8,11 +8,12 @@ class Home extends CI_Controller {
 		if($this->session->userdata('admin')){
 			redirect('Home/dashboardAdmin');
 		} else {
-			redirect('Home/listTrades');
+			die('é o delano caralho');
+			redirect('Home/listTrades/'.$idCategory);
 		}
 	}
 
-	public function listTrades($idCategory = false)
+	public function listTrades($idCategory = FALSE)
 	{
 		$this->load->model('model_trades');
 		$this->load->model('model_categories');
@@ -51,6 +52,10 @@ class Home extends CI_Controller {
 		}
 
 		$this->load->view('home', $data);
+	}
+
+	public function category($idCategory = FALSE){
+		$this->listTrades($idCategory);
 	}
 
 	public function dashboardAdmin()

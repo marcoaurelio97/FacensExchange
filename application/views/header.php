@@ -267,12 +267,7 @@
           <ul class="treeview-menu">
             <?php if ($this->session->userdata('categories')) : ?>
               <?php foreach ($this->session->userdata('categories') as $row) : ?>
-                <li class="active"><a href="<?= site_url('Home/' . $row->category_id) ?>"><?= $row->category_name ?></a></li>
-            <!-- <li class="active"><a href="index.html"><i class="fa fa-car"></i> Car</a></li>
-            <li class="active"><a href="index.html"><i class="fa fa-legal"></i> Tools</a></li>
-            <li class="active"><a href="index.html"><i class="fa fa-gamepad"></i> Toys</a></li>
-            <li class="active"><a href="index.html"><i class="fa fa-book"></i> Books</a></li>
-            <li class="active"><a href="index2.html"><i class="fa fa-futbol-o"></i> Sports</a></li> -->
+                <li class="active"><a href="<?= site_url('Home/category/' . $row->category_id) ?>"><?= $row->category_name ?></a></li>
               <?php endforeach; ?>
             <?php endif; ?>
           </ul>
