@@ -21,8 +21,6 @@
 <!-- daterangepicker -->
 <script src="<?= site_url('bower_components/moment/min/moment.min.js') ?>"></script>
 <script src="<?= site_url('bower_components/bootstrap-daterangepicker/daterangepicker.js') ?>"></script>
-<!-- datepicker -->
-<script src="<?= site_url('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') ?>"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="<?= site_url('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') ?>"></script>
 <!-- Slimscroll -->

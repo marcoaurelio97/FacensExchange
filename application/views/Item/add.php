@@ -34,7 +34,7 @@
       <div class="row container">
       
         <!-- /.col -->
-        <div class="col-md-8">
+        <div class="col-md-12 col-md-offset-2">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h2 class="box-title"><strong>Item Infos</strong></h2>

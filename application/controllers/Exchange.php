@@ -343,4 +343,18 @@ class Exchange extends CI_Controller
         $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The trade was deleted!</div>");
         redirect('User/listTrades');
     }
+
+    public function Report($idTrade){
+        $motive = ($this->input->post('motive')) ? $this->input->post('motive') : '';
+
+        if($this->form_validation->run()){
+
+        }
+        
+        $data['motives'] = array('' => 'Select a motive', '1' => 'Inappropriate Content', '2' => 'Inappropriate Username', '3' => 'Inappropriate Behavior');
+        $data['motive'] = $motive;        
+        $data['trade'] = $this->model_trades->getTradeById($idTrade,TRUE);
+        $data['title'] = 'Report Trade';
+        $this->load->view('report_trade',$data);
+    }
 }

@@ -9,6 +9,7 @@ class Item extends CI_Controller
         parent::__construct();
 
         $this->load->model('model_itens','itens');
+        $this->load->model('model_reports','reports');
         $this->load->model('model_notifications', 'notifications');
         $this->load->model('model_profiles', 'profiles');
         $this->load->model('model_rating', 'rating');
@@ -131,7 +132,7 @@ class Item extends CI_Controller
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while editing a Item!</div>");
-                redirect('Exchange/editItem/'.$idItem);
+                redirect('Item/editItem/'.$idItem);
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Item edited with success!</div>");
@@ -161,5 +162,41 @@ class Item extends CI_Controller
         $data['profileItem'] = $data['item']->item_idprofile;
         // var_dump($data);die;
         $this->load->view('Item/details', $data);
+    }
+
+    public function Report($idItem){
+
+        $motive = ($this->input->post('motive')) ? $this->input->post('motive') : '';
+
+        $this->form_validation->set_rules('motive', 'Motive','required|trim');
+        $this->form_validation->set_rules('description', 'description','trim');
+
+        if($this->form_validation->run()){
+            $db_report = array(
+                'rep_iditem'        => $idItem,
+                'rep_motive'        => $this->input->post('motive'),
+                'rep_description'   => $this->input->post('description'),
+                'rep_status'        => '1'
+            );
+
+            $this->reports->add($db_report);
+
+            if ($this->db->trans_status() === false) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while reporting an Item!</div>");
+                redirect('Item/Report/'.$idItem);
+            } else {
+                $this->db->trans_commit();
+                $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Report submitted successfully!</div>");
+                redirect('Home');
+            }
+        }
+
+        
+        $data['motives'] = array('' => 'Select a motive', '1' => 'Inappropriate Content', '2' => 'Inappropriate Username', '3' => 'Inappropriate Behavior');
+        $data['motive'] = $motive;        
+        $data['item'] = $this->itens->getItemById($idItem);
+        $data['title'] = 'Report Item';
+        $this->load->view('Item/report',$data);
     }
 }
