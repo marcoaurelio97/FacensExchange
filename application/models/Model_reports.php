@@ -7,12 +7,21 @@ class Model_reports extends CI_Model {
         parent::__construct();
     }
 
-    public function add($report){
+    public function addReportItem($report){
         $this->db->insert('itens_reports', $report);
     }
 
-    public function update($idReport, $db_report){
+    public function addReportProfile($report){
+        $this->db->insert('profiles_reports', $report);
+    }
+
+    public function updateReportItem($idReport, $db_report){
         $this->db->where('rep_id', $idReport);
         $this->db->update('itens_reports', $db_report);
+    }
+
+    public function updateReportProfile($idReport, $db_report){
+        $this->db->where('rep_id', $idReport);
+        $this->db->update('profiles_reports', $db_report);
     }
 }

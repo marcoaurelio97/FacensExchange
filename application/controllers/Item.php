@@ -179,7 +179,7 @@ class Item extends CI_Controller
                 'rep_status'        => '1'
             );
 
-            $this->reports->add($db_report);
+            $this->reports->addReportItem($db_report);
 
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
@@ -193,7 +193,7 @@ class Item extends CI_Controller
         }
 
         
-        $data['motives'] = array('' => 'Select a motive', '1' => 'Inappropriate Content', '2' => 'Inappropriate Username', '3' => 'Inappropriate Behavior');
+        $data['motives'] = array('' => 'Select a motive', '1' => 'Inappropriate Content');
         $data['motive'] = $motive;        
         $data['item'] = $this->itens->getItemById($idItem);
         $data['title'] = 'Report Item';

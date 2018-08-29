@@ -6,6 +6,7 @@ class Profile extends CI_Controller
 	{
 		parent::__construct();
         $this->load->model('Model_profiles', 'profiles');
+        $this->load->model('Model_reports', 'reports');
         $this->load->model('Model_address', 'adress');
         $this->load->model('Model_telephone', 'telephone');
         $this->load->model('Model_users', 'users');
@@ -177,7 +178,7 @@ class Profile extends CI_Controller
         $data['loggedProf'] = $this->profiles->getProfileByUserId($this->session->userdata('idUser'))->pro_id;
         $data['title'] = 'View Profile';
         $data['notFavorite'] = $this->profiles->checkFavorite($idProfile,$data['loggedProf']);
-        $this->load->view('view_profile',$data);
+        $this->load->view('Profile/view',$data);
     }
 
     public function Comments($idProfile){
@@ -224,5 +225,42 @@ class Profile extends CI_Controller
         $data['favUsers'] = $this->profiles->getFavoriteUsers($idProfile);
         // var_dump($data);die;
         $this->load->view('favorites',$data);
+    }
+
+
+    public function Report($idLogged,$idProfileReported){
+
+        $motive = ($this->input->post('motive')) ? $this->input->post('motive') : '';
+
+        $this->form_validation->set_rules('motive', 'Motive','required|trim');
+        $this->form_validation->set_rules('description', 'description','trim');
+
+        if($this->form_validation->run()){
+            $db_report = array(
+                'rep_idprofile'        => $idProfileReported,
+                'rep_motive'        => $this->input->post('motive'),
+                'rep_description'   => $this->input->post('description'),
+                'rep_status'        => '1'
+            );
+
+            $this->reports->addReportProfile($db_report);
+
+            if ($this->db->trans_status() === false) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while reporting an Item!</div>");
+                redirect('Item/Report/'.$idItem);
+            } else {
+                $this->db->trans_commit();
+                $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Report submitted successfully!</div>");
+                redirect('Home');
+            }
+        }
+
+        
+        $data['motives'] = array('' => 'Select a motive', '2' => 'Inappropriate Username', '3' => 'Inappropriate Behavior');
+        $data['motive'] = $motive;        
+        $data['profile'] = $this->profiles->getProfileById($idProfileReported);
+        $data['title'] = 'Report Item';
+        $this->load->view('Profile/report',$data);
     }
 }

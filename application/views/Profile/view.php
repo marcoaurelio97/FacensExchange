@@ -6,15 +6,14 @@
     <div class="content">
         <?= $this->session->userdata('item'); ?>
         <div class="row">
-            <div class="col-md-12" >
+            <div class="col-md-8 col-md-offset-2" >
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?= $profile->user_username?></h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-4" align="center"> 
-                                <!-- <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div> -->
+                            <div class="col-md-4 text-center"> 
                                 <img src="<?= site_url((isset($profile->pro_picture)) ? 'dist/img/'.$profile->pro_picture : 'dist/img/user-default.jpg') ?>" class="img-circle img-responsive" alt="avatar" width="150px" height="150px"> 
                             
                                 <div class="col-sm-">
@@ -31,13 +30,6 @@
                                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                             </button>
                                         <?php endfor;?>
-                                        <!-- <div class="rating">
-                                            <span class="glyphicon <?=$roundRating['1']?>" id="1"></span>
-                                            <span class="glyphicon <?=$roundRating['2']?>" id="2"></span>
-                                            <span class="glyphicon <?=$roundRating['3']?>" id="3"></span>
-                                            <span class="glyphicon <?=$roundRating['4']?>" id="4"></span>
-                                            <span class="glyphicon <?=$roundRating['5']?>" id="5"></span>
-                                        </div> -->
                                         <div>
                                             <span class="glyphicon glyphicon-user"></span>&nbsp;<?= $profile->pro_number_of_evaluations ?>
                                         </div>
@@ -82,11 +74,12 @@
                                 </table>
                                 <div>
                                     <span class="pull-right">
+                                        <a href="<?= site_url('Profile/report/'.$loggedProf.'/'.$profile->pro_id)?>" class="btn btn-danger">Report</a>                                            
                                         <?php if($notFavorite):?>
                                             <a href="<?= site_url('Profile/addFavorite/'.$loggedProf.'/'.$profile->pro_id)?>" class="btn btn-primary">Add to favorites</a>
                                         <?php else:?>
                                             <a href="<?= site_url('Profile/removeFavorite/'.$loggedProf.'/'.$profile->pro_id)?>" class="btn btn-danger">Remove favorite</a>                                            
-                                        <?php endif;?>                                            
+                                        <?php endif;?>
                                     </span>
                                 </div>
                             </div>
