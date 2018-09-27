@@ -8,7 +8,7 @@ class Home extends CI_Controller {
 		if($this->session->userdata('admin')){
 			redirect('Home/dashboardAdmin');
 		} else {
-			redirect('Home/listTrades/'.$idCategory);
+			redirect('Home/listTrades');
 		}
 	}
 
