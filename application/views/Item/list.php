@@ -50,7 +50,7 @@
                                 <?php endif;?>
                                 </p>
                             </div>
-                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Item/itemDetails/'.$row->item_id.'/TRUE') ?>">More info</a>
+                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Item/itemDetails/'.$row->item_id) ?>">More info</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -92,7 +92,7 @@
                                 <?php endif;?>
                                 </p>
                             </div>
-                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Exchange/tradeDetails/'.$row->item_id.'/TRUE') ?>">More info</a>
+                            <a class="btn btn-block btn-primary btn-flat" href="<?= site_url('Item/itemDetails/'.$row->item_id) ?>">More info</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
