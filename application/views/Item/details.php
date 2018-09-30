@@ -1,28 +1,21 @@
 <?php $this->load->view('header') ?>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Item Details
       </h1>
     </section>
 
-    <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
      
       <div class="row">
+        <!-- IMAGEM -->
         <div class="col-md-6">
-          <!-- Box Comment -->
           <div class="box box-primary">
-           
-            <!-- /.box-header -->
             <div class="box-body">
                 <img class="img-responsive pad" src="<?= site_url('dist/img/' . $item->itempic_picture) ?>" alt="Photo">
-            </div>  
-            
+            </div>
             <div class="box-body">
                 <div>
                     <div style="float:left;margin-right:10px;margin-left:25px;" >
@@ -31,11 +24,9 @@
                 </div>
               </div>
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <!-- INFORMAÇÕES ITEM -->
         <div class="col-md-6">
-          <!-- Box Comment -->
           <div class="box box-primary">
               <div class="box-header with-border">
                   <div >               
@@ -43,9 +34,7 @@
                       <h6 class="description-header">Published - <i class="fa fa-fw fa-clock-o"></i><?= date('d/m/Y', strtotime($item->item_date_add)); ?></h6>
                 </div>              
               </div>
-            <!-- /.box-header -->
             <div class="box-body">
-              <!-- post text -->
               <strong><i class="fa fa-th margin-r-5"></i>Category</strong>
               <div class="box-body">
                   <ul>
@@ -79,22 +68,94 @@
                   </div>
                 </div>
               <?php endif; ?>
-
             </div>
-            <!-- /.box-body -->
-           
-            <!-- /.box-footer -->
-            
-            <!-- /.box-footer -->
           </div>
-          <!-- /.box -->
+          <!-- CHAT -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-primary direct-chat direct-chat-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Public chat about this Item</h3>
+                </div>
+                <div class="box-body">
+                <div class="overlay">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <div class="direct-chat-messages" id="chatDaMassa"></div>
+                </div>
+                <div class="box-footer">
+                  <div class="input-group">
+                    <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="msg">
+                        <span class="input-group-btn">
+                          <button type="button" id="sendMessage" class="btn btn-primary btn-flat">Send</button>
+                        </span>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
-
     </section>
-    <!-- /.content -->
   </div>
 
 <?php $this->load->view('footer') ?>
+
+<script>
+  $(function(){
+    $.ajax({
+      url: '<?= base_url('Item/getMessagesChat/'.$item->item_id.'/'.$profileLogged)?>',
+      success: function( response ){
+        $('.overlay').hide();
+        data = JSON.parse(response);
+        $('#chatDaMassa').html('');
+        $.each(data,function(index){
+          var lado = (data[index].side == 'R') ? 'right' : '';
+          $('#chatDaMassa').append(
+            '<div class="direct-chat-msg ' + lado + '">'                                          +
+              '<div class="direct-chat-info clearfix">'                                           +
+                '<span class="direct-chat-name pull-left">'+ data[index].username + '</span>'     +
+                '<span class="direct-chat-timestamp pull-right">' + data[index].time + '</span>'  +
+              '</div>'                                                                            +
+              '<div class="direct-chat-text">'                                                    +
+                data[index].message                                                               +
+              '</div>'                                                                            +
+            '</div>'
+          );
+        });
+      }
+    });
+
+    $('#sendMessage').on('click',addMessage);
+  });
+
+  function addMessage(){
+    var message = $('#msg').val();
+    $('#msg').val('');
+    $.ajax({
+      type: 'POST',
+      url: '<?= base_url('Item/newMessage/'.$item->item_id)?>',
+      data:{
+            message : message
+      },
+      beforeSend: function() {
+        $('.overlay').show();
+      },
+      success: function( response ){
+        $('.overlay').hide();
+        data = JSON.parse(response);
+        var lado = (data.side == 'R') ? 'right' : '';
+        $('#chatDaMassa').append(
+          '<div class="direct-chat-msg ' + lado + '">'                                  +
+            '<div class="direct-chat-info clearfix">'                                   +
+              '<span class="direct-chat-name pull-left">'+ data.username + '</span>'    +
+              '<span class="direct-chat-timestamp pull-right">' + data.time + '</span>' +
+            '</div>'                                                                    +
+            '<div class="direct-chat-text">'                                            +
+              data.message                                                              +
+            '</div>'                                                                    +
+          '</div>'
+        );
+      }
+    });
+  }
+</script>

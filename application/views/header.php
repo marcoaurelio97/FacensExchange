@@ -70,7 +70,11 @@
                 <ul class="menu">
                   <?php foreach ($this->session->userdata('notifications') AS $row) : ?>
                     <li>
-                      <a href="<?= site_url('Trade/tradeConfirmation/'.$row->notif_id.'/'.$row->notif_tradeoffer_id) ?>"><i class="fa fa-exchange text-aqua"></i> <?= $row->notif_message ?></a>
+                      <?php if($row->notif_type == 'TRADE'):?>
+                        <a href="<?= site_url('Trade/tradeConfirmation/'.$row->notif_id.'/'.$row->notif_tradeoffer_id) ?>"><i class="fa fa-exchange text-aqua"></i> <?= $row->notif_message ?></a>
+                      <?php elseif($row->notif_type == 'MESSAGE'):?>
+                        <a href="<?= site_url('Item/seeChat/'.$row->notif_chat.'/'.$row->notif_id) ?>"><i class="fa fa-exchange text-aqua"></i> <?= $row->notif_message ?></a>
+                      <?php endif; ?>
                     </li>
                   <?php endforeach; ?>
                 </ul>

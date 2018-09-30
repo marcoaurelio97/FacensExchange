@@ -55,6 +55,17 @@ class Model_itens extends CI_Model {
         return FALSE;
     }
 
+    public function getIdProfileByItem($idItem) {
+        $this->db->where('item_id',$idItem);
+        $item = $this->db->get('itens');
+
+        if($item && $item->num_rows() > 0) {
+            return $item->row()->item_idprofile;
+        }
+        
+        return FALSE;
+    }
+
     public function getHomeItems($idProfile = FALSE){
         if($idProfile){
             $this->db->where('item_idprofile !=',$idProfile);
