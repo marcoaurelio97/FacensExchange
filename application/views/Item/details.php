@@ -71,29 +71,31 @@
             </div>
           </div>
           <!-- CHAT -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="box box-primary direct-chat direct-chat-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Public chat about this Item</h3>
-                </div>
-                <div class="box-body">
-                <div class="overlay">
-                  <i class="fa fa-refresh fa-spin"></i>
-                </div>
-                <div class="direct-chat-messages" id="chatDaMassa"></div>
-                </div>
-                <div class="box-footer">
-                  <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="msg">
-                        <span class="input-group-btn">
-                          <button type="button" id="sendMessage" class="btn btn-primary btn-flat">Send</button>
-                        </span>
+          <?php if($this->session->userdata('logged')): ?>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="box box-primary direct-chat direct-chat-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Public chat about this Item</h3>
+                  </div>
+                  <div class="box-body">
+                  <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
+                  </div>
+                  <div class="direct-chat-messages" id="chatDaMassa"></div>
+                  </div>
+                  <div class="box-footer">
+                    <div class="input-group">
+                      <input type="text" name="message" placeholder="Type Message ..." class="form-control" id="msg">
+                          <span class="input-group-btn">
+                            <button type="button" id="sendMessage" class="btn btn-primary btn-flat">Send</button>
+                          </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+            </div>
           </div>
-        </div>
+        <?php endif;?>
       </div>
     </section>
   </div>
@@ -102,30 +104,32 @@
 
 <script>
   $(function(){
-    $.ajax({
-      url: '<?= base_url('Item/getMessagesChat/'.$item->item_id.'/'.$profileLogged)?>',
-      success: function( response ){
-        $('.overlay').hide();
-        data = JSON.parse(response);
-        $('#chatDaMassa').html('');
-        $.each(data,function(index){
-          var lado = (data[index].side == 'R') ? 'right' : '';
-          $('#chatDaMassa').append(
-            '<div class="direct-chat-msg ' + lado + '">'                                          +
-              '<div class="direct-chat-info clearfix">'                                           +
-                '<span class="direct-chat-name pull-left">'+ data[index].username + '</span>'     +
-                '<span class="direct-chat-timestamp pull-right">' + data[index].time + '</span>'  +
-              '</div>'                                                                            +
-              '<div class="direct-chat-text">'                                                    +
-                data[index].message                                                               +
-              '</div>'                                                                            +
-            '</div>'
-          );
-        });
-      }
-    });
+    if(<?= $this->session->userdata('logged') ?>){
+      $.ajax({
+        url: '<?= base_url('Item/getMessagesChat/'.$item->item_id.'/'.$profileLogged)?>',
+        success: function( response ){
+          $('.overlay').hide();
+          data = JSON.parse(response);
+          $('#chatDaMassa').html('');
+          $.each(data,function(index){
+            var lado = (data[index].side == 'R') ? 'right' : '';
+            $('#chatDaMassa').append(
+              '<div class="direct-chat-msg ' + lado + '">'                                          +
+                '<div class="direct-chat-info clearfix">'                                           +
+                  '<span class="direct-chat-name pull-left">'+ data[index].username + '</span>'     +
+                  '<span class="direct-chat-timestamp pull-right">' + data[index].time + '</span>'  +
+                '</div>'                                                                            +
+                '<div class="direct-chat-text">'                                                    +
+                  data[index].message                                                               +
+                '</div>'                                                                            +
+              '</div>'
+            );
+          });
+        }
+      });
 
-    $('#sendMessage').on('click',addMessage);
+      $('#sendMessage').on('click',addMessage);
+    }
   });
 
   function addMessage(){
