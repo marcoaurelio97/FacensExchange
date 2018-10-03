@@ -146,6 +146,6 @@
             debugger;
             console.log('Successful login for: ' + response.name);
             document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-        });
+        }, {scope : 'email, user_likes'});
     }
 </script>
