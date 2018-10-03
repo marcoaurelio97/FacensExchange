@@ -102,7 +102,6 @@
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
-    debugger;
     console.log('statusChangeCallback');
     console.log(response);
     // The response object is returned with a status field that lets the
@@ -114,8 +113,7 @@
       testAPI();
     } else {
       // The person is not logged into your app or we are unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+      document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
     }
   }
 
@@ -123,7 +121,9 @@
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
   function checkLoginState() {
+	debugger;
     FB.getLoginStatus(function(response) {
+	debugger;
       statusChangeCallback(response);
     });
   }
