@@ -88,7 +88,7 @@
         console.log(response);
         if (response.status === 'connected') {
             debugger;
-            testAPI();
+            testAPI(response.authResponse.userID);
         } else {
             document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
         }
@@ -140,9 +140,14 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    function testAPI() {
+    function testAPI(idUser) {
         console.log('Welcome! Fetching your information.... ');
-        FB.api('/me', function(response) {
+        // FB.api('/me', function(response) {
+        //     debugger;
+        //     console.log('Successful login for: ' + response.name);
+        //     document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+        // });
+        FB.api('/' + idUser, function(response) {
             debugger;
             console.log('Successful login for: ' + response.name);
             document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
