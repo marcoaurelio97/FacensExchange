@@ -17,8 +17,8 @@
 |
 */
 // $config['base_url']	= 'https://facens-exchange.herokuapp.com/'; #FUNCIONAR ONLINE
-$config['base_url']	= 'http://localhost/FacensExchange/'; #FUNCIONAR LOCAL
-// $config['base_url']	= 'https://facensexchange.ml';
+// $config['base_url']	= 'http://localhost/FacensExchange/'; #FUNCIONAR LOCAL
+$config['base_url']	= 'https://facensexchange.ml';
 /*
 |--------------------------------------------------------------------------
 | Index File
