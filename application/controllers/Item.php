@@ -185,6 +185,8 @@ class Item extends CI_Controller
         }
         else
         {
+
+
         // Recupera a data de acesso gravado no BD
         $db_date = $db_userControl->access_date;
         $db_date = new DateTime($db_date);
@@ -208,11 +210,10 @@ class Item extends CI_Controller
             );
             // Salva o registro de acesso na tabela de 'user_control'
             $this->userControl->updateUserControl($userControl_update,$db_userControl->id_user_control);
+
         }
         }
-
-
-        
+                
         $this->load->view('Item/details', $data);
     }
 
