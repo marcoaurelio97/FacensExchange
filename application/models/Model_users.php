@@ -119,4 +119,15 @@ class Model_users extends CI_Model {
         $this->db->where_in('user_status', $status);
         return $this->db->count_all_results('users');
     }
+
+    public function getUsernameByProfile($idProfile){
+        $this->db->where('user_pro_id',$idProfile);
+        $result = $this->db->get('users');
+
+        if($result && $result->num_rows() > 0) {
+            return $result->row()->user_username;
+        }
+        
+        return FALSE;
+    }
 }

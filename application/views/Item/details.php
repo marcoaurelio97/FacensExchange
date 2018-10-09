@@ -1,28 +1,20 @@
 <?php $this->load->view('header') ?>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Item Details
       </h1>
     </section>
 
-    <!-- Main content -->
     <section class="content">
-      <!-- Small boxes (Stat box) -->
-     
       <div class="row">
+        <!-- IMAGEM -->
         <div class="col-md-6">
-          <!-- Box Comment -->
           <div class="box box-primary">
-           
-            <!-- /.box-header -->
             <div class="box-body">
                 <img class="img-responsive pad" src="<?= site_url('dist/img/' . $item->itempic_picture) ?>" alt="Photo">
-            </div>  
-            
+            </div>
             <div class="box-body">
                 <div>
                     <div style="float:left;margin-right:10px;margin-left:25px;" >
@@ -31,11 +23,9 @@
                 </div>
               </div>
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <!-- INFORMAÇÕES ITEM -->
         <div class="col-md-6">
-          <!-- Box Comment -->
           <div class="box box-primary">
               <div class="box-header with-border">
                   <div >               
@@ -43,9 +33,7 @@
                       <h6 class="description-header">Published - <i class="fa fa-fw fa-clock-o"></i><?= date('d/m/Y', strtotime($item->item_date_add)); ?></h6>
                 </div>              
               </div>
-            <!-- /.box-header -->
             <div class="box-body">
-              <!-- post text -->
               <strong><i class="fa fa-th margin-r-5"></i>Category</strong>
               <div class="box-body">
                   <ul>
@@ -79,22 +67,174 @@
                   </div>
                 </div>
               <?php endif; ?>
-
             </div>
-            <!-- /.box-body -->
-           
-            <!-- /.box-footer -->
-            
-            <!-- /.box-footer -->
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+        <div class="col-md-8 col-md-offset-2">
 
+          <div class="nav-tabs-custom">
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+                <!-- NOVO CHAT -->
+                <h3>Q&A Session</h3>
+                <div class="active tab-pane" id="activity">
+                  <!-- Post -->
+                  <div class="post clearfix">
+
+                    <div id="qeaSession">
+                      <p>
+                        <b>Welcome!</b> Here is where you can ask any questions about this item
+                      </p>
+                    </div>
+                    <br>
+                    <?php if($profileItem != $profileLogged):?>
+                      <div class="form-group margin-bottom-none">
+                        <div class="col-sm-9">
+                          <input class="form-control input-sm" id="msg" placeholder="Type here...">
+                        </div>
+                        <div class="col-sm-3">
+                          <button type="button" id="sendMessage" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
+                        </div>
+                      </div>
+                    <?php endif;?>
+                  </div>
+                </div>
+              </div>
+                  <!-- /.post -->
+            </div>
+        </div>
+      </div>
     </section>
-    <!-- /.content -->
   </div>
 
 <?php $this->load->view('footer') ?>
+
+<script>
+  $(function(){
+      var ownerItem = <?=$profileItem?>;
+      var profileLogged = <?=$profileLogged?>;
+      var isOwner = (ownerItem == profileLogged) ? true : false;
+      $.ajax({
+        url: '<?= base_url('Item/getMessagesChat/'.$item->item_id)?>',
+        success: function( response ){
+          if(response != ''){
+            data = JSON.parse(response);
+            $('#qeaSession').html('');
+            $.each(data,function(index){
+              if(isOwner && !data[index].replied){
+                reply = '<div class="form-group margin-bottom-none" id="divReply'+ data[index].idmessage +'">'                                                   +
+                          '<div class="col-sm-9">'                                                                      +
+                            '<input type="text" class="form-control input-sm" id="msgReply'+ data[index].idmessage +'" placeholder="Reply">' +
+                          '</div>'                                                                                      +
+                          '<div class="col-sm-3">'                                                                      +
+                            '<button type="submit" class="btn btn-danger pull-right btn-block btn-sm replyMsg" data-idmsg="'+ data[index].idmessage +'">Send</button>'    +
+                          '</div>'                                                                                      +
+                        '</div><br>';                                                                                       
+              } else if(data[index].replied){
+                reply = '<small><cite title="Reply">Reply <i class="fa fa-angle-double-right"></i>'+data[index].reply+'</cite></small>';
+              }else {
+                reply = '';
+              }
+
+              href = '<?= site_url('dist/img') ?>/' + data[index].profilePicture;
+
+              $('#qeaSession').append(
+                '<div clas="post clearfix" id="replyText'+ data[index].idmessage +'">'                                                                      +
+                  '<div class="user-block">'                                                                      +
+                    '<img class="img-circle img-bordered-sm" src="' + href + '" alt="User Image">'                            +
+                    '<span class="username">'                                                                     +
+                      '<a href="#">'+data[index].username+'</a>'                                                  +
+                    '</span>'                                                                                     +
+                    '<span class="description">'+data[index].time+'</span>'                                       +
+                  '</div>'                                                                                        +
+                  '<br>'                                                                                          +
+                  '<p>'                                                                                           +
+                    data[index].message                                                                           +
+                  '</p>'                                                                                          +
+                  reply                                                                                           +
+                '</div>'                                                                                          +
+                '<hr>'
+              );
+            });
+            $('.replyMsg').on('click',replyMessage);
+          }
+        }
+      });
+      $('#sendMessage').on('click',addMessage);
+  });
+
+  function addMessage(){
+    var ownerItem = <?=$profileItem?>;
+    var profileLogged = <?=$profileLogged?>;
+    var isOwner = (ownerItem == profileLogged) ? true : false;
+    var message = $('#msg').val();
+    if(message != ''){
+    $('#msg').val('');
+      $.ajax({
+        type: 'POST',
+        url: '<?= base_url('Item/newMessage/'.$item->item_id)?>',
+        data:{
+              message : message,
+              idOwner : <?= $item->item_idprofile ?>
+        },
+        success: function( response ){
+          data = JSON.parse(response);
+
+          if(isOwner){
+            reply = '<div class="form-group margin-bottom-none">'                                                   +
+                      '<div class="col-sm-9">'                                                                      +
+                        '<input type="text" class="form-control input-sm" id="msg" placeholder="Reply">'         +
+                      '</div>'                                                                                      +
+                      '<div class="col-sm-3">'                                                                      +
+                        '<button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>'    +
+                      '</div>'                                                                                      +
+                    '</div><br>';                                                                                       
+          } else {
+            reply = '';
+          }
+          $('#qeaSession').append(
+            '<div clas="post clearfix">'                                                                      +
+              '<div class="user-block">'                                                                      +
+                '<img class="img-circle img-bordered-sm" src="" alt="User Image">'                            +
+                '<span class="username">'                                                                     +
+                  '<a href="#">'+data.username+'</a>'                                                         +
+                '</span>'                                                                                     +
+                '<span class="description">'+data.time+'</span>'                                              +
+              '</div>'                                                                                        +
+              '<br>'                                                                                          +
+              '<p>'                                                                                           +
+                data.message                                                                                  +
+              '</p>'                                                                                          +
+              reply                                                                                           +
+            '</div>'                                                                                          +
+            '<hr>'
+          );
+        }
+      });
+    }
+  }
+
+  function replyMessage(){
+    debugger;
+    var idMessage = $(this).data('idmsg');
+    var message = $('#msgReply'+idMessage).val();
+    if(message != ''){
+    $('#msgReply').val('');
+      $.ajax({
+        type: 'POST',
+        url: '<?= base_url('Item/replyMessage')?>',
+        data:{
+              message : message,
+              idMessage: idMessage
+        },
+        success: function( response ){
+          data = JSON.parse(response);
+          $('#replyText'+idMessage).append(
+            '<small><cite title="Reply">Reply <i class="fa fa-angle-double-right"></i>'+data.reply+'</cite></small>'
+          );
+          $('#divReply'+idMessage).hide();
+        }
+      });
+    }
+  }
+</script>

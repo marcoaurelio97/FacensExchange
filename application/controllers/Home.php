@@ -59,24 +59,22 @@ class Home extends CI_Controller {
 
 	public function dashboardAdmin()
 	{
-		$this->load->model('model_trades', 'trades');
-		$this->load->model('model_users', 'users');
+		$this->load->model('Model_itens','itens');
+		$this->load->model('Model_reports','reports');
+		$this->load->model('Model_trades','trades');
 
-		$data['countTrades'] = $this->trades->getCountTrades(array('0', '1'));
+		$data['pendingItems'] = $this->itens->getCountItems(array(0));
+		$data['tradedItems'] = $this->itens->getCountItems(array(1));
+		$data['userRegistrations'] = $this->users->getCountUsers(array(1));
+		$data['reports'] = $this->reports->getCountReports(array(1));
+		$data['donutChart'] = $this->itens->getItemsDonutChart();
+		$data['pendingTrades'] = $this->trades->getCountTrades(array(0));
+		$data['acceptedTrades'] = $this->trades->getCountTrades(array(1));
+		$data['totalTrades'] = $this->trades->getCountTrades(array(1,2));
 
-		$aux = $data['countTrades'];
+		$data['last_trades'] = $this->trades->getLastTrades(20);
 
-		if($aux == 0)
-		$aux = 1;
-		
-		$data['countFinalized'] = number_format((($this->trades->getCountTrades(array('1'))/$aux)*100), 0);
-		$data['countUsers'] = $this->users->getCountUsers(array('1'));
-
-		$data['last_trades'] = $this->trades->getLastExchanges();	
-
+		// var_dump($data['donutChart']);die;
 		$this->load->view('dashboard', $data);
 	}
-
-
-    
 }

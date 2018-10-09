@@ -13,6 +13,8 @@ class Item extends CI_Controller
         $this->load->model('model_notifications', 'notifications');
         $this->load->model('model_profiles', 'profiles');
         $this->load->model('model_rating', 'rating');
+        $this->load->model('model_users', 'users');
+        $this->load->model('model_chat', 'chat');
         $this->load->model('model_wishes', 'wishes');
         $this->load->model('model_upload');
         $this->load->model('model_categories','categories');
@@ -198,5 +200,101 @@ class Item extends CI_Controller
         $data['item'] = $this->itens->getItemById($idItem);
         $data['title'] = 'Report Item';
         $this->load->view('Item/report',$data);
+    }
+
+    public function newMessage($idItem)
+    {
+        $message = $this->input->post('message');
+        $idOwner = $this->input->post('idOwner');
+
+        $idProfile = $this->session->userdata('idProfile');
+        $idProfileItem = $this->itens->getIdProfileByItem($idItem);
+        
+        if(!$this->chat->hasChat($idItem)){
+            $chat = $this->chat->createChat($idItem,$idOwner);
+        }else{
+            $chat = $this->chat->getChatId($idItem);
+        }
+
+
+        $this->chat->addMessage($chat,$message,$idProfile);
+        
+        $username = $this->users->getUsernameByProfile($idProfile);
+
+        $userItemOwner = $this->itens->getItemById($idItem)->user_id;
+        if($userItemOwner != $this->session->userdata('idUser')){
+            $dbNotification = array(
+                'notif_iduser'          => $userItemOwner,
+                'notif_date_add'        => date('Y-m-d H:i:s'),
+                'notif_status'          => '1',
+                'notif_message'         => 'You received a new message!',
+                'notif_type'            => 'MESSAGE',
+                'notif_chat'            => $chat
+            );
+    
+            $this->notifications->addNotification($dbNotification);
+        }
+
+        $arr = array(
+            'username' => $username,
+            'message' => $message,
+            'side' => 'R',
+            'time' => date('Y-m-d H:i:s')
+        );
+        echo json_encode($arr); 
+        die;
+    }
+
+    public function getMessagesChat($idItem){
+        
+        
+        $idProfile = $this->session->userdata('idProfile');
+        
+        if($this->chat->hasChat($idItem)){
+            $chat = $this->chat->getChatId($idItem);
+        } else {
+            return json_encode(array());
+        }
+        $msgsChat = $this->chat->getMessagesChat($chat);
+
+        $arr = array();
+        foreach($msgsChat AS $msg){
+            $arr[] = array(
+                'username' => $msg->username,
+                'message' => $msg->message,
+                'idmessage' => $msg->id,
+                'profilePicture' => $msg->picture,
+                'time' => $msg->time,
+                'replied' => is_null($msg->reply) ? FALSE : TRUE,
+                'reply' => $msg->reply
+            );
+        }
+
+        echo json_encode($arr);
+        die;
+    }
+
+    public function replyMessage()
+    {
+        $message = $this->input->post('message');
+        $idmessage = $this->input->post('idMessage');
+
+        $this->chat->addReply($message,$idmessage);
+
+        $arr = array(
+            'reply' => $message,
+        );
+        echo json_encode($arr); 
+        die;
+    }
+
+    public function seeChat($chatId, $notifId){
+        $this->notifications->updateNotification(array('notif_status' => '0'),$notifId);
+        $idItem = $this->chat->getItemByChat($chatId);
+        $data['profileLogged'] = $this->session->userdata('idProfile');
+        $data['item'] = $this->itens->getItemById($idItem);
+        $data['wishes'] = $this->wishes->getWishesByIdItem($idItem);
+        $data['profileItem'] = $data['item']->item_idprofile;
+        $this->load->view('Item/details', $data);
     }
 }

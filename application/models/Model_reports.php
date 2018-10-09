@@ -24,4 +24,9 @@ class Model_reports extends CI_Model {
         $this->db->where('rep_id', $idReport);
         $this->db->update('profiles_reports', $db_report);
     }
+
+    public function getCountReports($status){
+        $this->db->where_in('rep_status',$status);
+        return $this->db->count_all_results('itens_reports');
+    }
 }

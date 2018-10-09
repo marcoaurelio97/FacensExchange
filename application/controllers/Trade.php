@@ -150,7 +150,8 @@ class Trade extends CI_Controller
                 'notif_date_add'        => date('Y-m-d H:i:s'),
                 'notif_status'          => '1',
                 'notif_message'         => $messageToReceiver,
-                'notif_tradeoffer_id'   => $idTrade
+                'notif_tradeoffer_id'   => $idTrade,
+                'notif_type'            => 'TRADE'
             );
     
             $this->notifications->addNotification($dbNotification);
@@ -160,7 +161,8 @@ class Trade extends CI_Controller
                 'notif_date_add'        => date('Y-m-d H:i:s'),
                 'notif_status'          => '1',
                 'notif_message'         => $messageToSender,
-                'notif_tradeoffer_id'   => $idTrade
+                'notif_tradeoffer_id'   => $idTrade,
+                'notif_type'            => 'TRADE'
             );
     
             $this->notifications->addNotification($dbNotification);
