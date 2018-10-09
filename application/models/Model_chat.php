@@ -46,12 +46,23 @@ class Model_chat extends CI_Model
         $this->db->insert('messages',$db_chat);
     }
 
+    public function addReply($message,$idMessage){
+        $db_chat['mes_reply'] = $message;
+
+        $this->db->where('mes_id', $idMessage);
+        $this->db->update('messages',$db_chat);
+    }
+
     public function getMessagesChat($idChat){
         $this->db->select(' user_username AS username,
                             mes_message AS message,
                             mes_idprofile AS idprofile,
-                            mes_time AS time');
+                            mes_time AS time,
+                            pro_picture AS picture,
+                            mes_id AS id,
+                            mes_reply AS reply');
         $this->db->where('mes_idchat',$idChat);
+        $this->db->join('profiles','mes_idprofile = pro_id');        
         $this->db->join('users','mes_idprofile = user_pro_id');
         $ret = $this->db->get('messages');
 

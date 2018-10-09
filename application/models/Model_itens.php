@@ -79,4 +79,38 @@ class Model_itens extends CI_Model {
         }
         return FALSE;
     }
+
+    public function getAllTrades(){
+        $this->db->join('profiles', 'item_idprofile = pro_id');
+        $this->db->join('users', 'user_pro_id = pro_id');
+        $this->db->join('categories', 'item_idcategory = category_id');
+
+        $item = $this->db->get('itens');
+
+        if($item && $item->num_rows() > 0) {
+            return $item->row();
+        }
+        
+        return FALSE;
+    }
+
+    public function getCountItems($status){
+        $this->db->where_in('item_status', $status);
+        return $this->db->count_all_results('itens');
+    }
+
+    public function getItemsDonutChart(){
+        $this->db->select('category_name AS name, COUNT(item_idcategory) AS count');
+        $this->db->where('item_status !=',2);
+        $this->db->join('categories','category_id = item_idcategory');
+        $this->db->group_by('item_idcategory');
+
+        $ret = $this->db->get('itens',FALSE);
+
+        if($ret && $ret->num_rows() > 0) {
+            return $ret->result();
+        }
+        
+        return FALSE;
+    }
 }

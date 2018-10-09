@@ -205,4 +205,28 @@ class Model_trades extends CI_Model {
 
         return FALSE;
     }
+
+    public function getLastTrades($quantidade = 10){
+        $this->db->limit($quantidade);
+        $this->db->select(' trade_id AS tradeId,
+                            receiver.item_title AS recItem,
+                            sender.item_title AS senItem,
+                            userRec.user_username AS recUser,
+                            userSen.user_username AS senUser,
+                            trade_status AS status');
+        $this->db->join('itens AS receiver','trade_iditem_receiver = receiver.item_id');
+        $this->db->join('profiles AS profileRec', 'profileRec.pro_id = receiver.item_idprofile');
+        $this->db->join('users AS userRec', 'userRec.user_pro_id = profileRec.pro_id');
+        $this->db->join('itens AS sender','trade_iditem_sender = sender.item_id');
+        $this->db->join('profiles AS profileSen', 'profileSen.pro_id = sender.item_idprofile');
+        $this->db->join('users AS userSen', 'userSen.user_pro_id = profileSen.pro_id');
+        $this->db->order_by('trade_date_add','DESC');
+
+        $trades = $this->db->get('trades');
+        if($trades && $trades->num_rows() > 0){
+            return $trades->result();
+        }
+
+        return FALSE;
+    }
 }

@@ -204,15 +204,18 @@ class Item extends CI_Controller
 
     public function newMessage($idItem)
     {
+        $message = $this->input->post('message');
+        $idOwner = $this->input->post('idOwner');
+
         $idProfile = $this->session->userdata('idProfile');
         $idProfileItem = $this->itens->getIdProfileByItem($idItem);
+        
         if(!$this->chat->hasChat($idItem)){
-            $chat = $this->chat->createChat($idItem);
+            $chat = $this->chat->createChat($idItem,$idOwner);
         }else{
             $chat = $this->chat->getChatId($idItem);
         }
 
-        $message = $this->input->post('message');
 
         $this->chat->addMessage($chat,$message,$idProfile);
         
@@ -244,6 +247,7 @@ class Item extends CI_Controller
 
     public function getMessagesChat($idItem){
         
+        
         $idProfile = $this->session->userdata('idProfile');
         
         if($this->chat->hasChat($idItem)){
@@ -251,7 +255,6 @@ class Item extends CI_Controller
         } else {
             return json_encode(array());
         }
-
         $msgsChat = $this->chat->getMessagesChat($chat);
 
         $arr = array();
@@ -259,12 +262,29 @@ class Item extends CI_Controller
             $arr[] = array(
                 'username' => $msg->username,
                 'message' => $msg->message,
-                'side' => ($msg->idprofile == $idProfile) ? 'R' : 'L',
-                'time' => $msg->time
+                'idmessage' => $msg->id,
+                'profilePicture' => $msg->picture,
+                'time' => $msg->time,
+                'replied' => is_null($msg->reply) ? FALSE : TRUE,
+                'reply' => $msg->reply
             );
         }
 
         echo json_encode($arr);
+        die;
+    }
+
+    public function replyMessage()
+    {
+        $message = $this->input->post('message');
+        $idmessage = $this->input->post('idMessage');
+
+        $this->chat->addReply($message,$idmessage);
+
+        $arr = array(
+            'reply' => $message,
+        );
+        echo json_encode($arr); 
         die;
     }
 
