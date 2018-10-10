@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Item extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -17,7 +16,8 @@ class Item extends CI_Controller
         $this->load->model('model_chat', 'chat');
         $this->load->model('model_wishes', 'wishes');
         $this->load->model('model_upload');
-        $this->load->model('model_categories','categories');
+        $this->load->model('model_categories','categories');        
+        $this->load->model('model_user_control','userControl');        
     }
 
     public function addItem()
@@ -75,7 +75,8 @@ class Item extends CI_Controller
         $this->load->view('Item/add', $data);
     }
 
-    public function listItems(){
+    public function listItems()
+    {
         $idProfile = $this->session->userdata('idProfile');
 
         $data['currentItems'] = $this->itens->getItems($idProfile,'0');
@@ -95,7 +96,8 @@ class Item extends CI_Controller
         $this->load->view('Item/list', $data);
     }
 
-    public function deleteItem($idItem){
+    public function deleteItem($idItem)
+    {
         $this->itens->deleteItem($idItem);
         $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The Item was deleted!</div>");
         redirect('Item/listItems');
@@ -157,16 +159,69 @@ class Item extends CI_Controller
         $this->load->view('Item/add',$data);
     }
 
-    public function itemDetails($idItem){
+    public function itemDetails($idItem)
+    {
+        date_default_timezone_set('UTC');
         $data['profileLogged'] = $this->session->userdata('idProfile');
         $data['item'] = $this->itens->getItemById($idItem);
         $data['wishes'] = $this->wishes->getWishesByIdItem($idItem);
         $data['profileItem'] = $data['item']->item_idprofile;
-        // var_dump($data);die;
+               
+        $userControl = array(
+            'user_ip' => $_SERVER['REMOTE_ADDR'],
+            'item_id' => $idItem,
+        );
+
+        // Recupera objeto user_control do banco, com base no ip e id do item
+        $db_userControl = $this->userControl->getUserControl($userControl);
+        
+        if(!$db_userControl)
+        {
+          // Recupera a troca para verificar a quantidade de visualizações que a mesma possui
+          $info_itens = $this->itens->getItemById($idItem); 
+          // Incremente a quantidade de visualizações do item
+          $count_views = ($info_itens->item_views) + 1; 
+          // Salva o click visualizado do item no banco de dados
+          $this->itens->updateItem($idItem, array('item_views' => $count_views));
+          // Salva o registro de acesso na tabela de 'user_control'
+          $this->userControl->addUserControl($userControl);           
+        }
+        else
+        {
+
+
+        // Recupera a data de acesso gravado no BD
+        $db_date = $db_userControl->access_date;
+        $db_date = new DateTime($db_date);
+        // Adiciona 5 minutos na data do BD para controle do acesso
+        $db_date->modify('+5 minutes');
+        // Recupera a data atual do sistema
+        $date = new DateTime();
+
+        // Verifica se a data atual (date) é maior que a data do banco (+5 minutos), com isso o sistema contará a view 
+        if($date > $db_date)
+        {
+            // Recupera a troca para verificar a quantidade de visualizações que a mesma possui
+            $info_itens = $this->itens->getItemById($idItem);   
+            // Incremente a quantidade de visualizações do item
+            $count_views = ($info_itens->item_views) + 1; 
+            // Salva o click visualizado do item no banco de dados
+            $this->itens->updateItem($idItem, array('item_views' => $count_views));
+            // Cria um array com a nova data de acesso
+            $userControl_update = array(
+                'access_date' => $date->format("Y-m-d H:i:s"),
+            );
+            // Salva o registro de acesso na tabela de 'user_control'
+            $this->userControl->updateUserControl($userControl_update,$db_userControl->id_user_control);
+
+        }
+        }
+                
         $this->load->view('Item/details', $data);
     }
 
-    public function Report($idItem){
+    public function Report($idItem)
+    {
 
         $motive = ($this->input->post('motive')) ? $this->input->post('motive') : '';
 
