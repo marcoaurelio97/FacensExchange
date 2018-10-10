@@ -15,8 +15,9 @@
         <h1 class="col-md-12">Home</h1>
       </div>
     </section>
+    <?php if(sizeof($top_items) == 3): ?>
     <div class="row col-md-12 box box-solid">
-    <div class="col-xs-6">   
+    <div class="col-xs-12">   
           <div class="box-body">          
             <div class="box-header">
               <h3 class="box-title">Top Changes</h3>
@@ -29,29 +30,19 @@
                   <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
                   <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
                 </ol>
-                <div class="carousel-inner">
-                  <div class="item active">
-                    <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First Change">
-
-                    <div class="carousel-caption">
-                      First Change
-                    </div>
+                  <div class="carousel-inner" >
+                    <?php $count = 1; if ($top_items):?>
+                      <?php foreach ($top_items as $row):?>
+                           <div class="item <?php if($count == 1):echo "active"?> <?php endif; ?> " >                 
+                              <img src="<?= site_url('dist/img/'.$row->itempic_picture); ?>" alt=" <?= $row->item_title ?>" width="500" height="500" style="margin: 0 auto;">
+                                <div class="carousel-caption">
+                                  <?= $row->item_title ?>
+                                </div>
+                           </div> 
+                       <?php $count++; ?>                    
+                      <?php endforeach;?>
+                     <?php endif; ?>                         
                   </div>
-                  <div class="item">
-                    <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second Change">
-
-                    <div class="carousel-caption">
-                      Second Change
-                    </div>
-                  </div>
-                  <div class="item">
-                    <img src="http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap" alt="Third Change">
-
-                    <div class="carousel-caption">
-                      Third Change
-                    </div>
-                  </div>
-                </div>
                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                   <span class="fa fa-angle-left"></span>
                 </a>
@@ -64,9 +55,10 @@
             </div>
             <!-- /.box-body -->
           </div>
+         
           <!-- /.box -->
 </div>
-
+<?php endif; ?>
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->

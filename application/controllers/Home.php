@@ -41,6 +41,9 @@ class Home extends CI_Controller {
 			}
 		}
 
+		// Recupera os itens mais visualizados do site
+		$data['top_items'] = $this->itens->getTopItens(isset($profile) ? $profile->pro_id : FALSE);
+		
 		$this->session->set_userdata('categories', $this->model_categories->getCategories());
 		$this->session->set_userdata('offersNotifications', $this->model_trades->getOffersNotifications($idProfile));
 		$this->session->set_userdata('notifications', $this->model_notifications->getNotifications($idUser));

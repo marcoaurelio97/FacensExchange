@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Item extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -74,7 +73,8 @@ class Item extends CI_Controller
         $this->load->view('Item/add', $data);
     }
 
-    public function listItems(){
+    public function listItems()
+    {
         $idProfile = $this->session->userdata('idProfile');
 
         $data['currentItems'] = $this->itens->getItems($idProfile,'0');
@@ -94,7 +94,8 @@ class Item extends CI_Controller
         $this->load->view('Item/list', $data);
     }
 
-    public function deleteItem($idItem){
+    public function deleteItem($idItem)
+    {
         $this->itens->deleteItem($idItem);
         $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>The Item was deleted!</div>");
         redirect('Item/listItems');
@@ -156,8 +157,8 @@ class Item extends CI_Controller
         $this->load->view('Item/add',$data);
     }
 
-    public function itemDetails($idItem){
-
+    public function itemDetails($idItem)
+    {
         date_default_timezone_set('UTC');
         $data['profileLogged'] = $this->session->userdata('idProfile');
         $data['item'] = $this->itens->getItemById($idItem);
@@ -217,7 +218,8 @@ class Item extends CI_Controller
         $this->load->view('Item/details', $data);
     }
 
-    public function Report($idItem){
+    public function Report($idItem)
+    {
 
         $motive = ($this->input->post('motive')) ? $this->input->post('motive') : '';
 

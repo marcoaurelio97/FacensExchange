@@ -57,6 +57,7 @@ class Model_itens extends CI_Model {
     }
 
     public function getHomeItems($idProfile = FALSE){
+
         if($idProfile){
             $this->db->where('item_idprofile !=',$idProfile);
         }
@@ -69,4 +70,22 @@ class Model_itens extends CI_Model {
         }
         return FALSE;
     }
+
+    public function getTopItens($idProfile = FALSE){
+        
+        if($idProfile){
+            $this->db->where('item_idprofile !=',$idProfile);
+        }
+        $this->db->join('itens_pictures', 'item_id = itempic_iditem', 'inner join');
+        $this->db->where('item_status = "0"');
+        $this->db->limit(3);
+        $items = $this->db->get('itens');
+
+        if($items && $items->num_rows() > 0){
+            return $items->result();
+        }
+        return FALSE;
+    }
+
+
 }

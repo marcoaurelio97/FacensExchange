@@ -81,9 +81,7 @@ class Model_users extends CI_Model {
         }
 
         return FALSE;
-    }
-
-    
+    }   
 
     public function setUserProfile($idUser,$idProfile){
         $this->db->where('user_id',$idUser);
