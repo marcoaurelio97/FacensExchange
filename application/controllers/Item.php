@@ -268,28 +268,16 @@ class Item extends CI_Controller
             $chat = $this->chat->getChatId($idItem);
         }
 
-
         $this->chat->addMessage($chat,$message,$idProfile);
         
         $username = $this->users->getUsernameByProfile($idProfile);
-
-        $userItemOwner = $this->itens->getItemById($idItem)->user_id;
-        if($userItemOwner != $this->session->userdata('idUser')){
-            $dbNotification = array(
-                'notif_iduser'          => $userItemOwner,
-                'notif_date_add'        => date('Y-m-d H:i:s'),
-                'notif_status'          => '1',
-                'notif_message'         => 'You received a new message!',
-                'notif_type'            => 'MESSAGE',
-                'notif_chat'            => $chat
-            );
-    
-            $this->notifications->addNotification($dbNotification);
-        }
+        $picture = $this->profiles->getPictureByIdProfile($idProfile);
 
         $arr = array(
             'username' => $username,
             'message' => $message,
+            'profilePicture' => (is_null($picture)) ? 'user-default.jpg' : $msg->picture,
+            'idProfile' => $idProfile,
             'side' => 'R',
             'time' => date('Y-m-d H:i:s')
         );

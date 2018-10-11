@@ -144,9 +144,9 @@
               $('#qeaSession').append(
                 '<div clas="post clearfix" id="replyText'+ data[index].idmessage +'">'                                                                      +
                   '<div class="user-block">'                                                                      +
-                    '<img class="img-circle img-bordered-sm" src="' + href + '" alt="User Image">'                            +
+                    '<img class="img-circle img-bordered-sm" src="' + href + '" alt="User Image">'                +
                     '<span class="username">'                                                                     +
-                      '<a href="' + hrefProfile + '">'+data[index].username+'</a>'                                                  +
+                      '<a href="' + hrefProfile + '">'+data[index].username+'</a>'                                +
                     '</span>'                                                                                     +
                     '<span class="description">'+data[index].time+'</span>'                                       +
                   '</div>'                                                                                        +
@@ -185,24 +185,15 @@
         success: function( response ){
           data = JSON.parse(response);
 
-          if(isOwner){
-            reply = '<div class="form-group margin-bottom-none">'                                                   +
-                      '<div class="col-sm-9">'                                                                      +
-                        '<input type="text" class="form-control input-sm" id="msg" placeholder="Reply">'         +
-                      '</div>'                                                                                      +
-                      '<div class="col-sm-3">'                                                                      +
-                        '<button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>'    +
-                      '</div>'                                                                                      +
-                    '</div><br>';                                                                                       
-          } else {
-            reply = '';
-          }
+          href = '<?= site_url('dist/img') ?>/' + data.profilePicture;
+          hrefProfile = '<?= base_url('Profile/viewProfile') ?>/' + data.idProfile;
+
           $('#qeaSession').append(
             '<div clas="post clearfix">'                                                                      +
               '<div class="user-block">'                                                                      +
-                '<img class="img-circle img-bordered-sm" src="" alt="User Image">'                            +
+                '<img class="img-circle img-bordered-sm" src="' + href + '" alt="User Image">'                +
                 '<span class="username">'                                                                     +
-                  '<a href="#">'+data.username+'</a>'                                                         +
+                  '<a href="' + hrefProfile + '">'+data.username+'</a>'                                       +
                 '</span>'                                                                                     +
                 '<span class="description">'+data.time+'</span>'                                              +
               '</div>'                                                                                        +
@@ -210,7 +201,6 @@
               '<p>'                                                                                           +
                 data.message                                                                                  +
               '</p>'                                                                                          +
-              reply                                                                                           +
             '</div>'                                                                                          +
             '<hr>'
           );

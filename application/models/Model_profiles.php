@@ -152,4 +152,17 @@ class Model_profiles extends CI_Model {
         
         return FALSE;
     }
+
+    public function getPictureByIdProfile($idProfile){
+        $this->db->select('pro_picture');
+        $this->db->where('pro_id',$idProfile);
+
+        $result = $this->db->get('profiles');
+
+        if($result && $result->num_rows() > 0) {
+            return $result->row()->pro_picture;
+        }
+        
+        return NULL;
+    }
 }
