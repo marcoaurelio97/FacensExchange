@@ -2,25 +2,24 @@
 <!-- Content Wrapper. Contains page content -->
 
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>Home</h1>
-    </section>
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <?= $this->session->userdata('item'); ?>
         <div class="row">
-            <div class="col-md-12" style="min-height: 500px;">
-                <h2>Rate the user <?= $userToBeRated->pro_name ?></h2>
-                <form action="" method="post" id="form">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h2 class="panel-title">Rate the user <?= $userToBeRated->pro_name ?></h2>                       
+                    </div>
+                    <div class="panel-body">
+                    <form action="" method="post" id="form">
                     <div class="col-lg-12">
                         <div class="star-rating">
-                            <span class="fa fa-star-o" data-rating="1"></span>
-                            <span class="fa fa-star-o" data-rating="2"></span>
-                            <span class="fa fa-star-o" data-rating="3"></span>
-                            <span class="fa fa-star-o" data-rating="4"></span>
-                            <span class="fa fa-star-o" data-rating="5"></span>
+                            <span class="fa fa-star-o fa-2x" data-rating="1" style="color: yellow;"></span>
+                            <span class="fa fa-star-o fa-2x" data-rating="2" style="color: yellow;"></span>
+                            <span class="fa fa-star-o fa-2x" data-rating="3" style="color: yellow;"></span>
+                            <span class="fa fa-star-o fa-2x" data-rating="4" style="color: yellow;"></span>
+                            <span class="fa fa-star-o fa-2x" data-rating="5" style="color: yellow;"></span>
                             <input type="hidden" name="rating" class="rating-value">
                         </div>
                     </div>
@@ -31,14 +30,17 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-lg-12">
-                            <input type="submit" class="btn btn-success" value="Confirm">
+                            <input type="submit" class="btn btn-success pull-right" value="Confirm">
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
+                    </div>
+ </div>
+
     </section>
 </div>
+
+ 
 <!-- ./wrapper -->
 
 <?php $this->load->view('footer') ?>
