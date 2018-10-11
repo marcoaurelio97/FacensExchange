@@ -211,8 +211,8 @@ class Trade extends CI_Controller
                 $userToBeRated = $this->profiles->getProfileByUserId($trade['sender']->user_id);
                 $userThatRated = $this->profiles->getProfileByUserId($trade['receiver']->user_id);
             } else {
-                $userThatRated = $this->profiles->getProfileByUserId($trade['receiver']->user_id);                 
-                $userToBeRated = $this->profiles->getProfileByUserId($trade['sender']->user_id);
+                $userToBeRated = $this->profiles->getProfileByUserId($trade['receiver']->user_id);
+                $userThatRated = $this->profiles->getProfileByUserId($trade['sender']->user_id);
             }
             
             $this->db->trans_begin();
