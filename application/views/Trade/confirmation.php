@@ -22,6 +22,7 @@
                             <span class="fa fa-star-o" data-rating="4"></span>
                             <span class="fa fa-star-o" data-rating="5"></span>
                             <input type="hidden" name="rating" class="rating-value">
+                              <?php echo form_error('rating'); ?>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -31,7 +32,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label"></label>
                         <div class="col-lg-12">
-                            <input type="submit" class="btn btn-success" value="Confirm">
+                            <input type="submit" class="btn btn-success pull-right" value="Confirm">
                         </div>
                     </div>
                 </form>
