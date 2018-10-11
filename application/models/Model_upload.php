@@ -9,17 +9,21 @@ class Model_upload extends CI_Model {
         $nameImage = $_FILES['image']['name'];
 
         $config = array(
-            'upload_path' => './dist/img/',
+            'upload_path'   => './dist/img/',
             'allowed_types' => '*',
-            'file_name' => $nameImage,
-            'max_size' => '1000000'
+            'file_name'     => $nameImage,
+            'max_size'      => '1000000'
         );
 
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('image')) {
+            if ($this->itens->getItemPicture($idItem)) {
+                $this->itens->removeItemPicture($idItem);
+            }
+
             $db = array(
-                'itempic_iditem' => $idItem,
+                'itempic_iditem'  => $idItem,
                 'itempic_picture' => $nameImage
             );
 
