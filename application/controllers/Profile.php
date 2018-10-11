@@ -185,7 +185,6 @@ class Profile extends CI_Controller
         $data['comments'] = $this->profiles->getCommentsProfile($idProfile);
         // var_dump($data['comments']);die;
         $this->load->view('comments',$data);
-        
     }
 
     public function addFavorite($idProfile, $idFavorite) {
