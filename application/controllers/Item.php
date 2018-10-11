@@ -315,10 +315,11 @@ class Item extends CI_Controller
                 'username' => $msg->username,
                 'message' => $msg->message,
                 'idmessage' => $msg->id,
-                'profilePicture' => $msg->picture,
+                'profilePicture' => (is_null($msg->picture)) ? 'user-default.jpg' : $msg->picture,
                 'time' => $msg->time,
                 'replied' => is_null($msg->reply) ? FALSE : TRUE,
-                'reply' => $msg->reply
+                'reply' => $msg->reply,
+                'idProfile' => $msg->idProfile
             );
         }
 

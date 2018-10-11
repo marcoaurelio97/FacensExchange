@@ -87,10 +87,10 @@
                       </p>
                     </div>
                     <br>
-                    <?php if($profileItem != $profileLogged):?>
+                    <?php if($profileItem != $profileLogged && $this->session->userdata('logged')):?>
                       <div class="form-group margin-bottom-none">
                         <div class="col-sm-9">
-                          <input class="form-control input-sm" id="msg" placeholder="Type here...">
+                          <input class="form-control input-sm" maxlength="75" id="msg" placeholder="Type here...">
                         </div>
                         <div class="col-sm-3">
                           <button type="button" id="sendMessage" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
@@ -114,6 +114,8 @@
       var ownerItem = <?=$profileItem?>;
       var profileLogged = <?=$profileLogged?>;
       var isOwner = (ownerItem == profileLogged) ? true : false;
+      var logged = (<?=$this->session->userdata('logged') ? 'true' : 'false'?>);
+
       $.ajax({
         url: '<?= base_url('Item/getMessagesChat/'.$item->item_id)?>',
         success: function( response ){
@@ -121,10 +123,10 @@
             data = JSON.parse(response);
             $('#qeaSession').html('');
             $.each(data,function(index){
-              if(isOwner && !data[index].replied){
+              if(isOwner && !data[index].replied && logged){
                 reply = '<div class="form-group margin-bottom-none" id="divReply'+ data[index].idmessage +'">'                                                   +
                           '<div class="col-sm-9">'                                                                      +
-                            '<input type="text" class="form-control input-sm" id="msgReply'+ data[index].idmessage +'" placeholder="Reply">' +
+                            '<input type="text" class="form-control maxlength="75" input-sm" id="msgReply'+ data[index].idmessage +'" placeholder="Reply">' +
                           '</div>'                                                                                      +
                           '<div class="col-sm-3">'                                                                      +
                             '<button type="submit" class="btn btn-danger pull-right btn-block btn-sm replyMsg" data-idmsg="'+ data[index].idmessage +'">Send</button>'    +
@@ -132,18 +134,19 @@
                         '</div><br>';                                                                                       
               } else if(data[index].replied){
                 reply = '<small><cite title="Reply">Reply <i class="fa fa-angle-double-right"></i>'+data[index].reply+'</cite></small>';
-              }else {
+              } else {
                 reply = '';
               }
 
               href = '<?= site_url('dist/img') ?>/' + data[index].profilePicture;
+              hrefProfile = '<?= base_url('Profile/viewProfile') ?>/' + data[index].idProfile;
 
               $('#qeaSession').append(
                 '<div clas="post clearfix" id="replyText'+ data[index].idmessage +'">'                                                                      +
                   '<div class="user-block">'                                                                      +
                     '<img class="img-circle img-bordered-sm" src="' + href + '" alt="User Image">'                            +
                     '<span class="username">'                                                                     +
-                      '<a href="#">'+data[index].username+'</a>'                                                  +
+                      '<a href="' + hrefProfile + '">'+data[index].username+'</a>'                                                  +
                     '</span>'                                                                                     +
                     '<span class="description">'+data[index].time+'</span>'                                       +
                   '</div>'                                                                                        +
@@ -167,6 +170,8 @@
     var ownerItem = <?=$profileItem?>;
     var profileLogged = <?=$profileLogged?>;
     var isOwner = (ownerItem == profileLogged) ? true : false;
+    var logged = (<?=$this->session->userdata('logged') ? 'true' : 'false'?>);
+
     var message = $('#msg').val();
     if(message != ''){
     $('#msg').val('');
@@ -215,7 +220,6 @@
   }
 
   function replyMessage(){
-    debugger;
     var idMessage = $(this).data('idmsg');
     var message = $('#msgReply'+idMessage).val();
     if(message != ''){

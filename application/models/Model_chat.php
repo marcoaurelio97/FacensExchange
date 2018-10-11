@@ -60,7 +60,8 @@ class Model_chat extends CI_Model
                             mes_time AS time,
                             pro_picture AS picture,
                             mes_id AS id,
-                            mes_reply AS reply');
+                            mes_reply AS reply,
+                            mes_idprofile AS idProfile');
         $this->db->where('mes_idchat',$idChat);
         $this->db->join('profiles','mes_idprofile = pro_id');        
         $this->db->join('users','mes_idprofile = user_pro_id');
