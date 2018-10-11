@@ -18,7 +18,7 @@ class Model_itens extends CI_Model {
     public function getItems($idProfile,$status = FALSE){
         $this->db->where('item_idprofile',$idProfile);        
         $this->db->join('itens_pictures', 'item_id = itempic_iditem', 'left');
-        $this->db->where('item_views','ASC');
+        $this->db->order_by('item_views','ASC');
         if($status || $status === '0'){
             $this->db->where('item_status',$status);
         }
