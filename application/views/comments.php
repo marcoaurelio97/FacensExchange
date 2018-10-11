@@ -22,7 +22,7 @@
                                     </button>
                                 <?php endfor;?>
                                 <?php for($i = 0; $i < 5-$row->rat_rating; $i++):?>
-                                    <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" disabled>
+                                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" disabled>
                                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                     </button>
                                 <?php endfor;?>

@@ -26,7 +26,7 @@
                                             </button>
                                         <?php endfor;?>
                                         <?php for($i = 0; $i < 5-$roundRating; $i++):?>
-                                            <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
+                                            <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
                                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                             </button>
                                         <?php endfor;?>
@@ -74,7 +74,6 @@
                                 </table>
                                 <div>
                                     <span class="pull-right">
-                                        <a href="<?= site_url('Profile/report/'.$loggedProf.'/'.$profile->pro_id)?>" class="btn btn-danger">Report</a>                                            
                                         <?php if($notFavorite):?>
                                             <a href="<?= site_url('Profile/addFavorite/'.$loggedProf.'/'.$profile->pro_id)?>" class="btn btn-primary">Add to favorites</a>
                                         <?php else:?>
