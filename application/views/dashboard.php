@@ -28,7 +28,7 @@
               <!-- Porcentagem de trocas bem sucedidas -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3><?= round((($acceptedTrades/($totalTrades))*100),2); ?><sup style="font-size: 20px">%</sup></h3>
+                  <h3><?= $totalTrades ? round((($acceptedTrades/($totalTrades))*100),2) : '0'; ?><sup style="font-size: 20px">%</sup></h3>
                   <p>Successful Trades</p>
                 </div>
                 <div class="icon">
@@ -94,9 +94,7 @@
               <h3 class="box-title">Items by Category</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
               </div>
             </div>
             <div class="box-body chart-responsive">
@@ -113,9 +111,7 @@
           <h3 class="box-title">Latest Exchanges</h3>
 
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
           </div>
         </div>
         <!-- /.box-header -->

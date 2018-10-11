@@ -72,7 +72,7 @@ class Model_users extends CI_Model {
 
     public function getUsers($id_user){
         
-        $sql = "SELECT user_username,user_email,user_date_add,user_role FROM users WHERE user_id <> ?";
+        $sql = "SELECT user_id,user_username,user_email,user_date_add,user_role FROM users WHERE user_id <> ?";
 
         $users = $this->db->query($sql, array($id_user));
 

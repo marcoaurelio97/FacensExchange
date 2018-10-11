@@ -36,19 +36,19 @@
                   <th>Role</th>           
                 </tr>
             
-                <?php $count = 1; if($users){ ?>
-                  <?php foreach($users AS $row){ ?>
+                <?php if ($users) : ?>
+                  <?php foreach($users AS $row) : ?>
                     <tr>
-                      <td><?=$count?></td>
+                      <td><?= $row->user_id ?></td>
                       <td><?= $row->user_username ?></td>
                       <td><?= $row->user_email ?></td>
                       <td><?= $row->user_date_add ?></td>
                       <td><span class="label label-<?php if($row->user_role == "admin"){echo "danger";}else{echo "primary";} ?>"><?= $row->user_role ?></span></td>  
                     </tr> 
-                  <?php $count++;} ?>
-                <?php } else { ?>             
+                  <?php endforeach; ?>
+                <?php else : ?>
                   <p>No users added.</p>               
-                <?php } ?>  
+                <?php endif; ?>  
               </table>
             </div>
           <!-- /.box-body -->
