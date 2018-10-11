@@ -78,6 +78,7 @@ class Model_itens extends CI_Model {
         }
         $this->db->join('itens_pictures', 'item_id = itempic_iditem', 'inner join');
         $this->db->where('item_status = "0"');
+        $this->db->order_by("item_views", "desc");
         $this->db->limit(3);
         $items = $this->db->get('itens');
 
