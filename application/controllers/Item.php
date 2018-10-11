@@ -133,6 +133,10 @@ class Item extends CI_Controller
                 $this->wishes->addWishes($db_wishes);
             }
 
+            if ($_FILES) {
+                $this->model_upload->uploadImagesItem($idItem);
+            }
+
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('item', "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>An error occurred while editing a Item!</div>");
@@ -140,7 +144,7 @@ class Item extends CI_Controller
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('item', "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Alert!</h4>Item edited with success!</div>");
-                redirect('Home');
+                redirect('Home/listTrades');
             }
         }
 
@@ -175,8 +179,7 @@ class Item extends CI_Controller
         // Recupera objeto user_control do banco, com base no ip e id do item
         $db_userControl = $this->userControl->getUserControl($userControl);
         
-        if(!$db_userControl)
-        {
+        if (!$db_userControl) {
           // Recupera a troca para verificar a quantidade de visualizações que a mesma possui
           $info_itens = $this->itens->getItemById($idItem); 
           // Incremente a quantidade de visualizações do item
@@ -185,36 +188,30 @@ class Item extends CI_Controller
           $this->itens->updateItem($idItem, array('item_views' => $count_views));
           // Salva o registro de acesso na tabela de 'user_control'
           $this->userControl->addUserControl($userControl);           
-        }
-        else
-        {
+        } else {
+            // Recupera a data de acesso gravado no BD
+            $db_date = $db_userControl->access_date;
+            $db_date = new DateTime($db_date);
+            // Adiciona 5 minutos na data do BD para controle do acesso
+            $db_date->modify('+5 minutes');
+            // Recupera a data atual do sistema
+            $date = new DateTime();
 
-
-        // Recupera a data de acesso gravado no BD
-        $db_date = $db_userControl->access_date;
-        $db_date = new DateTime($db_date);
-        // Adiciona 5 minutos na data do BD para controle do acesso
-        $db_date->modify('+5 minutes');
-        // Recupera a data atual do sistema
-        $date = new DateTime();
-
-        // Verifica se a data atual (date) é maior que a data do banco (+5 minutos), com isso o sistema contará a view 
-        if($date > $db_date)
-        {
-            // Recupera a troca para verificar a quantidade de visualizações que a mesma possui
-            $info_itens = $this->itens->getItemById($idItem);   
-            // Incremente a quantidade de visualizações do item
-            $count_views = ($info_itens->item_views) + 1; 
-            // Salva o click visualizado do item no banco de dados
-            $this->itens->updateItem($idItem, array('item_views' => $count_views));
-            // Cria um array com a nova data de acesso
-            $userControl_update = array(
-                'access_date' => $date->format("Y-m-d H:i:s"),
-            );
-            // Salva o registro de acesso na tabela de 'user_control'
-            $this->userControl->updateUserControl($userControl_update,$db_userControl->id_user_control);
-
-        }
+            // Verifica se a data atual (date) é maior que a data do banco (+5 minutos), com isso o sistema contará a view 
+            if ($date > $db_date) {
+                // Recupera a troca para verificar a quantidade de visualizações que a mesma possui
+                $info_itens = $this->itens->getItemById($idItem);   
+                // Incremente a quantidade de visualizações do item
+                $count_views = ($info_itens->item_views) + 1; 
+                // Salva o click visualizado do item no banco de dados
+                $this->itens->updateItem($idItem, array('item_views' => $count_views));
+                // Cria um array com a nova data de acesso
+                $userControl_update = array(
+                    'access_date' => $date->format("Y-m-d H:i:s"),
+                );
+                // Salva o registro de acesso na tabela de 'user_control'
+                $this->userControl->updateUserControl($userControl_update,$db_userControl->id_user_control);
+            }
         }
                 
         $this->load->view('Item/details', $data);

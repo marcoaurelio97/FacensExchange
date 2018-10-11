@@ -131,5 +131,21 @@ class Model_itens extends CI_Model {
         return FALSE;
     }
 
+    public function getItemPicture($idItem)
+    {
+        $this->db->where('itempic_iditem', $idItem);
+        $picture = $this->db->get('itens_pictures');
 
+        if ($picture && $picture->num_rows() > 0) {
+            return $picture->row();
+        }
+
+        return false;
+    }
+
+    public function removeItemPicture($idItem)
+    {
+        $this->db->where('itempic_iditem', $idItem);
+        $this->db->delete('itens_pictures');
+    }
 }
