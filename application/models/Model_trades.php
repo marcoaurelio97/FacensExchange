@@ -206,6 +206,24 @@ class Model_trades extends CI_Model {
         return FALSE;
     }
 
+    public function getTradesByIdProfile($idProfile,$current = FALSE){
+        if ($current) {
+            $this->db->where('trade_status', '0');
+        } else {
+            $this->db->where('trade_status', '1');
+        }
+        $this->db->where("rec.item_idprofile = $idProfile OR sen.item_idprofile = $idProfile");
+        $this->db->order_by('trade_date_add','DESC');
+        $this->db->join('itens AS rec','trade_iditem_receiver = rec.item_id');
+        $this->db->join('itens AS sen','trade_iditem_sender = sen.item_id');
+        $trades = $this->db->get('trades');
+        if($trades && $trades->num_rows() > 0){
+            return $trades->result();
+        }
+
+        return FALSE;
+    }
+
     public function getLastTrades($quantidade = 10){
         $this->db->limit($quantidade);
         $this->db->select(' trade_id AS tradeId,
