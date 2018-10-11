@@ -212,7 +212,7 @@ class Model_trades extends CI_Model {
         } else {
             $this->db->where('trade_status', '1');
         }
-        $this->db->where("rec.item_idprofile = $idProfile OR sen.item_idprofile = $idProfile");
+        $this->db->where("(rec.item_idprofile = $idProfile OR sen.item_idprofile = $idProfile)");
         $this->db->order_by('trade_date_add','DESC');
         $this->db->join('itens AS rec','trade_iditem_receiver = rec.item_id');
         $this->db->join('itens AS sen','trade_iditem_sender = sen.item_id');
