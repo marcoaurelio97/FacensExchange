@@ -16,12 +16,13 @@
 
 <div class="content-wrapper">
     <?php echo $this->session->userdata('item'); ?>
+    <?= $title ?>
     <?php if(isset($tradesCurrent)): ?>
-    <section class="content-header">
-    <h1>Current Trades</h1>
-    </section>
-    <section class="content">
-        <div class="row">
+        <section class="content-header">
+        <h1>Current Trades</h1>
+        </section>
+        <section class="content">
+            <div class="row">
                 <?php foreach($tradesCurrent AS $row): ?>
                     <div class="col-md-8 col-md-offset-2" style="min-height: 300px;">
                         <div class="box box-solid box-primary">
@@ -106,7 +107,7 @@
         <br>
         <div class="container">
             <div class='alert alert-info alert-dismissible'>
-                You don't have any current trade
+                You don't have any trade
             </div>
         </div>
     <?php endif; ?>

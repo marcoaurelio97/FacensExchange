@@ -15,7 +15,8 @@ class User extends CI_Controller
     public function listTrades()
     {
         $idUser = $this->session->userdata('idUser');
-        $trades = $this->trades->getTrades(TRUE);
+        $idProfile = $this->session->userdata('idProfile');
+        $trades = $this->trades->getTradesByIdProfile($idProfile,TRUE);
         if($trades){
             $tradesCurrent = array();
             foreach($trades AS $trade){
@@ -40,7 +41,7 @@ class User extends CI_Controller
             $data['tradesCurrent'] = $tradesCurrent;
         }
 
-        $trades = $this->trades->getTrades(FALSE);
+        $trades = $this->trades->getTradesByIdProfile($idProfile,FALSE);
         if($trades){
             $tradesFinalized = array();
             foreach($trades AS $trade){
@@ -62,7 +63,9 @@ class User extends CI_Controller
             }
             $data['tradesFinalized'] = $tradesFinalized;
         }        
-        $this->load->view('Trade/list', $data);
+        $data['title'] = '';
+        // var_dump($data);die;
+        $this->load->view('Trade/list',$data);
     }
 
     public function listUsers()
