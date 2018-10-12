@@ -276,7 +276,7 @@ class Item extends CI_Controller
         $arr = array(
             'username' => $username,
             'message' => $message,
-            'profilePicture' => (is_null($picture)) ? 'user-default.jpg' : $msg->picture,
+            'profilePicture' => (is_null($picture)) ? 'user-default.jpg' : $picture,
             'idProfile' => $idProfile,
             'side' => 'R',
             'time' => date('Y-m-d H:i:s')
